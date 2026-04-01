@@ -36,35 +36,29 @@ export default function ProjectsPage() {
       <Header />
       <Breadcrumb items={[{ label: 'Projects' }]} />
       <main className="min-h-screen bg-background">
-        {/* Header Section */}
         <section className="border-b border-border">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-3xl">
-              <h1 className="text-4xl font-bold text-foreground">
-                10 Practice Projects
-              </h1>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Learn by building. Apply your chosen SDD method to real-world projects with varying scales and complexity.
-              </p>
-            </div>
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+            <h1 className="text-2xl font-bold text-foreground">10 Practice Projects</h1>
+            <p className="mt-1 text-sm text-muted-foreground">Learn by building. Apply your chosen SDD method to real-world projects with varying scales and complexity.</p>
           </div>
         </section>
 
         {/* Filter Section */}
         <section className="border-b border-border bg-card">
-          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-4 sm:items-end sm:justify-between">
+          <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-3 sm:justify-between">
               <input
                 type="text"
                 placeholder="Search projects..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="rounded-lg border border-border bg-background px-4 py-2 text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none w-full sm:max-w-xs"
+                className="rounded-md border border-border bg-background px-3 py-1 text-sm text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
               />
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-1.5 flex-wrap">
                 <Button
                   variant={difficulty === 'all' ? 'default' : 'outline'}
                   size="sm"
+                  className="h-7 text-xs"
                   onClick={() => setDifficulty('all')}
                 >
                   All
@@ -72,6 +66,7 @@ export default function ProjectsPage() {
                 <Button
                   variant={difficulty === 'beginner' ? 'default' : 'outline'}
                   size="sm"
+                  className="h-7 text-xs"
                   onClick={() => setDifficulty('beginner')}
                 >
                   Beginner
@@ -79,6 +74,7 @@ export default function ProjectsPage() {
                 <Button
                   variant={difficulty === 'intermediate' ? 'default' : 'outline'}
                   size="sm"
+                  className="h-7 text-xs"
                   onClick={() => setDifficulty('intermediate')}
                 >
                   Intermediate
@@ -86,6 +82,7 @@ export default function ProjectsPage() {
                 <Button
                   variant={difficulty === 'advanced' ? 'default' : 'outline'}
                   size="sm"
+                  className="h-7 text-xs"
                   onClick={() => setDifficulty('advanced')}
                 >
                   Advanced

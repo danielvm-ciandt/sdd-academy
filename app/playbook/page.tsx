@@ -1,4 +1,5 @@
 import { Header } from '@/components/Header'
+import { Breadcrumb } from '@/components/Breadcrumb'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -7,23 +8,17 @@ export default function PlaybookPage() {
   return (
     <>
       <Header />
+      <Breadcrumb items={[{ label: 'Playbook' }]} />
       <main className="min-h-screen bg-background">
-        {/* Header Section */}
         <section className="border-b border-border">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-3xl">
-              <h1 className="text-4xl font-bold text-foreground">
-                Team Leader Playbook
-              </h1>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Strategies for adopting SDD methods across your team. Build a culture of structured, specification-driven development.
-              </p>
-            </div>
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+            <h1 className="text-2xl font-bold text-foreground">Team Leader Playbook</h1>
+            <p className="mt-1 text-sm text-muted-foreground">Strategies for adopting SDD methods across your team. Build a culture of structured, specification-driven development.</p>
           </div>
         </section>
 
         {/* Playbook Tabs */}
-        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <Tabs defaultValue="adoption" className="w-full">
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="adoption">Adoption</TabsTrigger>

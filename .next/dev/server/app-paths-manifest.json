@@ -1,3 +1,9 @@
 {
-  "/page": "app/page.js"
+  "/find-your-method/page": "app/find-your-method/page.js",
+  "/methods/[slug]/page": "app/methods/[slug]/page.js",
+  "/methods/page": "app/methods/page.js",
+  "/page": "app/page.js",
+  "/playbook/page": "app/playbook/page.js",
+  "/projects/page": "app/projects/page.js",
+  "/tools/page": "app/tools/page.js"
 }

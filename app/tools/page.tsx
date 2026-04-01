@@ -4,6 +4,7 @@ import { Header } from '@/components/Header'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import Link from 'next/link'
+import { Breadcrumb } from '@/components/Breadcrumb'
 import toolsData from '@/data/tools.json'
 import methodsData from '@/data/methods.json'
 
@@ -19,23 +20,17 @@ export default function ToolsPage() {
   return (
     <>
       <Header />
+      <Breadcrumb items={[{ label: 'Tools' }]} />
       <main className="min-h-screen bg-background">
-        {/* Header Section */}
         <section className="border-b border-border">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-3xl">
-              <h1 className="text-4xl font-bold text-foreground">
-                AI Tools Compatibility Matrix
-              </h1>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Discover which AI development tools work best with each SDD method. Find your perfect pairing.
-              </p>
-            </div>
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+            <h1 className="text-2xl font-bold text-foreground">AI Tools Compatibility Matrix</h1>
+            <p className="mt-1 text-sm text-muted-foreground">Discover which AI development tools work best with each SDD method. Find your perfect pairing.</p>
           </div>
         </section>
 
         {/* Matrix Section */}
-        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="overflow-x-auto rounded-lg border border-border">
             <table className="w-full">
               <thead>

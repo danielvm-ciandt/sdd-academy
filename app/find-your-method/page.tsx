@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
+import { Breadcrumb } from '@/components/Breadcrumb'
 import methodsData from '@/data/methods.json'
 
 interface QuizAnswer {
@@ -162,16 +163,12 @@ export default function FindYourMethodPage() {
   return (
     <>
       <Header />
+      <Breadcrumb items={[{ label: 'Find Method' }]} />
       <main className="min-h-screen bg-background">
-        {/* Header */}
         <section className="border-b border-border">
-          <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
-            <h1 className="text-4xl font-bold text-foreground text-center">
-              Find Your Method
-            </h1>
-            <p className="mt-4 text-center text-muted-foreground">
-              Answer a few questions to discover which SDD method is best for you.
-            </p>
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+            <h1 className="text-2xl font-bold text-foreground">Find Your Method</h1>
+            <p className="mt-1 text-sm text-muted-foreground">Answer a few questions to discover which SDD method is best for you.</p>
           </div>
         </section>
 
