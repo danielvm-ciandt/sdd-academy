@@ -51,12 +51,13 @@
       "toolCompatibility": {
         "claude-code": "native",
         "cursor": "native",
-        "windsurf": "cli",
+        "windsurf": "native",
         "copilot": "cli",
         "cline": "cli",
-        "antigravity": "cli",
+        "antigravity": "native",
         "aider": "limited",
-        "continue": "limited"
+        "continue": "limited",
+        "opencode": "native"
       },
       "relatedProjects": [
         "digital-music-store",
@@ -129,7 +130,8 @@
         "cline": "cli",
         "antigravity": "cli",
         "aider": "limited",
-        "continue": "limited"
+        "continue": "limited",
+        "opencode": "native"
       },
       "relatedProjects": [
         "hr-portal",
@@ -200,7 +202,8 @@
         "cline": "cli",
         "antigravity": "limited",
         "aider": "limited",
-        "continue": "limited"
+        "continue": "limited",
+        "opencode": "native"
       },
       "relatedProjects": [
         "recommendation-engine",
@@ -267,7 +270,8 @@
         "cline": "cli",
         "antigravity": "cli",
         "aider": "limited",
-        "continue": "limited"
+        "continue": "limited",
+        "opencode": "native"
       },
       "relatedProjects": [
         "element-explorer",
@@ -337,7 +341,8 @@
         "cline": "cli",
         "antigravity": "cli",
         "aider": "limited",
-        "continue": "limited"
+        "continue": "limited",
+        "opencode": "native"
       },
       "relatedProjects": [
         "element-explorer",
@@ -412,7 +417,8 @@
         "cline": "native",
         "antigravity": "native",
         "aider": "native",
-        "continue": "native"
+        "continue": "native",
+        "opencode": "native"
       },
       "relatedProjects": [
         "todo-api",
@@ -476,7 +482,8 @@
         "cline": "cli",
         "antigravity": "not-supported",
         "aider": "not-supported",
-        "continue": "not-supported"
+        "continue": "not-supported",
+        "opencode": "native"
       },
       "relatedProjects": [
         "element-explorer",
@@ -539,7 +546,8 @@
         "cline": "cli",
         "antigravity": "cli",
         "aider": "limited",
-        "continue": "limited"
+        "continue": "limited",
+        "opencode": "native"
       },
       "relatedProjects": [
         "digital-music-store",
@@ -607,7 +615,8 @@
         "cline": "native",
         "antigravity": "native",
         "aider": "cli",
-        "continue": "cli"
+        "continue": "cli",
+        "opencode": "native"
       },
       "relatedProjects": [
         "project-management-tool",

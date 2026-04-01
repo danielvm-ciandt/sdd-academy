@@ -86,3 +86,12 @@
 {"timestamp":"01:33:51.403","source":"Browser","level":"LOG","message":"%c[Vercel Web Analytics]%c [view] http://localhost:3000/playbook color: rgb(120, 120, 120) color: inherit {\"dp\":\"/playbook\",\"o\":\"http://localhost:3000/playbook\",\"sdkn\":\"@vercel/analytics/next\",\"sdkv\":\"1.6.1\",\"sv\":\"0.1.3\",\"ts\":1775051138930} /_vercel/insights/view"}
 {"timestamp":"01:33:52.146","source":"Browser","level":"LOG","message":"%c[Vercel Web Analytics]%c [view] http://localhost:3000/find-your-method color: rgb(120, 120, 120) color: inherit {\"dp\":\"/find-your-method\",\"o\":\"http://localhost:3000/find-your-method\",\"sdkn\":\"@vercel/analytics/next\",\"sdkv\":\"1.6.1\",\"sv\":\"0.1.3\",\"ts\":1775051139691} /_vercel/insights/view"}
 {"timestamp":"01:33:53.355","source":"Browser","level":"LOG","message":"%c[Vercel Web Analytics]%c [view] http://localhost:3000/methods color: rgb(120, 120, 120) color: inherit {\"dp\":\"/methods\",\"o\":\"http://localhost:3000/methods\",\"sdkn\":\"@vercel/analytics/next\",\"sdkv\":\"1.6.1\",\"sv\":\"0.1.3\",\"ts\":1775051140901} /_vercel/insights/view"}
+{"timestamp":"05:50:16.772","source":"Server","level":"LOG","message":"✓ Compiled in 2.4s"}
+{"timestamp":"05:50:19.561","source":"Server","level":"LOG","message":"✓ Compiled in 530ms"}
+{"timestamp":"05:50:23.436","source":"Server","level":"LOG","message":"✓ Compiled in 798ms"}
+{"timestamp":"05:50:25.502","source":"Server","level":"LOG","message":"✓ Compiled in 284ms"}
+{"timestamp":"05:50:28.751","source":"Server","level":"LOG","message":"✓ Compiled in 268ms"}
+{"timestamp":"05:50:31.137","source":"Server","level":"LOG","message":"✓ Compiled in 191ms"}
+{"timestamp":"05:50:33.891","source":"Server","level":"LOG","message":"✓ Compiled in 197ms"}
+{"timestamp":"05:50:38.343","source":"Server","level":"LOG","message":"✓ Compiled in 461ms"}
+{"timestamp":"05:57:24.214","source":"Server","level":"LOG","message":"✓ Compiled in 380ms"}
