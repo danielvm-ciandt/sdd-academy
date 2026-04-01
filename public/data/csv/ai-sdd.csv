@@ -1,0 +1,9 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,npx ai-sdd,Install AI-SDD,Yes,.sdd/ directory + steering files + commands,Yes,Scaffolds the framework
+Setup,2,AI Agent,N/A,/sdd:steering,Establish Project Context,Yes,.sdd/steering/ (project memory),Yes,Tech stack preferences; coding standards; persists across sessions
+Per-Feature Cycle,1,AI Agent,N/A,/sdd:spec-init,Initialize Spec,Yes,Feature spec structure under .sdd/,Yes,Provide feature description as argument
+Per-Feature Cycle,2,AI Agent,N/A,/sdd:spec-requirements,Gather Requirements,Yes,Requirements spec,Yes,Three-phase approval gate; must approve before design
+Per-Feature Cycle,3,AI Agent,N/A,/sdd:spec-design,Design Feature,Yes,"Design spec (data model, API, services, security)",Yes,Must approve before tasks
+Per-Feature Cycle,4,AI Agent,N/A,/sdd:spec-tasks,Generate Tasks,Yes,Task breakdown with dependency tracking,Yes,"Tasks marked (P) can run in parallel"
+Per-Feature Cycle,5,AI Agent,N/A,/sdd:spec-impl,Implement with TDD,Yes,Code + tests (red-green-refactor),Yes,TDD cycle per task
+Per-Feature Cycle,6,AI Agent,N/A,/sdd:validate-design,Validate Design,Recommended,Architectural consistency report,Yes,Used for FR-03 in how-to; checks consistency with existing features

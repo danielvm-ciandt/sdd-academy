@@ -1,0 +1,401 @@
+{
+  "projects": [
+    {
+      "id": "element-explorer",
+      "name": "Element Explorer API",
+      "slug": "element-explorer",
+      "description": "Build a REST API for exploring and filtering elements from the periodic table with advanced search capabilities.",
+      "database": "Periodic Table",
+      "scale": "Small (1 table, 118 rows)",
+      "difficulty": "beginner",
+      "estimatedHours": 2,
+      "keywords": ["api", "database", "simple", "rest"],
+      "whatYouBuild": "REST endpoints for element lookup, filtering by atomic number, mass, category, and other properties. Learn API design fundamentals.",
+      "schema": [
+        {
+          "table": "elements",
+          "description": "Periodic table of elements",
+          "columns": [
+            { "name": "id", "type": "INT", "description": "Unique identifier" },
+            { "name": "symbol", "type": "VARCHAR", "description": "Element symbol" },
+            { "name": "name", "type": "VARCHAR", "description": "Element name" },
+            { "name": "atomicNumber", "type": "INT", "description": "Atomic number" },
+            { "name": "atomicMass", "type": "FLOAT", "description": "Atomic mass" },
+            { "name": "category", "type": "VARCHAR", "description": "Element category" }
+          ]
+        }
+      ],
+      "gettingStarted": "1. Load the periodic table data\\n2. Set up basic Express server\\n3. Implement search endpoints\\n4. Add filtering and sorting\\n5. Test with sample queries",
+      "relatedMethods": ["gsd", "ai-sdd"],
+      "tags": ["api", "database", "rest", "beginner"]
+    },
+    {
+      "id": "todo-api",
+      "name": "Todo API",
+      "slug": "todo-api",
+      "description": "Create a full-featured Todo application API with user authentication, task management, and collaboration features.",
+      "database": "Task Management",
+      "scale": "Small (3 tables, user-dependent rows)",
+      "difficulty": "beginner",
+      "estimatedHours": 3,
+      "keywords": ["api", "database", "crud", "auth"],
+      "whatYouBuild": "User authentication, task CRUD operations, sharing tasks with other users, marking tasks complete, organizing by lists.",
+      "schema": [
+        {
+          "table": "users",
+          "description": "User accounts",
+          "columns": [
+            { "name": "id", "type": "UUID", "description": "User ID" },
+            { "name": "email", "type": "VARCHAR", "description": "User email" },
+            { "name": "name", "type": "VARCHAR", "description": "User name" }
+          ]
+        },
+        {
+          "table": "tasks",
+          "description": "Todo tasks",
+          "columns": [
+            { "name": "id", "type": "UUID", "description": "Task ID" },
+            { "name": "userId", "type": "UUID", "description": "Task owner" },
+            { "name": "title", "type": "VARCHAR", "description": "Task title" },
+            { "name": "completed", "type": "BOOLEAN", "description": "Completion status" }
+          ]
+        }
+      ],
+      "gettingStarted": "1. Create user and task tables\\n2. Implement authentication\\n3. Build task CRUD endpoints\\n4. Add task sharing\\n5. Test collaboration features",
+      "relatedMethods": ["gsd", "taskmaster"],
+      "tags": ["api", "crud", "auth", "database"]
+    },
+    {
+      "id": "digital-music-store",
+      "name": "Digital Music Store",
+      "slug": "digital-music-store",
+      "description": "Build a music store platform with artists, albums, songs, playlists, and user ratings and reviews.",
+      "database": "Music Catalog",
+      "scale": "Medium (5 tables, complex relationships)",
+      "difficulty": "intermediate",
+      "estimatedHours": 6,
+      "keywords": ["ecommerce", "database", "relationships", "complex"],
+      "whatYouBuild": "Browse music by artist/album/genre, create playlists, rate/review songs, purchase tracks, streaming preview, recommendation engine.",
+      "schema": [
+        {
+          "table": "artists",
+          "description": "Music artists"
+        },
+        {
+          "table": "albums",
+          "description": "Albums by artists"
+        },
+        {
+          "table": "songs",
+          "description": "Individual songs"
+        },
+        {
+          "table": "playlists",
+          "description": "User-created playlists"
+        },
+        {
+          "table": "reviews",
+          "description": "User reviews and ratings"
+        }
+      ],
+      "gettingStarted": "1. Design artist/album/song relationships\\n2. Implement music browsing\\n3. Add playlist creation\\n4. Build review system\\n5. Add recommendation engine",
+      "relatedMethods": ["bmad", "openspec"],
+      "tags": ["ecommerce", "relationships", "intermediate"]
+    },
+    {
+      "id": "flight-booking-system",
+      "name": "Flight Booking System",
+      "slug": "flight-booking-system",
+      "description": "Develop a comprehensive flight booking platform with flights, bookings, payments, and seat management.",
+      "database": "Flight Management",
+      "scale": "Large (8 tables, complex transactions)",
+      "difficulty": "advanced",
+      "estimatedHours": 12,
+      "keywords": ["transaction", "database", "complex", "enterprise"],
+      "whatYouBuild": "Flight search, seat selection, booking management, payment processing, cancellations, refunds, loyalty program.",
+      "schema": [
+        {
+          "table": "flights",
+          "description": "Flight schedules"
+        },
+        {
+          "table": "aircraft",
+          "description": "Aircraft information"
+        },
+        {
+          "table": "seats",
+          "description": "Seat configurations"
+        },
+        {
+          "table": "bookings",
+          "description": "Customer bookings"
+        },
+        {
+          "table": "payments",
+          "description": "Payment records"
+        },
+        {
+          "table": "passengers",
+          "description": "Passenger details"
+        },
+        {
+          "table": "loyalty",
+          "description": "Loyalty program data"
+        },
+        {
+          "table": "cancellations",
+          "description": "Cancellation history"
+        }
+      ],
+      "gettingStarted": "1. Design flight/booking schema\\n2. Implement search functionality\\n3. Add seat management\\n4. Build booking engine\\n5. Implement payment processing",
+      "relatedMethods": ["bmad", "spec-workflow-mcp"],
+      "tags": ["transaction", "advanced", "enterprise"]
+    },
+    {
+      "id": "social-network",
+      "name": "Social Network Platform",
+      "slug": "social-network",
+      "description": "Create a social networking platform with users, posts, comments, likes, follows, and direct messaging.",
+      "database": "Social Media",
+      "scale": "Large (7 tables, high volume)",
+      "difficulty": "advanced",
+      "estimatedHours": 10,
+      "keywords": ["social", "realtime", "relationships", "complex"],
+      "whatYouBuild": "User profiles, post creation, comments, likes, follow system, newsfeed, direct messaging, notifications.",
+      "schema": [
+        {
+          "table": "users",
+          "description": "User profiles"
+        },
+        {
+          "table": "posts",
+          "description": "User posts"
+        },
+        {
+          "table": "comments",
+          "description": "Post comments"
+        },
+        {
+          "table": "likes",
+          "description": "Post and comment likes"
+        },
+        {
+          "table": "follows",
+          "description": "User follow relationships"
+        },
+        {
+          "table": "messages",
+          "description": "Direct messages"
+        },
+        {
+          "table": "notifications",
+          "description": "User notifications"
+        }
+      ],
+      "gettingStarted": "1. Design user relationships\\n2. Build post/comment system\\n3. Implement like functionality\\n4. Add follow system\\n5. Build messaging system",
+      "relatedMethods": ["openspec", "specpulse"],
+      "tags": ["social", "complex", "advanced"]
+    },
+    {
+      "id": "hr-portal",
+      "name": "HR Management Portal",
+      "slug": "hr-portal",
+      "description": "Build an enterprise HR management system with employee records, payroll, benefits, and performance tracking.",
+      "database": "HR Management",
+      "scale": "Large (10 tables, complex rules)",
+      "difficulty": "advanced",
+      "estimatedHours": 14,
+      "keywords": ["enterprise", "compliance", "complex", "large"],
+      "whatYouBuild": "Employee directory, payroll management, benefits tracking, performance reviews, leave management, organizational hierarchy.",
+      "schema": [
+        {
+          "table": "employees",
+          "description": "Employee records"
+        },
+        {
+          "table": "departments",
+          "description": "Organization departments"
+        },
+        {
+          "table": "positions",
+          "description": "Job positions"
+        },
+        {
+          "table": "payroll",
+          "description": "Payroll records"
+        },
+        {
+          "table": "benefits",
+          "description": "Employee benefits"
+        },
+        {
+          "table": "performance",
+          "description": "Performance reviews"
+        },
+        {
+          "table": "leave",
+          "description": "Leave requests and history"
+        }
+      ],
+      "gettingStarted": "1. Design organizational structure\\n2. Build employee management\\n3. Implement payroll system\\n4. Add performance tracking\\n5. Build leave management",
+      "relatedMethods": ["bmad", "spec-kit"],
+      "tags": ["enterprise", "hr", "advanced"]
+    },
+    {
+      "id": "banking-system",
+      "name": "Banking System",
+      "slug": "banking-system",
+      "description": "Develop a secure banking platform with accounts, transactions, transfers, loans, and regulatory compliance.",
+      "database": "Finance",
+      "scale": "Very Large (15 tables, critical)",
+      "difficulty": "advanced",
+      "estimatedHours": 16,
+      "keywords": ["finance", "security", "compliance", "transaction"],
+      "whatYouBuild": "Account management, transaction history, money transfers, loan management, interest calculation, compliance reporting, audit trails.",
+      "schema": [
+        {
+          "table": "accounts",
+          "description": "Bank accounts"
+        },
+        {
+          "table": "customers",
+          "description": "Customer records"
+        },
+        {
+          "table": "transactions",
+          "description": "Transaction history"
+        },
+        {
+          "table": "transfers",
+          "description": "Money transfers"
+        },
+        {
+          "table": "loans",
+          "description": "Loan accounts"
+        },
+        {
+          "table": "interest",
+          "description": "Interest calculations"
+        }
+      ],
+      "gettingStarted": "1. Design account schema\\n2. Implement transaction logging\\n3. Build transfer system\\n4. Add loan management\\n5. Implement compliance tracking",
+      "relatedMethods": ["spec-workflow-mcp", "bmad"],
+      "tags": ["finance", "security", "advanced"]
+    },
+    {
+      "id": "recommendation-engine",
+      "name": "Recommendation Engine",
+      "slug": "recommendation-engine",
+      "description": "Create an AI-powered recommendation system that suggests products, content, or connections based on user behavior.",
+      "database": "User Behavior Analytics",
+      "scale": "Medium-Large (6 tables, analytics)",
+      "difficulty": "intermediate",
+      "estimatedHours": 8,
+      "keywords": ["ai", "analytics", "recommendations", "ml"],
+      "whatYouBuild": "User behavior tracking, preference learning, recommendation algorithms, A/B testing, analytics dashboard, collaborative filtering.",
+      "schema": [
+        {
+          "table": "users",
+          "description": "User profiles"
+        },
+        {
+          "table": "items",
+          "description": "Products or content"
+        },
+        {
+          "table": "interactions",
+          "description": "User-item interactions"
+        },
+        {
+          "table": "recommendations",
+          "description": "Generated recommendations"
+        }
+      ],
+      "gettingStarted": "1. Set up user/item tracking\\n2. Implement behavior logging\\n3. Build recommendation algorithm\\n4. Add analytics\\n5. Set up A/B testing",
+      "relatedMethods": ["ai-sdd", "specpulse"],
+      "tags": ["ai", "analytics", "ml"]
+    },
+    {
+      "id": "chat-application",
+      "name": "Real-Time Chat Application",
+      "slug": "chat-application",
+      "description": "Build a real-time messaging platform with users, conversations, messages, media sharing, and presence tracking.",
+      "database": "Messaging",
+      "scale": "Medium-Large (5 tables, real-time)",
+      "difficulty": "intermediate",
+      "estimatedHours": 7,
+      "keywords": ["realtime", "websocket", "messaging", "presence"],
+      "whatYouBuild": "User conversations, message history, media attachments, typing indicators, read receipts, online presence, notification system.",
+      "schema": [
+        {
+          "table": "users",
+          "description": "User accounts"
+        },
+        {
+          "table": "conversations",
+          "description": "Chat conversations"
+        },
+        {
+          "table": "messages",
+          "description": "Chat messages"
+        },
+        {
+          "table": "attachments",
+          "description": "Message attachments"
+        },
+        {
+          "table": "presence",
+          "description": "User online status"
+        }
+      ],
+      "gettingStarted": "1. Design conversation schema\\n2. Set up WebSocket connection\\n3. Implement message storage\\n4. Add presence tracking\\n5. Build notification system",
+      "relatedMethods": ["specpulse", "gsd"],
+      "tags": ["realtime", "messaging", "intermediate"]
+    },
+    {
+      "id": "project-management-tool",
+      "name": "Project Management Tool",
+      "slug": "project-management-tool",
+      "description": "Develop a collaborative project management platform with tasks, teams, timelines, and progress tracking.",
+      "database": "Project Management",
+      "scale": "Large (9 tables, collaborative)",
+      "difficulty": "advanced",
+      "estimatedHours": 11,
+      "keywords": ["collaboration", "project", "tasks", "teams"],
+      "whatYouBuild": "Project creation, task management, team assignment, timelines, dependency tracking, progress reports, collaboration features.",
+      "schema": [
+        {
+          "table": "projects",
+          "description": "Projects"
+        },
+        {
+          "table": "tasks",
+          "description": "Project tasks"
+        },
+        {
+          "table": "teams",
+          "description": "Team information"
+        },
+        {
+          "table": "members",
+          "description": "Team members"
+        },
+        {
+          "table": "assignments",
+          "description": "Task assignments"
+        },
+        {
+          "table": "timelines",
+          "description": "Project timelines"
+        },
+        {
+          "table": "comments",
+          "description": "Task comments"
+        }
+      ],
+      "gettingStarted": "1. Design project hierarchy\\n2. Build task system\\n3. Implement team management\\n4. Add timeline tracking\\n5. Build collaboration features",
+      "relatedMethods": ["taskmaster", "bmad"],
+      "tags": ["collaboration", "project", "advanced"]
+    }
+  ]
+}

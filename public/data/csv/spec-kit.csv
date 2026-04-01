@@ -1,0 +1,9 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,specify init . --ai claude,Install Spec-Kit,Yes,.specify/ directory + templates + commands,Yes,"uv tool install specify-cli; then specify init; specify check to verify"
+Setup,2,AI Agent,N/A,/speckit.constitution,Create Constitution,Yes,.specify/memory/constitution.md,Yes,Project principles: code quality + testing + security + API consistency
+Per-Feature Cycle,1,AI Agent,N/A,/speckit.specify,Create Specification,Yes,.specify/specs/NNN-[name]/spec.md,Yes,User stories + functional requirements + acceptance criteria
+Per-Feature Cycle,2,AI Agent,N/A,/speckit.clarify,Clarify Requirements,Recommended,Updated spec.md,Yes,Structured questions to fill gaps; tighten requirements
+Per-Feature Cycle,3,AI Agent,N/A,/speckit.plan,Create Technical Plan,Yes,.specify/specs/NNN-[name]/plan.md,Yes,"Architecture decisions, data model, file structure, implementation steps"
+Per-Feature Cycle,4,AI Agent,N/A,/speckit.tasks,Generate Task Breakdown,Yes,.specify/specs/NNN-[name]/tasks.md,Yes,"Ordered, dependency-aware tasks with file paths and parallel markers"
+Per-Feature Cycle,5,AI Agent,N/A,/speckit.implement,Implement Tasks,Yes,Working code + tests,Yes,Executes all tasks in order
+Per-Feature Cycle,6,AI Agent,N/A,/speckit.analyze,Cross-Artifact Analysis,Recommended,Consistency check report,Yes,Used for FR-03 in how-to; checks consistency before implementation

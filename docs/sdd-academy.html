@@ -1,0 +1,3959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDD Academy — Spec-Driven Development Learning Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0d0f14;
+  --bg-secondary: #13161d;
+  --bg-card: #181b24;
+  --bg-card-hover: #1e2230;
+  --bg-elevated: #222639;
+  --accent: #e8734a;
+  --accent-dim: rgba(232,115,74,0.15);
+  --accent-glow: rgba(232,115,74,0.3);
+  --text-primary: #e8e6e3;
+  --text-secondary: #9b9a97;
+  --text-dim: #6b6a67;
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.15);
+  --green: #4ade80;
+  --blue: #60a5fa;
+  --yellow: #fbbf24;
+  --purple: #a78bfa;
+  --red: #f87171;
+  --teal: #2dd4bf;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font); background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+a:hover { opacity: 0.8; }
+code, .mono { font-family: var(--mono); }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+
+/* AUTH GATE */
+#auth-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg-primary);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 2rem;
+}
+#auth-gate .auth-box {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 3rem; text-align: center;
+  max-width: 440px; width: 90%;
+}
+#auth-gate .auth-logo { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.5rem; }
+#auth-gate .auth-logo span { color: var(--accent); }
+#auth-gate .auth-subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem; }
+#auth-gate .auth-btn {
+  background: var(--accent); color: #fff; border: none;
+  padding: 0.875rem 2rem; border-radius: 8px; font-size: 1rem;
+  font-weight: 600; cursor: pointer; width: 100%;
+  transition: all 0.2s; font-family: var(--font);
+}
+#auth-gate .auth-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+#auth-gate .auth-note { color: var(--text-dim); font-size: 0.8rem; margin-top: 1.5rem; }
+#auth-gate .auth-error { color: var(--red); font-size: 0.85rem; margin-top: 1rem; display: none; }
+#auth-gate .auth-skip { color: var(--text-dim); font-size: 0.8rem; margin-top: 1rem; cursor: pointer; text-decoration: underline; }
+#auth-gate .auth-skip:hover { color: var(--text-secondary); }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,15,20,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); padding: 0.75rem 0;
+}
+nav .nav-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+nav .nav-brand { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.03em; display: flex; align-items: center; gap: 0.5rem; }
+nav .nav-brand span { color: var(--accent); }
+nav .nav-badge { font-size: 0.65rem; background: var(--accent-dim); color: var(--accent); padding: 0.2rem 0.5rem; border-radius: 99px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+nav .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+nav .nav-links a { color: var(--text-secondary); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; }
+nav .nav-links a:hover { color: var(--text-primary); }
+@media (max-width: 900px) { nav .nav-links { display: none; } }
+
+/* HERO */
+.hero {
+  padding: 6rem 0 4rem; border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(232,115,74,0.04) 0%, transparent 60%);
+}
+.hero .version { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-dim); background: var(--bg-card); border: 1px solid var(--border); padding: 0.3rem 0.75rem; border-radius: 99px; margin-bottom: 2rem; }
+.hero .version::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 1.5rem; }
+.hero h1 .accent { color: var(--accent); }
+.hero .subtitle { font-size: 1.15rem; color: var(--text-secondary); max-width: 650px; line-height: 1.7; margin-bottom: 3rem; }
+.hero .meta-row { display: flex; gap: 3rem; flex-wrap: wrap; }
+.hero .meta-item { }
+.hero .meta-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.25rem; }
+.hero .meta-value { font-size: 0.95rem; color: var(--text-secondary); }
+
+/* SECTIONS */
+.section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+.section-num { font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 0.75rem; }
+.section-title { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
+.section-desc { color: var(--text-secondary); max-width: 700px; margin-bottom: 3rem; font-size: 1.05rem; line-height: 1.7; }
+
+/* HOW IT WORKS */
+.how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+@media (max-width: 768px) { .how-grid { grid-template-columns: 1fr; } }
+.how-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; transition: all 0.3s; }
+.how-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+.how-card .step-num { font-size: 3rem; font-weight: 900; color: var(--accent); opacity: 0.3; line-height: 1; margin-bottom: 1rem; }
+.how-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+.how-card p { color: var(--text-secondary); font-size: 0.9rem; }
+
+/* METHOD SELECTOR */
+.selector-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
+.selector-q { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; }
+.selector-options { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; }
+.selector-opt {
+  background: var(--bg-secondary); border: 1px solid var(--border);
+  padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer;
+  font-size: 0.9rem; color: var(--text-secondary); transition: all 0.2s;
+  font-family: var(--font);
+}
+.selector-opt:hover { border-color: var(--accent); color: var(--text-primary); }
+.selector-opt.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+#selector-result { display: none; background: var(--bg-elevated); border: 1px solid var(--accent); border-radius: 12px; padding: 2rem; margin-top: 1.5rem; }
+#selector-result h4 { color: var(--accent); margin-bottom: 0.5rem; font-size: 1.1rem; }
+#selector-result .rec-methods { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+#selector-result .rec-tag { background: var(--accent-dim); color: var(--accent); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+#selector-result .rec-tag:hover { background: var(--accent); color: #fff; }
+
+/* METHOD CARDS */
+.methods-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1.5rem; }
+@media (max-width: 768px) { .methods-grid { grid-template-columns: 1fr; } }
+.method-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; transition: all 0.3s;
+}
+.method-card:hover { border-color: var(--border-hover); }
+.method-card .mc-header { padding: 1.5rem 1.5rem 0; }
+.method-card .mc-complexity {
+  display: inline-block; font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 0.75rem;
+}
+.method-card .mc-complexity.high { background: rgba(248,113,113,0.15); color: var(--red); }
+.method-card .mc-complexity.medium { background: rgba(251,191,36,0.15); color: var(--yellow); }
+.method-card .mc-complexity.low { background: rgba(74,222,128,0.15); color: var(--green); }
+.method-card .mc-version { display: inline-block; font-size: 0.7rem; color: var(--teal); background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.2); padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; font-family: var(--mono); vertical-align: middle; }
+.method-card .mc-version a { color: var(--teal); }
+.method-card .mc-name { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.25rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.25rem; }
+.method-card .mc-tagline { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1rem; }
+.method-card .mc-philosophy { font-size: 0.9rem; color: var(--text-secondary); padding: 0 1.5rem; margin-bottom: 1rem; line-height: 1.6; }
+.method-card .mc-stats { display: flex; gap: 1.5rem; padding: 0 1.5rem; margin-bottom: 1rem; }
+.method-card .mc-stat { }
+.method-card .mc-stat-val { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+.method-card .mc-stat-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+.method-card .mc-toggle {
+  display: block; width: 100%; padding: 0.875rem;
+  background: var(--bg-secondary); border: none; border-top: 1px solid var(--border);
+  color: var(--accent); font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font); transition: background 0.2s;
+}
+.method-card .mc-toggle:hover { background: var(--bg-elevated); }
+.method-card .mc-detail { display: none; border-top: 1px solid var(--border); padding: 1.5rem; }
+.method-card .mc-detail.open { display: block; }
+.method-card .mc-detail h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.75rem; margin-top: 1.5rem; }
+.method-card .mc-detail h4:first-child { margin-top: 0; }
+.method-card .mc-detail .agent-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.method-card .mc-detail .agent-item { display: flex; gap: 0.75rem; font-size: 0.85rem; }
+.method-card .mc-detail .agent-name { color: var(--text-primary); font-weight: 600; min-width: 120px; }
+.method-card .mc-detail .agent-role { color: var(--text-secondary); }
+.method-card .mc-detail .cmd-block {
+  background: var(--bg-primary); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem; margin: 0.5rem 0; overflow-x: auto;
+  font-family: var(--mono); font-size: 0.8rem; color: var(--green); line-height: 1.8;
+}
+.method-card .mc-detail .workflow-table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 0.8rem; }
+.method-card .mc-detail .workflow-table th { text-align: left; color: var(--text-dim); font-weight: 600; padding: 0.5rem; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.7rem; }
+.method-card .mc-detail .workflow-table td { padding: 0.5rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+.method-card .mc-detail .workflow-table td:first-child { color: var(--accent); font-weight: 500; white-space: nowrap; }
+.method-card .mc-detail .workflow-table td code { background: var(--bg-primary); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.75rem; color: var(--green); }
+.method-card .mc-detail .z2p-steps { display: flex; flex-direction: column; gap: 0.75rem; }
+.method-card .mc-detail .z2p-step { display: flex; gap: 1rem; align-items: flex-start; }
+.method-card .mc-detail .z2p-num { background: var(--accent); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 0.15rem; }
+.method-card .mc-detail .z2p-content { flex: 1; }
+.method-card .mc-detail .z2p-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.15rem; }
+.method-card .mc-detail .z2p-desc { font-size: 0.8rem; color: var(--text-secondary); }
+.method-card .mc-detail .z2p-cmd { font-family: var(--mono); font-size: 0.75rem; color: var(--green); margin-top: 0.2rem; }
+.method-card .mc-detail .ref-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.method-card .mc-detail .ref-link { background: var(--bg-secondary); border: 1px solid var(--border); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; }
+
+/* PROJECTS */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
+@media (max-width: 768px) { .projects-grid { grid-template-columns: 1fr; } }
+.project-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.75rem; transition: all 0.3s; position: relative;
+}
+.project-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+.project-card .tier {
+  position: absolute; top: 1rem; right: 1rem;
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 0.25rem 0.6rem; border-radius: 4px;
+}
+.project-card .tier.starter { background: rgba(74,222,128,0.15); color: var(--green); }
+.project-card .tier.intermediate { background: rgba(96,165,250,0.15); color: var(--blue); }
+.project-card .tier.advanced { background: rgba(251,191,36,0.15); color: var(--yellow); }
+.project-card .tier.expert { background: rgba(248,113,113,0.15); color: var(--red); }
+.project-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; padding-right: 5rem; }
+.project-card .pc-source { font-size: 0.8rem; color: var(--accent); margin-bottom: 0.75rem; font-family: var(--mono); }
+.project-card .pc-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6; }
+.project-card .pc-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.project-card .pc-meta-item { font-size: 0.8rem; }
+.project-card .pc-meta-label { color: var(--text-dim); }
+.project-card .pc-meta-val { color: var(--text-primary); font-weight: 600; }
+.project-card .pc-challenge { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+.project-card .pc-challenge strong { color: var(--text-primary); }
+
+/* TOOL MATRIX */
+.matrix-wrap { overflow-x: auto; }
+.matrix-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.matrix-table th { text-align: left; padding: 0.75rem; border-bottom: 2px solid var(--border); color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.matrix-table td { padding: 0.75rem; border-bottom: 1px solid var(--border); }
+.matrix-table td:first-child { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+.matrix-table .compat-yes { color: var(--green); font-weight: 600; }
+.matrix-table .compat-partial { color: var(--yellow); }
+.matrix-table .compat-no { color: var(--text-dim); }
+.matrix-table tr:hover td { background: var(--bg-card); }
+
+/* PLAYBOOK */
+.playbook-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
+@media (max-width: 768px) { .playbook-grid { grid-template-columns: 1fr; } }
+.playbook-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; transition: all 0.3s; }
+.playbook-card:hover { border-color: var(--border-hover); }
+.playbook-card .pb-icon { font-size: 2rem; margin-bottom: 1rem; }
+.playbook-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
+.playbook-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.6; }
+.playbook-card .pb-steps { font-size: 0.85rem; color: var(--text-secondary); }
+.playbook-card .pb-steps li { margin-bottom: 0.5rem; list-style: none; padding-left: 1.2rem; position: relative; }
+.playbook-card .pb-steps li::before { content: ''; position: absolute; left: 0; top: 0.5rem; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+/* FOOTER */
+footer { padding: 3rem 0; text-align: center; border-top: 1px solid var(--border); }
+footer .footer-brand { font-weight: 800; font-size: 1.2rem; margin-bottom: 0.5rem; }
+footer .footer-brand span { color: var(--accent); }
+footer .footer-note { color: var(--text-dim); font-size: 0.8rem; }
+
+/* DETAIL OVERLAY */
+#method-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.85); overflow-y: auto;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+#method-overlay .overlay-inner {
+  max-width: 960px; margin: 2rem auto; padding: 2.5rem;
+  background: var(--bg-secondary); border: 1px solid var(--border);
+  border-radius: 16px; position: relative; min-height: calc(100vh - 4rem);
+}
+#method-overlay .overlay-close {
+  position: sticky; top: 0; z-index: 10; float: right;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-primary); width: 40px; height: 40px;
+  border-radius: 8px; font-size: 1.2rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+#method-overlay .overlay-close:hover { background: var(--accent); color: #fff; }
+#method-overlay .overlay-tabs {
+  display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border); padding-bottom: 1rem;
+}
+#method-overlay .overlay-tab {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 8px;
+  cursor: pointer; font-size: 0.85rem; font-weight: 500; font-family: var(--font);
+  transition: all 0.2s;
+}
+#method-overlay .overlay-tab:hover { border-color: var(--accent); color: var(--text-primary); }
+#method-overlay .overlay-tab.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+#method-overlay .overlay-content { }
+#method-overlay .overlay-content h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+#method-overlay .overlay-content h3 { font-size: 1.2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--accent); }
+#method-overlay .overlay-content h4 { font-size: 1rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+#method-overlay .overlay-content h5 { font-size: 0.9rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
+#method-overlay .overlay-content p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.75rem; font-size: 0.9rem; }
+#method-overlay .overlay-content ul, #method-overlay .overlay-content ol { color: var(--text-secondary); padding-left: 1.5rem; margin-bottom: 1rem; font-size: 0.9rem; line-height: 1.8; }
+#method-overlay .overlay-content li { margin-bottom: 0.3rem; }
+#method-overlay .overlay-content code { background: var(--bg-primary); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.8rem; color: var(--green); font-family: var(--mono); }
+#method-overlay .overlay-content strong { color: var(--text-primary); }
+#method-overlay .overlay-content .cmd-block {
+  background: var(--bg-primary); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem; margin: 0.75rem 0; overflow-x: auto;
+  font-family: var(--mono); font-size: 0.8rem; color: var(--green); line-height: 1.8;
+}
+#method-overlay .overlay-content .workflow-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.8rem; }
+#method-overlay .overlay-content .workflow-table th { text-align: left; color: var(--accent); font-weight: 600; padding: 0.6rem; border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.7rem; white-space: nowrap; }
+#method-overlay .overlay-content .workflow-table td { padding: 0.6rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+#method-overlay .overlay-content .workflow-table td:nth-child(1) { color: var(--text-dim); font-size: 0.75rem; }
+#method-overlay .overlay-content .workflow-table td:nth-child(3) { color: var(--text-primary); font-weight: 500; }
+#method-overlay .overlay-content .workflow-table td code { font-size: 0.75rem; }
+#method-overlay .overlay-content .workflow-table tr:hover td { background: rgba(255,255,255,0.02); }
+.mc-fullguide {
+  display: block; width: 100%; padding: 0.75rem;
+  background: var(--accent-dim); border: none; border-top: 1px solid var(--border);
+  color: var(--accent); font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font); transition: background 0.2s;
+}
+.mc-fullguide:hover { background: var(--accent); color: #fff; }
+
+/* UTILITIES */
+.tag { display: inline-block; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 500; }
+.phase-tag { background: var(--bg-elevated); color: var(--text-secondary); border: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<!-- AUTH GATE -->
+<div id="auth-gate">
+  <div class="auth-box">
+    <div class="auth-logo">SDD <span>Academy</span></div>
+    <div class="auth-subtitle">Spec-Driven Development Learning Hub<br>Restricted to CI&T team members</div>
+    <button class="auth-btn" onclick="handleNeonAuth()">Sign in with Google (@ciandt.com)</button>
+    <div class="auth-error" id="auth-error">Access denied. Only @ciandt.com accounts are allowed.</div>
+    <div class="auth-note">Powered by Neon Auth &mdash; your email must end in @ciandt.com</div>
+    <div class="auth-skip" onclick="skipAuth()">Dev mode: skip auth for local testing</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">SDD <span>Academy</span> <span class="nav-badge">v1.0 &middot; 2026</span></div>
+    <div class="nav-links">
+      <a href="#how-it-works">How It Works</a>
+      <a href="#selector">Selector</a>
+      <a href="#methods">Methods</a>
+      <a href="#projects">Projects</a>
+      <a href="#tools">Tools</a>
+      <a href="#playbook">Playbook</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="version">SDD Academy &middot; v1.0 &middot; 2026</div>
+    <h1>Spec-Driven<br><span class="accent">Development</span><br>Academy</h1>
+    <p class="subtitle">A self-learning hub for CI&T's 350+ team members. Pick a method, pick a project, build it yourself. Lean thinking meets AI-assisted execution.</p>
+    <div class="meta-row">
+      <div class="meta-item"><div class="meta-label">Designed For</div><div class="meta-value">CI&T engineering teams using AI-assisted development</div></div>
+      <div class="meta-item"><div class="meta-label">Methods</div><div class="meta-value">9 spec-driven methodologies, compared and documented</div></div>
+      <div class="meta-item"><div class="meta-label">Philosophy</div><div class="meta-value">Lean thinking &middot; PMI structures &middot; Agile methodologies</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="container">
+    <div class="section-num">01 &mdash; How It Works</div>
+    <h2 class="section-title">Pick a method. Pick a project. Build it.</h2>
+    <p class="section-desc">Three steps to learn spec-driven development by doing. No lectures, no theory-only sessions. You learn by building real systems against real databases using the method of your choice.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="step-num">01</div>
+        <h3>Choose a Method</h3>
+        <p>Browse the 9 SDD methods below, or use the Method Selector to find the best fit for your project type, team size, and experience level. Each method has a complete "From Zero to Prod" guide.</p>
+      </div>
+      <div class="how-card">
+        <div class="step-num">02</div>
+        <h3>Choose a Project</h3>
+        <p>Pick one of 10 sample databases from Neon (from a simple 118-row Periodic Table to a 6.7GB flight booking system). Each comes with a project definition and challenge description.</p>
+      </div>
+      <div class="how-card">
+        <div class="step-num">03</div>
+        <h3>Build It Yourself</h3>
+        <p>Use any AI-assisted IDE (Cursor, Claude Code, Copilot, Cline, Windsurf, or others). The instructions are tool-agnostic. Follow the method's workflow, build the project, and share your results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 METHOD SELECTOR -->
+<section class="section" id="selector">
+  <div class="container">
+    <div class="section-num">02 &mdash; Method Selector</div>
+    <h2 class="section-title">Find your method</h2>
+    <p class="section-desc">Answer three questions and get a personalized recommendation. Not sure where to start? Let the selector guide you.</p>
+    <div class="selector-container">
+      <div class="selector-q">What's your project size?</div>
+      <div class="selector-options" id="q1">
+        <button class="selector-opt" data-q="1" data-v="small" onclick="selectOpt(this)">Small feature / bug fix</button>
+        <button class="selector-opt" data-q="1" data-v="medium" onclick="selectOpt(this)">Medium feature / module</button>
+        <button class="selector-opt" data-q="1" data-v="large" onclick="selectOpt(this)">Full product / platform</button>
+      </div>
+      <div class="selector-q">How much structure do you want?</div>
+      <div class="selector-options" id="q2">
+        <button class="selector-opt" data-q="2" data-v="minimal" onclick="selectOpt(this)">Minimal &mdash; just get it done</button>
+        <button class="selector-opt" data-q="2" data-v="moderate" onclick="selectOpt(this)">Moderate &mdash; specs + plan + build</button>
+        <button class="selector-opt" data-q="2" data-v="heavy" onclick="selectOpt(this)">Heavy &mdash; PRD, architecture, ADRs, gates</button>
+      </div>
+      <div class="selector-q">What matters most to you?</div>
+      <div class="selector-options" id="q3">
+        <button class="selector-opt" data-q="3" data-v="speed" onclick="selectOpt(this)">Speed &mdash; ship fast</button>
+        <button class="selector-opt" data-q="3" data-v="quality" onclick="selectOpt(this)">Quality &mdash; TDD, reviews, gates</button>
+        <button class="selector-opt" data-q="3" data-v="flexibility" onclick="selectOpt(this)">Flexibility &mdash; iterate freely</button>
+        <button class="selector-opt" data-q="3" data-v="governance" onclick="selectOpt(this)">Governance &mdash; audit trail, decisions</button>
+      </div>
+      <div id="selector-result">
+        <h4>Recommended methods for you:</h4>
+        <p id="selector-reason"></p>
+        <div class="rec-methods" id="selector-methods"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 METHODS -->
+<section class="section" id="methods">
+  <div class="container">
+    <div class="section-num">03 &mdash; Methods</div>
+    <h2 class="section-title">9 Spec-Driven Development Methods</h2>
+    <p class="section-desc">Each card contains the full method reference: philosophy, agents, workflow, setup commands, "From Zero to Prod" guide, and references. Click "Expand" to explore.</p>
+    <div class="methods-grid" id="methods-grid">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- 04 PROJECTS -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-num">04 &mdash; Projects</div>
+    <h2 class="section-title">10 Practice Projects</h2>
+    <p class="section-desc">Each project uses a real Neon Postgres sample database. Pick your complexity tier: starter (1-2 hours), intermediate (2-4 hours), advanced (4-8 hours), or expert (full day+). All projects connect to Neon's free tier.</p>
+    <div class="projects-grid" id="projects-grid">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- 05 TOOL MATRIX -->
+<section class="section" id="tools">
+  <div class="container">
+    <div class="section-num">05 &mdash; Tool Compatibility</div>
+    <h2 class="section-title">Method &times; Tool Matrix</h2>
+    <p class="section-desc">Not all methods work with all tools. This matrix shows compatibility so you can pick the right combination. Instructions are tool-agnostic, but setup commands may differ.</p>
+    <div class="matrix-wrap">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Claude Code</th>
+            <th>Cursor</th>
+            <th>Windsurf</th>
+            <th>Copilot (VS Code)</th>
+            <th>Cline</th>
+            <th>Antigravity</th>
+            <th>Aider</th>
+            <th>Continue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>BMAD</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-no">Limited</td><td class="compat-no">Limited</td></tr>
+          <tr><td>Spec-Kit</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-no">Limited</td><td class="compat-no">Limited</td></tr>
+          <tr><td>GSD</td><td class="compat-yes">Full</td><td class="compat-partial">Partial</td><td class="compat-no">Limited</td><td class="compat-no">Limited</td><td class="compat-partial">Partial</td><td class="compat-no">Limited</td><td class="compat-no">Limited</td><td class="compat-no">Limited</td></tr>
+          <tr><td>OpenSpec</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-no">Limited</td><td class="compat-no">Limited</td></tr>
+          <tr><td>AI-SDD</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-no">Limited</td><td class="compat-no">Limited</td></tr>
+          <tr><td>SpecPulse</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td></tr>
+          <tr><td>Spec-Workflow-MCP</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-no">No MCP</td><td class="compat-partial">Partial</td><td class="compat-no">No MCP</td><td class="compat-no">No MCP</td><td class="compat-no">No MCP</td></tr>
+          <tr><td>ANWS</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td><td class="compat-no">Limited</td><td class="compat-no">Limited</td></tr>
+          <tr><td>Taskmaster</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-yes">Full</td><td class="compat-partial">Partial</td><td class="compat-partial">Partial</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1.5rem; font-size:0.8rem; color:var(--text-dim);">
+      <strong style="color:var(--green)">Full</strong> = native slash commands or CLI work directly &nbsp;|&nbsp;
+      <strong style="color:var(--yellow)">Partial</strong> = works via .claude/commands or manual adaptation &nbsp;|&nbsp;
+      <strong style="color:var(--text-dim)">Limited/No MCP</strong> = requires workarounds or not supported
+    </div>
+
+    <h3 style="margin-top:3rem; font-size:1.3rem; font-weight:700; margin-bottom:1.5rem;">AI-Assisted IDEs &amp; Tools Reference</h3>
+    <div class="methods-grid">
+      <div class="how-card">
+        <h3 style="margin-bottom:0.5rem;">Cursor</h3>
+        <p>AI-first code editor built on VS Code. Native Composer for multi-file edits, .cursor/rules for project context, MCP support. Best for visual developers who want IDE integration.</p>
+        <a href="https://cursor.com" style="font-size:0.85rem; display:block; margin-top:0.75rem;">cursor.com</a>
+      </div>
+      <div class="how-card">
+        <h3 style="margin-bottom:0.5rem;">Claude Code</h3>
+        <p>Anthropic's CLI agent for agentic coding. Terminal-first, supports slash commands, MCP servers, CLAUDE.md project context. Best for developers who prefer terminal workflows.</p>
+        <a href="https://docs.anthropic.com/en/docs/claude-code" style="font-size:0.85rem; display:block; margin-top:0.75rem;">docs.anthropic.com</a>
+      </div>
+      <div class="how-card">
+        <h3 style="margin-bottom:0.5rem;">GitHub Copilot</h3>
+        <p>GitHub's AI pair programmer. Works in VS Code, JetBrains, Neovim. Inline completions and chat. Wide language support. Best for teams already in the GitHub ecosystem.</p>
+        <a href="https://github.com/features/copilot" style="font-size:0.85rem; display:block; margin-top:0.75rem;">github.com/features/copilot</a>
+      </div>
+      <div class="how-card">
+        <h3 style="margin-bottom:0.5rem;">Windsurf</h3>
+        <p>Codeium's AI IDE (formerly Codeium Editor). Cascade for multi-file flows, MCP support, agent mode. Good balance of visual IDE and agentic capabilities.</p>
+        <a href="https://codeium.com/windsurf" style="font-size:0.85rem; display:block; margin-top:0.75rem;">codeium.com/windsurf</a>
+      </div>
+      <div class="how-card">
+        <h3 style="margin-bottom:0.5rem;">Cline</h3>
+        <p>Open-source autonomous coding agent for VS Code. Supports Claude, GPT, Gemini, and local models. MCP support, file creation, terminal commands. Best for open-source advocates.</p>
+        <a href="https://github.com/cline/cline" style="font-size:0.85rem; display:block; margin-top:0.75rem;">github.com/cline/cline</a>
+      </div>
+      <div class="how-card">
+        <h3 style="margin-bottom:0.5rem;">Antigravity</h3>
+        <p>AI coding platform focused on large-scale codebases. Context engine for repository understanding. Ideal for enterprise teams working with monorepos and complex architectures.</p>
+        <a href="https://antigravity.dev" style="font-size:0.85rem; display:block; margin-top:0.75rem;">antigravity.dev</a>
+      </div>
+      <div class="how-card">
+        <h3 style="margin-bottom:0.5rem;">Aider</h3>
+        <p>Open-source CLI pair programming tool. Git-aware, supports many LLMs, conversational editing. Lightweight and scriptable. Best for developers who want minimal tooling overhead.</p>
+        <a href="https://aider.chat" style="font-size:0.85rem; display:block; margin-top:0.75rem;">aider.chat</a>
+      </div>
+      <div class="how-card">
+        <h3 style="margin-bottom:0.5rem;">Continue</h3>
+        <p>Open-source AI code assistant for VS Code and JetBrains. Custom model support, context providers, slash commands. Best for teams wanting full control over their AI stack.</p>
+        <a href="https://continue.dev" style="font-size:0.85rem; display:block; margin-top:0.75rem;">continue.dev</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 TEAM LEADER PLAYBOOK -->
+<section class="section" id="playbook">
+  <div class="container">
+    <div class="section-num">06 &mdash; Team Leader Playbook</div>
+    <h2 class="section-title">Rollout Strategies for Team Leaders</h2>
+    <p class="section-desc">Six proven strategies for team leaders to drive SDD adoption across their squads. Mix and match based on your team's culture and learning style.</p>
+    <div class="playbook-grid">
+      <div class="playbook-card">
+        <div class="pb-icon">&#9876;</div>
+        <h3>Method Deathmatch</h3>
+        <p>Two team members pick different methods, same Neon database, same time limit. They compare results using the scoring rubric. Creates engagement and real comparative data.</p>
+        <ul class="pb-steps">
+          <li>Pair two developers with different experience levels</li>
+          <li>Both pick the same Neon database project</li>
+          <li>Each picks a different SDD method</li>
+          <li>Timebox to 4 hours</li>
+          <li>Present results: working code, specs quality, and lessons learned</li>
+          <li>Team votes on "most productive method" for that project type</li>
+        </ul>
+      </div>
+      <div class="playbook-card">
+        <div class="pb-icon">&#128218;</div>
+        <h3>Method of the Month</h3>
+        <p>Focus on one SDD method per month. That month's method gets a Slack channel, a weekly office-hours call, and a challenge. By month 9, you have organic champions.</p>
+        <ul class="pb-steps">
+          <li>Month 1: Start with OpenSpec or SpecPulse (easiest onramp)</li>
+          <li>Create #sdd-[method-name] Slack channel</li>
+          <li>Weekly 30-min office hours with early adopters</li>
+          <li>End-of-month showcase: 3 best implementations presented to team</li>
+          <li>Rotate to next method and carry forward champions</li>
+        </ul>
+      </div>
+      <div class="playbook-card">
+        <div class="pb-icon">&#127891;</div>
+        <h3>Teach-Back Sessions</h3>
+        <p>After someone completes a method+project combo, they present a 15-minute teach-back to their squad. Teaching is the fastest path to mastery.</p>
+        <ul class="pb-steps">
+          <li>Developer completes a method + project combination</li>
+          <li>Prepares 15-min presentation: what worked, what didn't, key learnings</li>
+          <li>Shows their repo: spec artifacts, code structure, test coverage</li>
+          <li>Team asks questions and discusses applicability to current projects</li>
+          <li>Add insights to the team's internal knowledge base</li>
+        </ul>
+      </div>
+      <div class="playbook-card">
+        <div class="pb-icon">&#127942;</div>
+        <h3>SDD Leaderboard</h3>
+        <p>Opt-in leaderboard showing completions per team member. Three completed method+project combos = "SDD Practitioner". Gamify the learning path.</p>
+        <ul class="pb-steps">
+          <li>Define tiers: Explorer (1 combo), Practitioner (3), Expert (6), Master (9)</li>
+          <li>Track completions with GitHub repo submissions</li>
+          <li>Monthly recognition in team all-hands</li>
+          <li>SDD Masters become mentors for newcomers</li>
+          <li>Aggregate data to identify which methods work best for your team</li>
+        </ul>
+      </div>
+      <div class="playbook-card">
+        <div class="pb-icon">&#128640;</div>
+        <h3>Challenge of the Week</h3>
+        <p>Weekly micro-challenge: a specific method + database + constraint (e.g., "Build a REST API for Chinook using TDD in AI-SDD, timebox 3 hours"). Creates social momentum.</p>
+        <ul class="pb-steps">
+          <li>Post challenge every Monday in #sdd-academy channel</li>
+          <li>Include: method, database, constraint, timebox</li>
+          <li>Developers share repos by Friday</li>
+          <li>Monday review: quick walkthrough of 2-3 submissions</li>
+          <li>Best solution gets "SDD Pick of the Week"</li>
+        </ul>
+      </div>
+      <div class="playbook-card">
+        <div class="pb-icon">&#128736;</div>
+        <h3>Real Project Pilot</h3>
+        <p>After the team tries 2-3 methods on practice projects, pick one method and apply it to a real client sprint. Nothing validates learning like production use.</p>
+        <ul class="pb-steps">
+          <li>Select a low-risk feature in a real client project</li>
+          <li>Team votes on which method to pilot</li>
+          <li>Assign an SDD Expert as the "method coach" for the sprint</li>
+          <li>Run a retro: compare spec quality, build time, defect rate vs. previous sprints</li>
+          <li>Document findings as an internal case study</li>
+          <li>Share results at team all-hands for broader adoption</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-brand">SDD <span>Academy</span></div>
+    <div class="footer-note">Built for CI&T engineering teams &middot; Lean thinking &middot; Spec-driven development &middot; AI-assisted execution<br>&copy; 2026 CI&T &middot; Hosted on GitHub Pages &middot; Powered by Neon Auth</div>
+  </div>
+</footer>
+
+<!-- METHOD DETAIL OVERLAY -->
+<div id="method-overlay" onclick="if(event.target===this)closeOverlay()">
+  <div class="overlay-inner">
+    <button class="overlay-close" onclick="closeOverlay()">&times;</button>
+    <div class="overlay-tabs" id="overlay-tabs"></div>
+    <div class="overlay-content" id="overlay-content"></div>
+  </div>
+</div>
+
+</div><!-- end #app -->
+
+<script>
+// ===== NEON AUTH =====
+// CONFIGURATION: Replace these with your Neon Auth / Stack Auth credentials
+const NEON_AUTH_CONFIG = {
+  projectId: 'YOUR_NEON_AUTH_PROJECT_ID',  // From Neon Auth dashboard
+  publishableClientKey: 'YOUR_PUBLISHABLE_CLIENT_KEY',
+  allowedDomain: 'ciandt.com'
+};
+
+async function handleNeonAuth() {
+  // If Stack Auth SDK is loaded, use it
+  if (window.StackAuth) {
+    try {
+      const result = await window.StackAuth.signInWithOAuth('google');
+      if (result.user && result.user.email && result.user.email.endsWith('@' + NEON_AUTH_CONFIG.allowedDomain)) {
+        document.getElementById('auth-gate').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+      } else {
+        document.getElementById('auth-error').style.display = 'block';
+      }
+    } catch(e) {
+      console.error('Auth error:', e);
+      document.getElementById('auth-error').style.display = 'block';
+      document.getElementById('auth-error').textContent = 'Auth error: ' + e.message + '. Use dev mode to skip.';
+    }
+  } else {
+    // Fallback: Show configuration instructions
+    document.getElementById('auth-error').style.display = 'block';
+    document.getElementById('auth-error').innerHTML = 'Neon Auth not configured yet. Set up your project at <a href="https://neon.com/docs/guides/neon-auth" target="_blank" style="color:var(--accent)">neon.com/docs/guides/neon-auth</a>, then add your project ID to this file. Use "Dev mode" below to preview the site.';
+  }
+}
+
+function skipAuth() {
+  document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// ===== METHOD SELECTOR =====
+const selectorState = {};
+function selectOpt(el) {
+  const q = el.dataset.q;
+  const v = el.dataset.v;
+  selectorState['q'+q] = v;
+  el.parentElement.querySelectorAll('.selector-opt').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (selectorState.q1 && selectorState.q2 && selectorState.q3) showRecommendation();
+}
+
+function showRecommendation() {
+  const {q1,q2,q3} = selectorState;
+  const scores = {bmad:0,'spec-kit':0,gsd:0,openspec:0,'ai-sdd':0,specpulse:0,'spec-workflow-mcp':0,anws:0,taskmaster:0};
+  // Size
+  if(q1==='small'){scores.openspec+=3;scores['spec-workflow-mcp']+=3;scores.specpulse+=2;scores['spec-kit']+=2;}
+  if(q1==='medium'){scores['spec-kit']+=3;scores.specpulse+=3;scores.openspec+=2;scores['ai-sdd']+=2;scores.taskmaster+=2;scores['spec-workflow-mcp']+=2;}
+  if(q1==='large'){scores.bmad+=3;scores.gsd+=3;scores.anws+=3;scores.taskmaster+=2;scores['ai-sdd']+=2;}
+  // Structure
+  if(q2==='minimal'){scores.openspec+=3;scores['spec-workflow-mcp']+=3;scores.specpulse+=2;}
+  if(q2==='moderate'){scores['spec-kit']+=3;scores.specpulse+=3;scores['ai-sdd']+=2;scores.taskmaster+=2;scores['spec-workflow-mcp']+=2;}
+  if(q2==='heavy'){scores.bmad+=3;scores.anws+=3;scores.gsd+=2;scores['ai-sdd']+=2;scores.taskmaster+=2;}
+  // Priority
+  if(q3==='speed'){scores.openspec+=3;scores.gsd+=3;scores['spec-workflow-mcp']+=2;scores.specpulse+=2;}
+  if(q3==='quality'){scores['ai-sdd']+=3;scores.bmad+=2;scores.anws+=2;scores['spec-kit']+=2;}
+  if(q3==='flexibility'){scores.openspec+=3;scores.specpulse+=2;scores['spec-workflow-mcp']+=2;scores['spec-kit']+=2;}
+  if(q3==='governance'){scores.anws+=3;scores.bmad+=3;scores.taskmaster+=2;scores['ai-sdd']+=2;}
+
+  const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const top = sorted.slice(0,3);
+  const names = {bmad:'BMAD','spec-kit':'Spec-Kit',gsd:'GSD',openspec:'OpenSpec','ai-sdd':'AI-SDD',specpulse:'SpecPulse','spec-workflow-mcp':'Spec-Workflow-MCP',anws:'ANWS',taskmaster:'Taskmaster'};
+  const el = document.getElementById('selector-result');
+  el.style.display='block';
+  document.getElementById('selector-reason').textContent = 'Based on your answers (' + q1 + ' project, ' + q2 + ' structure, ' + q3 + ' priority):';
+  document.getElementById('selector-methods').innerHTML = top.map(([id,sc]) => '<span class="rec-tag" onclick="scrollToMethod(\''+id+'\')">'+names[id]+' (score: '+sc+')</span>').join('');
+}
+
+function scrollToMethod(id) {
+  const el = document.getElementById('method-'+id);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.borderColor='var(--accent)';setTimeout(()=>{el.style.borderColor='';},2000);}
+}
+
+// ===== METHODS DATA & RENDERING =====
+const methodsData = [
+  {id:"bmad",name:"BMAD Method",version:"latest",versionApi:"https://api.github.com/repos/bmad-code-org/BMAD-METHOD/releases/latest",tagline:"Multi-agent role-play with scale-adaptive intelligence workflow",repo:"https://github.com/bmad-code-org/BMAD-METHOD",philosophy:"BMAD uses specialized agent personas (PM, Architect, Dev, Scrum Master) with progressive context building across 4 phases. Each phase produces documents that inform the next. Supports quick flow for simple work or full method for complex products.",complexity:"high",totalSteps:37,bestFor:"Complex products requiring structured planning, UX design, and multi-story implementation with cross-functional coordination.",phases:["Analysis","Planning","Solutioning","Implementation"],
+    agents:[{n:"Analyst (Mary)",r:"Brainstorming, research"},{n:"PM (John)",r:"PRD, epics, stories"},{n:"Architect (Winston)",r:"Architecture, ADRs"},{n:"Scrum Master (Bob)",r:"Sprint planning"},{n:"Developer (Amelia)",r:"Story implementation"},{n:"QA (Quinn)",r:"Test automation"},{n:"UX Designer (Sally)",r:"UX design"}],
+    setup:["npx bmad-method install","# Select: Claude Code + All modules"],
+    z2p:[{s:1,t:"Install BMAD",d:"npx bmad-method install — select AI tool and modules",c:"npx bmad-method install"},{s:2,t:"Create PRD",d:"Cover ALL features in a comprehensive product requirements doc",c:"bmad-create-prd"},{s:3,t:"Create Architecture",d:"Design tech stack, data model, API contracts, and ADRs",c:"bmad-create-architecture"},{s:4,t:"Break into Epics & Stories",d:"Decompose requirements into implementable stories",c:"bmad-create-epics-and-stories"},{s:5,t:"Check Readiness",d:"Validate all planning docs are cohesive",c:"bmad-check-implementation-readiness"},{s:6,t:"Implement Stories",d:"For each: create story, implement, code review, commit",c:"bmad-dev-story"},{s:7,t:"Release",d:"Create PR, merge, tag version",c:"gh pr create"}],
+    refs:["https://github.com/bmad-code-org/BMAD-METHOD"]},
+  {id:"spec-kit",name:"Spec-Kit",version:"latest",versionApi:"https://api.github.com/repos/github/spec-kit/releases/latest",tagline:"Constitution-first spec-driven development with multi-step refinement",repo:"https://github.com/github/spec-kit",philosophy:"Specs as the source of truth before implementation. Constitution files define principles that guide everything. Multi-step refinement ensures requirements are properly clarified before planning.",complexity:"medium",totalSteps:10,bestFor:"Feature development with strong specs, validation, and cross-artifact consistency.",phases:["Constitution","Specify","Clarify","Plan","Tasks","Implement"],
+    agents:[{n:"AI Agent",r:"Spec creation, planning, task generation, implementation"}],
+    setup:["uv tool install specify-cli --from git+https://github.com/github/spec-kit.git","specify init . --ai claude"],
+    z2p:[{s:1,t:"Install & Init",d:"Use uv to install specify-cli, initialize project",c:"specify init . --ai claude"},{s:2,t:"Create Constitution",d:"Define project principles: quality, testing, security",c:"/speckit.constitution"},{s:3,t:"Write Spec",d:"Create comprehensive feature spec with user stories",c:"/speckit.specify"},{s:4,t:"Clarify",d:"Answer structured questions to fill gaps",c:"/speckit.clarify"},{s:5,t:"Plan",d:"Architecture decisions, data models, file structure",c:"/speckit.plan"},{s:6,t:"Tasks & Implement",d:"Generate tasks, then implement sequentially",c:"/speckit.tasks && /speckit.implement"},{s:7,t:"Analyze & Release",d:"Cross-artifact consistency check, commit",c:"/speckit.analyze"}],
+    refs:["https://github.com/github/spec-kit"]},
+  {id:"gsd",name:"Get-Shit-Done (GSD)",version:"latest",versionApi:"https://api.github.com/repos/gsd-build/get-shit-done/releases/latest",tagline:"Anti-context-rot with fresh contexts, parallel waves, and meta-prompting",repo:"https://github.com/gsd-build/get-shit-done",philosophy:"Prevents context loss with fresh 200k-token contexts per task. Parallel wave execution speeds delivery. Structured meta-prompting with research, planning, execution, verification.",complexity:"high",totalSteps:31,bestFor:"Large projects requiring parallel execution, brownfield codebases, and strict quality validation.",phases:["Discovery","Discussion","Planning","Execution","Verification","Release"],
+    agents:[{n:"Orchestrator",r:"Project-level workflow coordination"},{n:"Research Agents",r:"Domain research"},{n:"Planner",r:"Atomic task planning in XML"},{n:"Executors",r:"Fresh-context parallel task execution"},{n:"Verifier",r:"Deliverable validation"}],
+    setup:["npx get-shit-done-cc@latest","# Select: Claude Code as runtime"],
+    z2p:[{s:1,t:"Install & Discover",d:"Install GSD, run new-project for discovery and roadmapping",c:"npx get-shit-done-cc@latest && /gsd:new-project"},{s:2,t:"Discuss Phase",d:"Surface gray areas and capture decisions",c:"/gsd:discuss-phase 1"},{s:3,t:"Plan with Research",d:"Spawn parallel research agents, create atomic XML plans",c:"/gsd:plan-phase 1"},{s:4,t:"Execute in Waves",d:"Fresh 200k contexts per task, parallel wave grouping",c:"/gsd:execute-phase 1"},{s:5,t:"Verify Deliverables",d:"Walk through UAT items, debug agents for failures",c:"/gsd:verify-work 1"},{s:6,t:"Ship as PR",d:"Auto-generated PR body from phase summaries",c:"/gsd:ship 1"},{s:7,t:"Complete & Repeat",d:"Complete milestone, start next cycle",c:"/gsd:complete-milestone"}],
+    refs:["https://github.com/gsd-build/get-shit-done"]},
+  {id:"openspec",name:"OpenSpec",version:"latest",versionApi:"https://api.github.com/repos/Fission-AI/OpenSpec/releases/latest",tagline:"Fluid, iterative, artifact-guided workflow with change folders",repo:"https://github.com/Fission-AI/OpenSpec/",philosophy:"Structured change folders for each feature containing proposal, specs, design, and tasks. Fluid workflow — update any artifact anytime. Designed for both greenfield and brownfield.",complexity:"medium",totalSteps:8,bestFor:"Iterative development with frequent artifact review, brownfield projects requiring focused change management.",phases:["Propose","Review","Apply","Verify","Archive"],
+    agents:[{n:"AI Agent",r:"Artifact generation, implementation, verification"}],
+    setup:["npm install -g @fission-ai/openspec@latest","openspec init"],
+    z2p:[{s:1,t:"Install & Init",d:"Install OpenSpec globally, initialize project",c:"openspec init"},{s:2,t:"Propose Feature",d:"Generate complete change folder with all artifacts in one pass",c:"/opsx:propose feature-name \"description\""},{s:3,t:"Review Artifacts",d:"Read and edit proposal.md, specs/, design.md, tasks.md",c:"Manual review"},{s:4,t:"Implement",d:"Read tasks and implement each sequentially",c:"/opsx:apply"},{s:5,t:"Verify",d:"Validate implementation matches design and requirements",c:"/opsx:verify"},{s:6,t:"Archive & Commit",d:"Archive completed change, commit and tag",c:"/opsx:archive"}],
+    refs:["https://github.com/Fission-AI/OpenSpec/"]},
+  {id:"ai-sdd",name:"AI-SDD",version:"latest",versionApi:null,tagline:"Spec-as-source-of-truth with TDD and Director-Executor-Contract model",repo:"https://ai-sdd.com/",philosophy:"Specifications as the source of truth with a Director-Executor-Contract model. You provide intent and constraints, AI implements within boundaries. TDD integrated throughout.",complexity:"high",totalSteps:10,bestFor:"Projects requiring strict spec compliance, Test-Driven Development, and clear contracts between specs and implementation.",phases:["Steering","Spec Init","Requirements","Design","Tasks","Implement (TDD)"],
+    agents:[{n:"AI Agent",r:"Spec creation, design, task generation, TDD implementation"}],
+    setup:["npx ai-sdd","# Initialize steering context"],
+    z2p:[{s:1,t:"Install & Steer",d:"Install AI-SDD, establish project context",c:"npx ai-sdd && /sdd:steering"},{s:2,t:"Init Feature Spec",d:"Initialize feature specification",c:"/sdd:spec-init \"description\""},{s:3,t:"Requirements Gate",d:"Gather requirements, get approval",c:"/sdd:spec-requirements"},{s:4,t:"Design & Validate",d:"Create design, validate consistency",c:"/sdd:spec-design && /sdd:validate-design"},{s:5,t:"Generate Tasks",d:"Break design into ordered tasks",c:"/sdd:spec-tasks"},{s:6,t:"Implement with TDD",d:"Red-green-refactor cycle for each task",c:"/sdd:spec-impl"},{s:7,t:"Release",d:"Commit all features, create release tag",c:"git tag v1.0.0"}],
+    refs:["https://ai-sdd.com/"]},
+  {id:"specpulse",name:"SpecPulse",version:"latest",versionApi:"https://api.github.com/repos/specpulse/specpulse/releases/latest",tagline:"CLI-first with 11 identical commands across 8 AI platforms",repo:"https://github.com/specpulse/specpulse",philosophy:"CLI-first tool with AI enhancement. Identical commands work across 8 AI platforms. MoSCoW prioritization breaks tasks into priority levels. Specs before code.",complexity:"medium",totalSteps:11,bestFor:"Multi-platform AI development, feature workflows with clear MoSCoW prioritization.",phases:["Pulse","Spec","Clarify","Plan","Task","Execute","Validate"],
+    agents:[{n:"AI Agent",r:"Spec, planning, task generation, implementation, validation"}],
+    setup:["pip install specpulse","specpulse init my-project --ai claude"],
+    z2p:[{s:1,t:"Install & Init",d:"Install with pip, initialize project",c:"pip install specpulse && specpulse init my-project --ai claude"},{s:2,t:"Start Feature",d:"Initialize feature tracking directory",c:"/sp-pulse feature-name"},{s:3,t:"Create Spec",d:"Comprehensive spec with requirements, API, data models",c:"/sp-spec \"description\""},{s:4,t:"Plan & Task",d:"Generate plan, break into MoSCoW-prioritized tasks",c:"/sp-plan && /sp-task"},{s:5,t:"Execute",d:"Continuous task execution loop",c:"/sp-execute"},{s:6,t:"Validate & Check",d:"Validate against spec, check progress",c:"/sp-validate && /sp-status"},{s:7,t:"Release",d:"Commit and tag release",c:"git tag v1.0.0"}],
+    refs:["https://github.com/specpulse/specpulse"]},
+  {id:"spec-workflow-mcp",name:"Spec-Workflow-MCP",version:"latest",versionApi:"https://api.github.com/repos/Pimzino/spec-workflow-mcp/releases/latest",tagline:"MCP-native conversational interface with real-time web dashboard",repo:"https://github.com/Pimzino/spec-workflow-mcp",philosophy:"Natural language instead of slash commands. MCP-native tools integrate directly into Claude Code, Cursor, and Windsurf. Real-time web dashboard tracks progress visually.",complexity:"low",totalSteps:11,bestFor:"Conversational workflow with visual progress tracking; teams preferring natural language over CLI commands.",phases:["Create Spec","Approve Requirements","Approve Design","Execute Tasks"],
+    agents:[{n:"AI Agent + MCP Server",r:"Conversational spec creation, approval workflow, task execution"}],
+    setup:["claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp@latest -- /path/to/project","npx -y @pimzino/spec-workflow-mcp@latest --dashboard"],
+    z2p:[{s:1,t:"Add MCP Server",d:"Register spec-workflow MCP server with your AI tool",c:"claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp@latest"},{s:2,t:"Start Dashboard",d:"Real-time web dashboard at localhost:5000",c:"npx -y @pimzino/spec-workflow-mcp@latest --dashboard"},{s:3,t:"Create Spec (Natural Language)",d:"Just tell the agent what you want to build",c:"\"Create a spec for user registration...\""},{s:4,t:"Approve Requirements",d:"Review on dashboard, then approve",c:"\"Approve the requirements\""},{s:5,t:"Approve Design",d:"Review design doc, approve to unlock tasks",c:"\"Approve the design\""},{s:6,t:"Execute All Tasks",d:"Dashboard shows real-time progress",c:"\"Execute all remaining tasks\""},{s:7,t:"Release",d:"Verify on dashboard, commit, tag",c:"git tag v1.0.0"}],
+    refs:["https://github.com/Pimzino/spec-workflow-mcp"]},
+  {id:"anws",name:"ANWS",version:"latest",versionApi:"https://api.github.com/repos/Haaaiawd/ANWS/releases/latest",tagline:"Four principles: Axiom, Nexus, Weave, Sovereignty — design-first",repo:"https://github.com/Haaaiawd/ANWS",philosophy:"Four principles: Axiom (principle before implementation), Nexus (connection before fragmentation), Weave (coherence before accumulation), Sovereignty (human judgment before automation). Design-first with adversarial reviews.",complexity:"high",totalSteps:10,bestFor:"Projects needing strong architecture, design-first approach, adversarial review, and human judgment at key gates.",phases:["Genesis","Challenge","Blueprint","Forge"],
+    agents:[{n:"AI Agent",r:"Genesis, architecture, blueprint, forge implementation"}],
+    setup:["npm install -g @haaaiawd/anws","anws init --target claude"],
+    z2p:[{s:1,t:"Install & Init",d:"Install ANWS, initialize with target IDEs",c:"anws init --target claude"},{s:2,t:"Genesis",d:"Create PRD, Architecture, and ADRs in one pass",c:"/genesis"},{s:3,t:"Challenge",d:"Adversarial review: risks, gaps, contradictions",c:"/challenge"},{s:4,t:"Blueprint",d:"Decompose architecture into executable tasks",c:"/blueprint"},{s:5,t:"Human Review",d:"Review task breakdown before implementation",c:"Review .anws/v1/05_TASKS.md"},{s:6,t:"Forge",d:"Implement tasks with human review checkpoint",c:"/forge"},{s:7,t:"Release",d:"Commit, tag, create PR",c:"git tag v1.0.0"}],
+    refs:["https://github.com/Haaaiawd/ANWS"]},
+  {id:"taskmaster",name:"Taskmaster",version:"latest",versionApi:"https://api.github.com/repos/task-master-ai/task-master/releases/latest",tagline:"PRD-driven dependency-ordered task management with topological sorting",repo:"https://www.task-master.dev/",philosophy:"Parses a Product Requirements Document into structured tasks with topological ordering. Tasks are dependency-aware and executed sequentially. The PRD is the single source of truth.",complexity:"medium",totalSteps:13,bestFor:"Projects with clear upfront PRDs, dependency-heavy workflows, and linear task execution.",phases:["Write PRD","Parse","Analyze","Expand","Implement"],
+    agents:[{n:"Taskmaster CLI",r:"PRD parsing, task generation, complexity analysis"},{n:"AI Agent",r:"Task implementation"}],
+    setup:["npm install -g task-master-ai","task-master init"],
+    z2p:[{s:1,t:"Install & Init",d:"Install task-master-ai, initialize project",c:"task-master init"},{s:2,t:"Write PRD",d:"Create PRD in .taskmaster/docs/prd.md covering all features",c:"Write .taskmaster/docs/prd.md"},{s:3,t:"Parse PRD",d:"Convert PRD into structured, ordered task list",c:"task-master parse-prd .taskmaster/docs/prd.md"},{s:4,t:"Analyze & Expand",d:"Analyze complexity, expand complex tasks into subtasks",c:"task-master analyze-complexity && task-master expand --id=N"},{s:5,t:"Implement Loop",d:"Get next task, implement, mark done, repeat",c:"task-master next → implement → task-master set-status --id=N --status=done"},{s:6,t:"Verify All Complete",d:"List all tasks, verify all done",c:"task-master list"},{s:7,t:"Release",d:"Commit and tag release",c:"git tag v1.0.0"}],
+    refs:["https://www.task-master.dev/"]}
+];
+
+// Render method cards
+function renderMethods() {
+  const grid = document.getElementById('methods-grid');
+  grid.innerHTML = methodsData.map(m => `
+    <div class="method-card" id="method-${m.id}">
+      <div class="mc-header">
+        <div class="mc-complexity ${m.complexity}">${m.complexity} complexity</div>
+        <div class="mc-name">${m.name} <span class="mc-version" id="ver-${m.id}"><a href="${m.repo}" target="_blank">${m.version}</a></span></div>
+        <div class="mc-tagline">${m.tagline}</div>
+      </div>
+      <p class="mc-philosophy">${m.philosophy}</p>
+      <div class="mc-stats">
+        <div class="mc-stat"><div class="mc-stat-val">${m.totalSteps}</div><div class="mc-stat-label">Workflow Steps</div></div>
+        <div class="mc-stat"><div class="mc-stat-val">${m.phases.length}</div><div class="mc-stat-label">Phases</div></div>
+        <div class="mc-stat"><div class="mc-stat-val">${m.agents.length}</div><div class="mc-stat-label">Agents</div></div>
+      </div>
+      <button class="mc-toggle" onclick="toggleMethod('${m.id}')">Expand: Agents, Workflow, From Zero to Prod, References &#9662;</button>
+      <button class="mc-fullguide" onclick="openFullGuide('${m.id}')">Open Full Guide &rarr;</button>
+      <div class="mc-detail" id="detail-${m.id}">
+        <h4>Best For</h4>
+        <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:0;">${m.bestFor}</p>
+
+        <h4>Phases</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          ${m.phases.map((p,i) => `<span class="tag phase-tag">${i+1}. ${p}</span>`).join('')}
+        </div>
+
+        <h4>Key Agents / Roles</h4>
+        <div class="agent-list">
+          ${m.agents.map(a => `<div class="agent-item"><span class="agent-name">${a.n}</span><span class="agent-role">${a.r}</span></div>`).join('')}
+        </div>
+
+        <h4>Setup Commands</h4>
+        <div class="cmd-block">${m.setup.map(c => `<div>${c}</div>`).join('')}</div>
+
+        <h4>From Zero to Prod</h4>
+        <div class="z2p-steps">
+          ${m.z2p.map(s => `
+            <div class="z2p-step">
+              <div class="z2p-num">${s.s}</div>
+              <div class="z2p-content">
+                <div class="z2p-title">${s.t}</div>
+                <div class="z2p-desc">${s.d}</div>
+                <div class="z2p-cmd">${s.c}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <h4>References</h4>
+        <div class="ref-links">
+          ${m.refs.map(r => `<a href="${r}" target="_blank" class="ref-link">${r.replace('https://','')}</a>`).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleMethod(id) {
+  const detail = document.getElementById('detail-'+id);
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open');
+  const btn = detail.previousElementSibling;
+  btn.innerHTML = isOpen ? 'Expand: Agents, Workflow, From Zero to Prod, References &#9662;' : 'Collapse &#9652;';
+}
+
+// ===== PROJECTS DATA & RENDERING =====
+const projectsData = [
+  {name:"Element Explorer API",db:"Periodic Table",tier:"starter",tables:1,records:"118",size:"7.2 MB",source:"periodic_table",
+   desc:"Build a REST API for exploring chemical elements with filtering by group, period, atomic mass, and state. Include search, comparison endpoints, and a quiz mode.",
+   challenge:"<strong>Build this:</strong> API with endpoints for element lookup, filtering by properties (metal/nonmetal/metalloid), comparison of two elements, and a random element quiz endpoint. Include data validation and error handling."},
+  {name:"Happiness Analytics API",db:"World Happiness Index",tier:"starter",tables:1,records:"156",size:"7.2 MB",source:"happiness_index",
+   desc:"Build an analytics API that lets users query and compare country happiness metrics across multiple indicators like GDP, social support, and life expectancy.",
+   challenge:"<strong>Build this:</strong> API with endpoints for country ranking, regional comparison, correlation analysis between indicators, and year-over-year trend endpoints. Include statistical helpers."},
+  {name:"Titanic Survival API",db:"Titanic Passenger Data",tier:"starter",tables:1,records:"1,309",size:"7.5 MB",source:"titanic",
+   desc:"Build an API serving passenger data with statistical analysis endpoints. Calculate survival rates by class, gender, age group, and embarkation port.",
+   challenge:"<strong>Build this:</strong> API with passenger lookup, survival statistics by demographic, fare analysis, family group detection, and a prediction endpoint based on historical patterns."},
+  {name:"Content Catalog Engine",db:"Netflix Data",tier:"intermediate",tables:1,records:"8,807",size:"11 MB",source:"netflix",
+   desc:"Build a content catalog API with full-text search, filtering by genre/year/rating, director analytics, and content recommendation based on viewing patterns.",
+   challenge:"<strong>Build this:</strong> API with content search, multi-filter queries, director/actor filmography endpoints, genre distribution analytics, and a simple content recommendation engine."},
+  {name:"Digital Music Store",db:"Chinook",tier:"intermediate",tables:11,records:"77,929",size:"17 MB",source:"chinook",
+   desc:"Build a music store API with artists, albums, tracks, playlists, customers, and purchase management. Full CRUD with invoice generation and sales reporting.",
+   challenge:"<strong>Build this:</strong> Full REST API for the music store: browse artists/albums/tracks, manage playlists, create purchases with invoices, generate sales reports by period/genre/customer."},
+  {name:"Video Rental System",db:"Pagila (DVD Rental)",tier:"intermediate",tables:33,records:"62,322",size:"15 MB",source:"pagila",
+   desc:"Build a complete rental management system with customers, inventory tracking, rental workflows, payment processing, and overdue notifications.",
+   challenge:"<strong>Build this:</strong> Full CRUD rental system: customer registration, inventory search, rental checkout/return flow, payment processing, overdue detection, and store-level reporting dashboards."},
+  {name:"Brick Catalog Service",db:"Lego Database",tier:"advanced",tables:8,records:"633,250",size:"42 MB",source:"lego",
+   desc:"Build a catalog API for LEGO sets with themes, parts, colors, and inventory management. Include set-part relationships, color distribution analytics, and historical set tracking.",
+   challenge:"<strong>Build this:</strong> API with set browsing by theme/year, part inventory per set, color frequency analysis, historical theme evolution, and a set comparison endpoint showing shared parts."},
+  {name:"HR Management Portal",db:"Employees",tier:"advanced",tables:6,records:"391,901",size:"333 MB",source:"employees",
+   desc:"Build an HR API with employee records, department management, salary history, title changes, and organizational reporting. Handle complex date-range queries.",
+   challenge:"<strong>Build this:</strong> API with employee CRUD, department org chart, salary history with date ranges, title progression tracking, headcount analytics, and compensation benchmarking by department/role."},
+  {name:"Semantic Search Engine",db:"Wikipedia Vector Embeddings",tier:"expert",tables:1,records:"250,000",size:"850 MB",source:"wikipedia",
+   desc:"Build a vector similarity search API using pgvector for article retrieval. Implement semantic search, related articles, and topic clustering endpoints.",
+   challenge:"<strong>Build this:</strong> API with semantic search using vector cosine similarity, related articles endpoint, topic clustering by vector proximity, and a hybrid search combining text and vector matching. Requires pgvector extension."},
+  {name:"Flight Booking System",db:"Postgres Air",tier:"expert",tables:10,records:"67,228,600",size:"6.7 GB",source:"postgres_air",
+   desc:"Build a flight booking API with airports, routes, schedules, passengers, and reservation management. Handle complex multi-leg itineraries and seat availability.",
+   challenge:"<strong>Build this:</strong> Full booking system: airport/route search, flight schedule queries, passenger management, booking with seat selection, multi-leg itinerary builder, and real-time availability checking across concurrent requests."}
+];
+
+function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  grid.innerHTML = projectsData.map(p => `
+    <div class="project-card">
+      <div class="tier ${p.tier}">${p.tier}</div>
+      <h3>${p.name}</h3>
+      <div class="pc-source">neon/${p.source}</div>
+      <p class="pc-desc">${p.desc}</p>
+      <div class="pc-meta">
+        <div class="pc-meta-item"><span class="pc-meta-label">Tables: </span><span class="pc-meta-val">${p.tables}</span></div>
+        <div class="pc-meta-item"><span class="pc-meta-label">Records: </span><span class="pc-meta-val">${p.records}</span></div>
+        <div class="pc-meta-item"><span class="pc-meta-label">Size: </span><span class="pc-meta-val">${p.size}</span></div>
+        <div class="pc-meta-item"><span class="pc-meta-label">Neon DB: </span><span class="pc-meta-val">${p.db}</span></div>
+      </div>
+      <div class="pc-challenge">${p.challenge}</div>
+    </div>
+  `).join('');
+}
+
+// ===== DETAIL OVERLAY =====
+function openFullGuide(id) {
+  const overlay = document.getElementById('method-overlay');
+  const tabs = document.getElementById('overlay-tabs');
+  const content = document.getElementById('overlay-content');
+  const method = methodsData.find(m => m.id === id);
+  if (!method) return;
+
+  // Build tabs
+  tabs.innerHTML = `
+    <button class="overlay-tab active" onclick="switchTab('${id}','guide',this)">Complete Guide</button>
+    <button class="overlay-tab" onclick="switchTab('${id}','workflow',this)">Workflow Table</button>
+    <button class="overlay-tab" onclick="switchTab('${id}','z2p',this)">From Zero to Prod</button>
+    <button class="overlay-tab" onclick="switchTab('${id}','refs',this)">References</button>
+  `;
+
+  // Show guide tab by default
+  showGuideContent(id, content);
+  overlay.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function switchTab(id, tab, el) {
+  const content = document.getElementById('overlay-content');
+  el.parentElement.querySelectorAll('.overlay-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (tab === 'guide') showGuideContent(id, content);
+  else if (tab === 'workflow') showWorkflowContent(id, content);
+  else if (tab === 'z2p') showZ2PContent(id, content);
+  else if (tab === 'refs') showRefsContent(id, content);
+}
+
+function showGuideContent(id, el) {
+  if (typeof methodDetailsFull !== 'undefined' && methodDetailsFull[id]) {
+    el.innerHTML = methodDetailsFull[id];
+  } else {
+    const m = methodsData.find(m => m.id === id);
+    el.innerHTML = '<h2>' + m.name + ' — Complete Guide</h2><p style="color:var(--text-dim)">Loading detailed content...</p>';
+  }
+}
+
+function showWorkflowContent(id, el) {
+  if (typeof methodWorkflowsFull !== 'undefined' && methodWorkflowsFull[id]) {
+    const m = methodsData.find(m => m.id === id);
+    el.innerHTML = '<h2>' + m.name + ' — Complete Workflow</h2><p>All phases, steps, agents, commands, and output artifacts.</p>' + methodWorkflowsFull[id];
+  } else {
+    // Fallback: build from methodsData
+    const m = methodsData.find(m => m.id === id);
+    el.innerHTML = '<h2>' + m.name + ' — Workflow</h2><p>Workflow data from summary. Open the CSV file for full detail.</p>';
+  }
+}
+
+function showZ2PContent(id, el) {
+  const m = methodsData.find(m => m.id === id);
+  if (!m) return;
+  el.innerHTML = '<h2>' + m.name + ' — From Zero to Prod</h2>' +
+    '<p>Step-by-step guide to go from an empty directory to a deployed application.</p>' +
+    '<div style="margin-top:1.5rem;">' +
+    m.z2p.map(s => `
+      <div style="display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start;">
+        <div style="background:var(--accent);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;flex-shrink:0;">${s.s}</div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:1rem;margin-bottom:0.25rem;">${s.t}</div>
+          <div style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:0.5rem;">${s.d}</div>
+          <div class="cmd-block">${s.c}</div>
+        </div>
+      </div>
+    `).join('') + '</div>';
+}
+
+function showRefsContent(id, el) {
+  const m = methodsData.find(m => m.id === id);
+  if (!m) return;
+  el.innerHTML = '<h2>' + m.name + ' — References</h2>' +
+    '<h3>Official</h3>' +
+    '<div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:2rem;">' +
+    m.refs.map(r => '<a href="' + r + '" target="_blank" style="background:var(--bg-card);border:1px solid var(--border);padding:0.75rem 1rem;border-radius:8px;font-size:0.9rem;display:block;">' + r.replace('https://','') + '</a>').join('') +
+    '</div>' +
+    '<h3>Repository</h3>' +
+    '<a href="' + m.repo + '" target="_blank" style="background:var(--bg-card);border:1px solid var(--border);padding:0.75rem 1rem;border-radius:8px;font-size:0.9rem;display:block;">' + m.repo.replace('https://','') + '</a>' +
+    '<h3 style="margin-top:2rem;">How to Get Started</h3>' +
+    '<div class="cmd-block">' + m.setup.join('<br>') + '</div>';
+}
+
+function closeOverlay() {
+  document.getElementById('method-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeOverlay(); });
+
+// ===== LIVE VERSION FETCHING =====
+async function fetchVersions() {
+  for (const m of methodsData) {
+    if (!m.versionApi) continue;
+    try {
+      const resp = await fetch(m.versionApi);
+      if (resp.ok) {
+        const data = await resp.json();
+        const ver = data.tag_name || data.name || 'latest';
+        const el = document.getElementById('ver-' + m.id);
+        if (el) el.innerHTML = '<a href="' + (data.html_url || m.repo) + '" target="_blank">' + ver + '</a>';
+      } else {
+        // Try tags API as fallback
+        const tagsResp = await fetch(m.versionApi.replace('/releases/latest', '/tags?per_page=1'));
+        if (tagsResp.ok) {
+          const tags = await tagsResp.json();
+          if (tags.length > 0) {
+            const el = document.getElementById('ver-' + m.id);
+            if (el) el.innerHTML = '<a href="' + m.repo + '" target="_blank">' + tags[0].name + '</a>';
+          }
+        }
+      }
+    } catch(e) { /* silently fail — show "latest" as default */ }
+  }
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  renderMethods();
+  renderProjects();
+  // Fetch live versions from GitHub (non-blocking)
+  setTimeout(fetchVersions, 500);
+});
+</script>
+
+
+<script>
+const methodDetailsFull = {
+  "bmad": `<h2>How to Implement Features with BMAD Method</h2>
+<p><strong>Source:</strong> https://github.com/bmad-code-org/BMAD-METHOD</p>
+<p><strong>Docs:</strong> https://docs.bmad-method.org</p>
+<p><strong>Philosophy:</strong> Multi-agent role-play (PM, Architect, Dev, Scrum Master) with scale-adaptive intelligence. Progressive context building across 4 phases -- each phase produces documents that inform the next, so agents always know what to build and why.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Node.js v20+</li>
+<li>Git</li>
+<li>AI IDE (Claude Code, Cursor, Windsurf, Copilot, etc.)</li>
+</ul>
+
+<h3>Key Concepts</h3>
+<ul>
+<li><strong>Agents</strong> are specialized personas (skill IDs like \`bmad-pm\`, \`bmad-dev\`) invoked as skills. Each agent has a menu with <strong>triggers</strong> (short codes like \`CP\`, \`DS\`).</li>
+<li><strong>Workflows</strong> (like \`bmad-create-prd\`, \`bmad-dev-story\`) can be run directly as skills OR through an agent's menu trigger.</li>
+<li><strong>\`bmad-help\`</strong> is available at any time to tell you what to do next. It also evolves when extended modules are installed, so it always knows everything available in your project. It runs automatically at the end of every workflow to tell you exactly what to do next.</li>
+<li><strong>\`project-context.md\`</strong> is a recommended file that acts as a constitution for your project -- guiding implementation decisions across all workflows. Generate it via \`bmad-generate-project-context\` or create it manually at \`_bmad-output/project-context.md\`.</li>
+<li><strong>Fresh chats:</strong> Always start a fresh chat for each workflow. This prevents context limitations from causing issues.</li>
+</ul>
+
+<h4>Planning Tracks</h4>
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Track</th>
+<th>Best For</th>
+<th>Documents Created</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quick Flow</td>
+<td>Bug fixes, simple features, clear scope (1-15 stories)</td>
+<td>Tech-spec only</td>
+</tr>
+<tr>
+<td>BMad Method</td>
+<td>Products, platforms, complex features (10-50+ stories)</td>
+<td>PRD + Architecture + UX</td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td>Compliance, multi-tenant systems (30+ stories)</td>
+<td>PRD + Architecture + Security + DevOps</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Agents Reference</h4>
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Agent</th>
+<th>Skill ID</th>
+<th>Triggers</th>
+<th>Primary Workflows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Analyst (Mary)</td>
+<td>\`bmad-analyst\`</td>
+<td>BP, RS, CB, DP</td>
+<td>Brainstorm, Research, Create Brief</td>
+</tr>
+<tr>
+<td>Product Manager (John)</td>
+<td>\`bmad-pm\`</td>
+<td>CP, VP, EP, CE, IR, CC</td>
+<td>Create/Validate PRD, Create Epics+Stories, Readiness Check</td>
+</tr>
+<tr>
+<td>Architect (Winston)</td>
+<td>\`bmad-architect\`</td>
+<td>CA, IR</td>
+<td>Create Architecture, Implementation Readiness</td>
+</tr>
+<tr>
+<td>Scrum Master (Bob)</td>
+<td>\`bmad-sm\`</td>
+<td>SP, CS, ER, CC</td>
+<td>Sprint Planning, Create Story, Retrospective</td>
+</tr>
+<tr>
+<td>Developer (Amelia)</td>
+<td>\`bmad-dev\`</td>
+<td>DS, CR</td>
+<td>Dev Story, Code Review</td>
+</tr>
+<tr>
+<td>QA Engineer (Quinn)</td>
+<td>\`bmad-qa\`</td>
+<td>QA</td>
+<td>Generate tests</td>
+</tr>
+<tr>
+<td>Quick Flow (Barry)</td>
+<td>\`bmad-master\`</td>
+<td>QD, CR</td>
+<td>Quick Dev, Code Review</td>
+</tr>
+<tr>
+<td>UX Designer (Sally)</td>
+<td>\`bmad-ux-designer\`</td>
+<td>CU</td>
+<td>Create UX Design</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Project Setup</h3>
+<div class="cmd-block">mkdir my-project && cd my-project
+git init
+npx bmad-method install
+# Select: your AI tool (e.g., Claude Code)
+# Select: All modules for full workflow</div>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with BMAD Method"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<p>Verify installation inside your AI IDE:</p>
+
+<div class="cmd-block">bmad-help</div>
+
+<h3>Quick Flow (Parallel Track)</h3>
+<p>For small, well-understood work that doesn't need full planning and solutioning, use the Quick Flow to skip Phases 1-3 entirely:</p>
+
+<div class="cmd-block">bmad-master</div>
+
+<p>Select \`QD\` (Quick Dev). Or run directly:</p>
+
+<div class="cmd-block">bmad-quick-dev</div>
+
+<p>This unified workflow clarifies intent, plans, implements, reviews, and presents -- all in one pass.</p>
+
+<p><strong>Produces:</strong> \`spec-*.md\` + working code.</p>
+
+<p>Use this when the change is small enough that a full PRD/Architecture/Epic cycle would be overkill. For the full method, continue below.</p>
+
+<h3>Step 1: Create Your Plan (Phases 1-3)</h3>
+<p>Phases 1-3 are done <strong>once for the entire project</strong>, covering all features. Each workflow should run in a fresh chat.</p>
+
+<h4>Phase 1: Analysis (Optional)</h4>
+<p>If you're starting from a vague idea rather than clear requirements, use Phase 1 to explore the problem space before committing to planning.</p>
+
+<p>Load the Analyst agent:</p>
+
+<div class="cmd-block">bmad-analyst</div>
+
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Step</th>
+<th>Trigger</th>
+<th>Workflow</th>
+<th>Produces</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Brainstorm ideas</td>
+<td>\`BP\`</td>
+<td>\`bmad-brainstorming\`</td>
+<td>\`brainstorming-report.md\`</td>
+</tr>
+<tr>
+<td>Research assumptions</td>
+<td>\`RS\`</td>
+<td>\`bmad-domain-research\`, \`bmad-market-research\`, \`bmad-technical-research\`</td>
+<td>Research findings</td>
+</tr>
+<tr>
+<td>Capture strategic vision</td>
+<td>\`CB\`</td>
+<td>\`bmad-create-product-brief\`</td>
+<td>\`product-brief.md\`</td>
+</tr>
+</tbody>
+</table>
+
+<p>Skip this phase if you already have clear requirements and jump straight to Phase 2.</p>
+
+<h4>Phase 2: Planning (Required)</h4>
+<p>Define what to build and for whom. The PRD should cover <strong>all features</strong> for the project.</p>
+
+<p>Load the PM agent in a fresh chat:</p>
+
+<div class="cmd-block">bmad-pm</div>
+
+<p>From the PM menu, select \`CP\` (Create PRD). Describe <strong>all</strong> your requirements:</p>
+
+<blockquote>
+<p>"Build a task board app. FR-01: Users can register with email and password, system validates input, hashes password, stores user, returns JWT, rejects duplicate emails. FR-02: Users can create, rename, and delete boards, each board belongs to one user, list boards for authenticated user. FR-03: Users receive real-time notifications via WebSocket when a card assigned to them changes status."</p>
+</blockquote>
+
+<p>Alternatively, run the workflow directly as a skill:</p>
+
+<div class="cmd-block">bmad-create-prd</div>
+
+<p><strong>Produces:</strong> \`_bmad-output/PRD.md\` with functional requirements, non-functional requirements, acceptance criteria for the entire project.</p>
+
+<h5>UX Design (Optional -- when UI matters)</h5>
+<p>If the project has a user-facing interface, design the experience after creating the PRD. In a fresh chat:</p>
+
+<div class="cmd-block">bmad-ux-designer</div>
+
+<p>Select \`CU\` (Create UX Design). Or run directly:</p>
+
+<div class="cmd-block">bmad-create-ux-design</div>
+
+<p><strong>Produces:</strong> \`_bmad-output/ux-spec.md\` with user flows, wireframe descriptions, and interaction patterns.</p>
+
+<p>Skip this step for backend-only projects.</p>
+
+<h4>Phase 3: Solutioning</h4>
+<p>Decide how to build it and break work into stories. All workflows in this phase use the PRD (and UX spec if created) as input.</p>
+
+<h5>Create Architecture</h5>
+<p>In a fresh chat, load the Architect agent:</p>
+
+<div class="cmd-block">bmad-architect</div>
+
+<p>Select \`CA\` (Create Architecture). Or run the workflow directly:</p>
+
+<div class="cmd-block">bmad-create-architecture</div>
+
+<p><strong>Produces:</strong> \`_bmad-output/architecture.md\` with tech stack decisions, data model, API contracts, and ADRs covering the entire project.</p>
+
+<h5>Generate Project Context (Recommended)</h5>
+<p>After architecture is created, generate the project context file:</p>
+
+<div class="cmd-block">bmad-generate-project-context</div>
+
+<p><strong>Produces:</strong> \`_bmad-output/project-context.md\` -- ensures all AI agents follow your project's rules and preferences throughout implementation.</p>
+
+<h5>Create Epics and Stories</h5>
+<p>In a fresh chat, return to the PM agent to decompose <strong>all</strong> requirements into implementable work:</p>
+
+<div class="cmd-block">bmad-pm</div>
+
+<p>Select \`CE\` (Create Epics and Stories). Or run directly:</p>
+
+<div class="cmd-block">bmad-create-epics-and-stories</div>
+
+<p>This workflow uses both the PRD and Architecture to create technically-informed stories. Stories are better quality because architecture decisions (database, API patterns, tech stack) directly affect how work should be broken down.</p>
+
+<p><strong>Produces:</strong> Epic files with stories under \`_bmad-output/\` -- covering all features (FR-01, FR-02, FR-03, etc.).</p>
+
+<h5>Implementation Readiness Gate (Highly Recommended)</h5>
+<p>In a fresh chat, check whether the project is ready for implementation:</p>
+
+<div class="cmd-block">bmad-check-implementation-readiness</div>
+
+<p>Or via PM (\`IR\`) or Architect (\`IR\`). Validates cohesion across all planning documents. Returns <strong>PASS</strong>, <strong>CONCERNS</strong>, or <strong>FAIL</strong>. If it fails, revisit earlier phases to fix the gaps before proceeding.</p>
+
+<h3>Step 2: Build Your Project (Phase 4)</h3>
+<p>Once planning is complete, move to implementation. Each workflow should run in a fresh chat. You build <strong>story by story</strong>, not feature by feature.</p>
+
+<h4>Initialize Sprint Planning (once per project)</h4>
+<p>Load the Scrum Master to initialize sprint tracking:</p>
+
+<div class="cmd-block">bmad-sm</div>
+
+<p>Select \`SP\` (Sprint Planning). Or run directly:</p>
+
+<div class="cmd-block">bmad-sprint-planning</div>
+
+<p><strong>Produces:</strong> \`sprint-status.yaml\` to track all epics and stories through the dev cycle.</p>
+
+<h4>The Build Cycle</h4>
+<p>For each story, repeat this cycle in fresh chats:</p>
+
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Step</th>
+<th>Agent</th>
+<th>Workflow</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>SM (Bob)</td>
+<td>\`bmad-create-story\`</td>
+<td>Create story file from epic</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DEV (Amelia)</td>
+<td>\`bmad-dev-story\`</td>
+<td>Implement the story</td>
+</tr>
+<tr>
+<td>3</td>
+<td>DEV (Amelia)</td>
+<td>\`bmad-code-review\`</td>
+<td>Quality validation (recommended)</td>
+</tr>
+</tbody>
+</table>
+
+<h5>Example: Story 1 -- User Registration Endpoint</h5>
+<p><strong>Create the story</strong> (fresh chat):</p>
+
+<div class="cmd-block">bmad-create-story</div>
+
+<p><strong>Produces:</strong> \`story-user-registration.md\` with focused implementation context, acceptance criteria, and technical notes.</p>
+
+<p><strong>Implement the story</strong> (fresh chat):</p>
+
+<div class="cmd-block">bmad-dev-story</div>
+
+<p>The Dev agent reads the story file and implements: endpoint, validation, password hashing, JWT generation, and tests.</p>
+
+<p><strong>Produces:</strong> Working code + tests.</p>
+
+<p><strong>Code review</strong> (fresh chat):</p>
+
+<div class="cmd-block">bmad-code-review</div>
+
+<p><strong>Produces:</strong> Approved or changes requested. If changes are requested, go back to \`bmad-dev-story\`.</p>
+
+<p><strong>Commit:</strong></p>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push</div>
+
+<h5>Example: Story 2 -- Board CRUD</h5>
+<p>Repeat the same cycle:</p>
+
+<div class="cmd-block">bmad-create-story    # creates story-board-management.md
+bmad-dev-story       # implements board CRUD
+bmad-code-review     # validates quality</div>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push</div>
+
+<h5>Example: Story 3 -- Real-time Notifications</h5>
+
+<div class="cmd-block">bmad-create-story    # creates story-notifications.md
+bmad-dev-story       # implements WebSocket notifications
+bmad-code-review     # validates quality</div>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<h4>Supporting Workflows (as needed)</h4>
+<p>These workflows can be used at any point during the build cycle:</p>
+
+<p><strong>Sprint Status</strong> -- track progress and story status:</p>
+
+<div class="cmd-block">bmad-sprint-status</div>
+
+<p><strong>Correct Course</strong> -- handle significant mid-sprint changes (scope change, blocking dependency, pivoted requirements):</p>
+
+<div class="cmd-block">bmad-correct-course</div>
+
+<p><strong>Produces:</strong> Updated plan or re-routing decision. Use this instead of just pushing through when the original plan no longer fits.</p>
+
+<p><strong>Epic Retrospective</strong> -- review after completing all stories in an epic:</p>
+
+<div class="cmd-block">bmad-sm</div>
+
+<p>Select \`ER\` (Epic Retrospective). Or run directly:</p>
+
+<div class="cmd-block">bmad-retrospective</div>
+
+<p><strong>Produces:</strong> Lessons learned from the implementation cycle.</p>
+
+<h3>Release</h3>
+<p>After all stories are implemented and reviewed:</p>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT
+- FR-02: Board CRUD operations
+- FR-03: Real-time notifications via WebSocket
+
+## BMAD Artifacts
+- PRD.md, architecture.md (with ADRs), epic/story files
+- sprint-status.yaml tracking all stories
+- Implementation readiness gate passed
+- Code review approved for all stories"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>
+
+<h3>BMAD Artifacts</h3>
+<p>After completing the full workflow, your project should contain:</p>
+
+<div class="cmd-block">your-project/
+├── _bmad/                              # BMad configuration
+├── _bmad-output/
+│   ├── planning-artifacts/
+│   │   ├── PRD.md                      # Requirements (all features)
+│   │   ├── architecture.md             # Technical decisions + ADRs
+│   │   ├── ux-spec.md                  # UX design (if applicable)
+│   │   └── epics/                      # Epic and story files
+│   ├── implementation-artifacts/
+│   │   └── sprint-status.yaml          # Sprint tracking
+│   └── project-context.md              # Implementation rules (recommended)
+└── src/                                # Your working code</div>`,
+
+  "spec-kit": `<h2>How to Implement Features with Spec-Kit</h2>
+<p><strong>Source:</strong> https://github.com/github/spec-kit</p>
+<p><strong>Philosophy:</strong> Constitution-first, spec-driven development where specifications define the "what" before the "how", with multi-step refinement rather than one-shot generation.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Python 3.11+</li>
+<li><a href="https://docs.astral.sh/uv/">uv</a> package manager</li>
+<li>Git</li>
+<li>AI coding agent (Claude Code, Cursor, Copilot, etc.)</li>
+</ul>
+
+<h3>Project Setup</h3>
+
+<div class="cmd-block">mkdir my-project && cd my-project
+git init
+
+# Install Specify CLI (pin to latest release tag)
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@vX.Y.Z
+
+# Initialize in current directory with your AI agent
+specify init . --ai claude
+specify check</div>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with Spec-Kit"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<h3>FR-01 -- User Registration</h3>
+
+<h4>Step 1: Establish project principles</h4>
+
+<div class="cmd-block">/speckit.constitution Create principles focused on code quality, testing standards, security best practices, and API consistency</div>
+
+<p>This creates \`.specify/memory/constitution.md\` with your project's governing guidelines.</p>
+
+<h4>Step 2: Create the specification</h4>
+
+<div class="cmd-block">/speckit.specify Users can register with email and password. The system validates input, hashes the password, stores the user, and returns a JWT token. Duplicate emails are rejected with a clear error.</div>
+
+<p>This creates a \`spec.md\` in \`.specify/specs/001-user-registration/\` with user stories, functional requirements, and acceptance criteria.</p>
+
+<h4>Step 3: Clarify requirements (optional but recommended)</h4>
+
+<div class="cmd-block">/speckit.clarify</div>
+
+<p>The agent asks structured questions to fill gaps in the spec. Answer each to tighten the requirements.</p>
+
+<h4>Step 4: Create the technical plan</h4>
+
+<div class="cmd-block">/speckit.plan Use Node.js with Express, PostgreSQL for storage, bcrypt for hashing, and jsonwebtoken for JWT. REST API.</div>
+
+<p>This creates \`plan.md\` with architecture decisions, data model, file structure, and implementation steps.</p>
+
+<h4>Step 5: Generate task breakdown</h4>
+
+<div class="cmd-block">/speckit.tasks</div>
+
+<p>Creates \`tasks.md\` with ordered, dependency-aware tasks including file paths and parallel execution markers.</p>
+
+<h4>Step 6: Implement</h4>
+
+<div class="cmd-block">/speckit.implement</div>
+
+<p>The agent executes all tasks in order: models, services, endpoints, validation, error handling, and tests.</p>
+
+<h4>Step 7: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push
+git tag v0.0.1
+git push --tags</div>
+
+<h3>FR-02 -- Board Management</h3>
+
+<h4>Step 1: Create the specification</h4>
+
+<div class="cmd-block">/speckit.specify Users can create, rename, and delete boards. Each board belongs to one user. Boards have a title and creation timestamp. List boards for the authenticated user.</div>
+
+<p>A new feature branch and spec directory are created (e.g., \`002-board-management\`).</p>
+
+<h4>Step 2: Clarify and plan</h4>
+
+<div class="cmd-block">/speckit.clarify
+/speckit.plan Extend the existing Express API. Add Board model with foreign key to User. RESTful endpoints under /api/boards.</div>
+
+<h4>Step 3: Generate tasks and implement</h4>
+
+<div class="cmd-block">/speckit.tasks
+/speckit.implement</div>
+
+<h4>Step 4: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push
+git tag v0.0.2
+git push --tags</div>
+
+<h3>FR-03 -- Real-time Notifications</h3>
+
+<h4>Step 1: Specify the feature</h4>
+
+<div class="cmd-block">/speckit.specify Users receive real-time notifications via WebSocket when a card assigned to them changes status. Notifications include card title, old status, new status, and timestamp.</div>
+
+<h4>Step 2: Clarify, plan, and analyze</h4>
+
+<div class="cmd-block">/speckit.clarify
+/speckit.plan Add Socket.IO for WebSocket support. Notification service emits events on card status change. Client subscribes on login.
+/speckit.analyze</div>
+
+<p>The \`/speckit.analyze\` command runs a cross-artifact consistency check before implementation.</p>
+
+<h4>Step 3: Generate tasks and implement</h4>
+
+<div class="cmd-block">/speckit.tasks
+/speckit.implement</div>
+
+<h4>Step 4: Commit, PR, and release</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT authentication
+- FR-02: Board CRUD operations
+- FR-03: Real-time notifications via WebSocket
+
+## Spec-Kit Artifacts
+- constitution.md, spec.md, plan.md, tasks.md per feature
+- Cross-artifact analysis passed for all three features"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>`,
+
+  "gsd": `<h2>How to Implement Features with Get-Shit-Done (GSD)</h2>
+<p><strong>Source:</strong> https://github.com/gsd-build/get-shit-done</p>
+<p><strong>Philosophy:</strong> Anti-context-rot system that uses fresh 200k-token contexts per task, parallel wave execution, and structured meta-prompting to make AI coding reliable.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Node.js v20+</li>
+<li>Git</li>
+<li>Claude Code (or OpenCode, Gemini CLI, Codex, Copilot, Cursor, Windsurf, Antigravity)</li>
+</ul>
+
+<h3>Project Setup</h3>
+
+<div class="cmd-block">mkdir my-project && cd my-project
+git init
+npx get-shit-done-cc@latest
+# Select: Claude Code (or your runtime -- multi-select supported)
+# Select: Local (current project)</div>
+
+<p>Verify installation:</p>
+
+<div class="cmd-block">/gsd:help</div>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with GSD"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<h3>FR-01 -- User Registration</h3>
+
+<h4>Step 1: Initialize the project</h4>
+
+<div class="cmd-block">/gsd:new-project</div>
+
+<p>Use \`--auto\` to run autonomously with fewer prompts.</p>
+
+<blockquote>
+<p><strong>Already have code?</strong> Run \`/gsd:map-codebase\` first. It spawns parallel agents to analyze your stack, architecture, conventions, and concerns. Then \`/gsd:new-project\` knows your codebase -- questions focus on what you're adding, and planning automatically loads your patterns.</p>
+</blockquote>
+
+<p>The system starts an interactive flow:</p>
+<ol>
+<li><strong>Questions</strong> -- asks about your goals, constraints, tech preferences, edge cases</li>
+<li><strong>Research</strong> -- spawns parallel agents to investigate the domain</li>
+<li><strong>Requirements</strong> -- extracts v1 scope (include FR-01, FR-02, FR-03)</li>
+<li><strong>Roadmap</strong> -- creates phased delivery plan</li>
+</ol>
+
+<p>Describe your full vision and approve the roadmap. FR-01 (User Registration) becomes Phase 1.</p>
+
+<p><strong>Creates:</strong> \`PROJECT.md\`, \`REQUIREMENTS.md\`, \`ROADMAP.md\`, \`STATE.md\`, \`.planning/research/\`</p>
+
+<h4>Step 2: Discuss Phase 1</h4>
+
+<div class="cmd-block">/gsd:discuss-phase 1</div>
+
+<p>Use \`--batch\` to answer a grouped set of questions at once instead of one-by-one.</p>
+
+<p>The system identifies gray areas in the registration feature and asks targeted questions:</p>
+<ul>
+<li>Input validation rules? Password strength requirements?</li>
+<li>JWT expiration policy? Refresh tokens?</li>
+<li>Error response format?</li>
+</ul>
+
+<p>Your answers are captured in a context file that feeds the planner and researcher.</p>
+
+<p><strong>Creates:</strong> \`1-CONTEXT.md\`</p>
+
+<h4>Step 3: Plan Phase 1</h4>
+
+<div class="cmd-block">/gsd:plan-phase 1</div>
+
+<p>The system:</p>
+<ol>
+<li>Researches implementation approaches (guided by your context decisions)</li>
+<li>Creates 2-3 atomic task plans in XML structure</li>
+<li>Verifies plans against requirements</li>
+</ol>
+
+<p><strong>Creates:</strong> \`1-RESEARCH.md\`, \`1-1-PLAN.md\`, \`1-2-PLAN.md\`</p>
+
+<h4>Step 4: Execute Phase 1</h4>
+
+<div class="cmd-block">/gsd:execute-phase 1</div>
+
+<p>The system:</p>
+<ol>
+<li>Groups plans into dependency-based waves</li>
+<li>Runs each plan in a fresh 200k context window</li>
+<li>Commits after each task</li>
+<li>Verifies the codebase delivers what Phase 1 promised</li>
+</ol>
+
+<p><strong>Creates:</strong> \`1-1-SUMMARY.md\`, \`1-2-SUMMARY.md\`, \`1-VERIFICATION.md\`</p>
+
+<h4>Step 5: Verify the work</h4>
+
+<div class="cmd-block">/gsd:verify-work 1</div>
+
+<p>The system walks you through testable deliverables one at a time. If something fails, it spawns debug agents and creates fix plans.</p>
+
+<p><strong>Creates:</strong> \`1-UAT.md\`</p>
+
+<h4>Step 6: Ship Phase 1</h4>
+
+<div class="cmd-block">/gsd:ship 1</div>
+
+<p>GSD creates a PR with auto-generated body from the phase summaries. Use \`--draft\` for draft PRs.</p>
+
+<p>Alternatively, commit and tag manually:</p>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push
+git tag v0.0.1
+git push --tags</div>
+
+<h3>FR-02 -- Board Management</h3>
+
+<h4>Step 1: Discuss Phase 2</h4>
+
+<div class="cmd-block">/gsd:discuss-phase 2</div>
+
+<blockquote>
+<p>Board CRUD: create, rename, delete. Boards belong to one user. List user's boards.</p>
+</blockquote>
+
+<h4>Step 2: Plan Phase 2</h4>
+
+<div class="cmd-block">/gsd:plan-phase 2</div>
+
+<h4>Step 3: Execute Phase 2</h4>
+
+<div class="cmd-block">/gsd:execute-phase 2</div>
+
+<h4>Step 4: Verify</h4>
+
+<div class="cmd-block">/gsd:verify-work 2</div>
+
+<h4>Step 5: Ship Phase 2</h4>
+
+<div class="cmd-block">/gsd:ship 2</div>
+
+<p>Or manually:</p>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push
+git tag v0.0.2
+git push --tags</div>
+
+<h3>FR-03 -- Real-time Notifications</h3>
+
+<h4>Step 1: Discuss Phase 3</h4>
+
+<div class="cmd-block">/gsd:discuss-phase 3</div>
+
+<blockquote>
+<p>WebSocket notifications when cards change status. Notify assigned users.</p>
+</blockquote>
+
+<h4>Step 2: Plan and execute</h4>
+
+<div class="cmd-block">/gsd:plan-phase 3
+/gsd:execute-phase 3</div>
+
+<h4>Step 3: Verify</h4>
+
+<div class="cmd-block">/gsd:verify-work 3</div>
+
+<h4>Step 4: Ship as PR</h4>
+
+<div class="cmd-block">/gsd:ship 3</div>
+
+<p>GSD creates a PR with auto-generated body from the phase summaries.</p>
+
+<p>Alternatively, create the PR manually:</p>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT (Phase 1)
+- FR-02: Board CRUD operations (Phase 2)
+- FR-03: Real-time notifications via WebSocket (Phase 3)
+
+## GSD Artifacts
+- PROJECT.md, REQUIREMENTS.md, ROADMAP.md
+- Per-phase: CONTEXT, RESEARCH, PLAN, SUMMARY, VERIFICATION, UAT"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>
+
+<p>Complete the milestone:</p>
+
+<div class="cmd-block">/gsd:complete-milestone</div>
+
+<p>Start the next version with \`/gsd:new-milestone\` -- same flow as \`new-project\` but for your existing codebase.</p>
+
+<h3>Workflow Shortcut: \`/gsd:next\`</h3>
+<p>Not sure what comes next? Let GSD figure it out:</p>
+
+<div class="cmd-block">/gsd:next</div>
+
+<p>Auto-detects your current state and runs the next logical step in the discuss -> plan -> execute -> verify -> ship cycle.</p>
+
+<h3>Quick & Fast Modes</h3>
+
+<h4>\`/gsd:quick\` -- Ad-hoc tasks outside the phase system</h4>
+<p>For tasks that don't need full planning. Same agents, same quality, faster path.</p>
+
+<div class="cmd-block">/gsd:quick
+> What do you want to do? "Add dark mode toggle to settings"</div>
+
+<p>Composable flags:</p>
+<ul>
+<li>\`--discuss\` -- lightweight discussion to surface gray areas</li>
+<li>\`--research\` -- investigates approaches before planning</li>
+<li>\`--full\` -- enables plan-checking and post-execution verification</li>
+</ul>
+
+<div class="cmd-block">/gsd:quick --discuss --research --full</div>
+
+<h4>\`/gsd:fast\` -- Inline trivial tasks</h4>
+<p>Skips planning entirely. Executes immediately.</p>
+
+<div class="cmd-block">/gsd:fast fix the typo in the navbar</div>
+
+<h3>Session Management</h3>
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\`/gsd:pause-work\`</td>
+<td>Create handoff when stopping mid-phase (writes \`HANDOFF.json\`)</td>
+</tr>
+<tr>
+<td>\`/gsd:resume-work\`</td>
+<td>Restore from last session</td>
+</tr>
+<tr>
+<td>\`/gsd:progress\`</td>
+<td>Where am I? What's next?</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Configuration</h3>
+
+<h4>Model Profiles</h4>
+<p>Control which model each agent uses. Switch with \`/gsd:set-profile &lt;name&gt;\` or via \`/gsd:settings\`.</p>
+
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Profile</th>
+<th>Planning</th>
+<th>Execution</th>
+<th>Verification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\`quality\`</td>
+<td>Opus</td>
+<td>Opus</td>
+<td>Sonnet</td>
+</tr>
+<tr>
+<td>\`balanced\` (default)</td>
+<td>Opus</td>
+<td>Sonnet</td>
+<td>Sonnet</td>
+</tr>
+<tr>
+<td>\`budget\`</td>
+<td>Sonnet</td>
+<td>Sonnet</td>
+<td>Haiku</td>
+</tr>
+<tr>
+<td>\`inherit\`</td>
+<td>Inherit</td>
+<td>Inherit</td>
+<td>Inherit</td>
+</tr>
+</tbody>
+</table>
+
+<p>Use \`inherit\` when running non-Anthropic providers or to follow the runtime's model selection.</p>
+
+<h4>Workflow Agents</h4>
+<p>Toggle via \`/gsd:settings\`. These spawn additional agents during planning/execution.</p>
+
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\`workflow.research\`</td>
+<td>\`true\`</td>
+<td>Researches domain before planning each phase</td>
+</tr>
+<tr>
+<td>\`workflow.plan_check\`</td>
+<td>\`true\`</td>
+<td>Verifies plans achieve phase goals before execution</td>
+</tr>
+<tr>
+<td>\`workflow.verifier\`</td>
+<td>\`true\`</td>
+<td>Confirms must-haves were delivered after execution</td>
+</tr>
+<tr>
+<td>\`workflow.auto_advance\`</td>
+<td>\`false\`</td>
+<td>Auto-chain discuss -> plan -> execute without stopping</td>
+</tr>
+<tr>
+<td>\`workflow.discuss_mode\`</td>
+<td>\`discuss\`</td>
+<td>\`discuss\` (interview) or \`assumptions\` (codebase-first)</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Git Branching</h4>
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\`none\` (default)</td>
+<td>Commits to current branch</td>
+</tr>
+<tr>
+<td>\`phase\`</td>
+<td>Creates a branch per phase, merges at completion</td>
+</tr>
+<tr>
+<td>\`milestone\`</td>
+<td>One branch for entire milestone, merges at completion</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Recommended: Skip Permissions Mode</h4>
+<p>GSD is designed for frictionless automation:</p>
+
+<div class="cmd-block">claude --dangerously-skip-permissions</div>
+
+<h3>Additional Commands</h3>
+<table class="workflow-table">
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\`/gsd:map-codebase [area]\`</td>
+<td>Analyze existing codebase before \`new-project\` (brownfield)</td>
+</tr>
+<tr>
+<td>\`/gsd:new-milestone [name]\`</td>
+<td>Start next version after completing a milestone</td>
+</tr>
+<tr>
+<td>\`/gsd:add-phase\`</td>
+<td>Append phase to roadmap</td>
+</tr>
+<tr>
+<td>\`/gsd:insert-phase [N]\`</td>
+<td>Insert urgent work between phases</td>
+</tr>
+<tr>
+<td>\`/gsd:review\`</td>
+<td>Cross-AI peer review of current phase or branch</td>
+</tr>
+<tr>
+<td>\`/gsd:ship [N] [--draft]\`</td>
+<td>Create PR from verified phase work</td>
+</tr>
+<tr>
+<td>\`/gsd:audit-milestone\`</td>
+<td>Verify milestone achieved its definition of done</td>
+</tr>
+<tr>
+<td>\`/gsd:debug [desc]\`</td>
+<td>Systematic debugging with persistent state</td>
+</tr>
+<tr>
+<td>\`/gsd:workstreams\`</td>
+<td>Manage parallel workstreams (list, create, switch, complete)</td>
+</tr>
+<tr>
+<td>\`/gsd:ui-phase [N]\`</td>
+<td>Generate UI design contract for frontend phases</td>
+</tr>
+<tr>
+<td>\`/gsd:health [--repair]\`</td>
+<td>Validate \`.planning/\` directory integrity</td>
+</tr>
+<tr>
+<td>\`/gsd:stats\`</td>
+<td>Display project statistics</td>
+</tr>
+<tr>
+<td>\`/gsd:help\`</td>
+<td>Show all commands and usage guide</td>
+</tr>
+<tr>
+<td>\`/gsd:update\`</td>
+<td>Update GSD with changelog preview</td>
+</tr>
+</tbody>
+</table>`,
+
+  "openspec": `<h2>How to Implement Features with OpenSpec</h2>
+<p><strong>Source:</strong> https://github.com/Fission-AI/OpenSpec/</p>
+<p><strong>Philosophy:</strong> Fluid, iterative, artifact-guided workflow. Each change gets its own folder with proposal, specs, design, and tasks. Built for brownfield and greenfield alike.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Node.js 20.19.0+</li>
+<li>Git</li>
+<li>AI coding assistant (Claude Code, Cursor, Gemini CLI, etc.)</li>
+</ul>
+
+<h3>Project Setup</h3>
+
+<div class="cmd-block">mkdir my-project && cd my-project
+git init
+
+# Install OpenSpec globally
+npm install -g @fission-ai/openspec@latest
+
+# Initialize in current directory
+openspec init</div>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with OpenSpec"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<h3>FR-01 -- User Registration</h3>
+
+<h4>Step 1: Propose the feature</h4>
+
+<div class="cmd-block">/opsx:propose user-registration "Users can register with email and password. System validates input, hashes password, stores user, and returns a JWT. Duplicate emails rejected."</div>
+
+<p>OpenSpec creates a complete change folder:</p>
+
+<div class="cmd-block">openspec/changes/user-registration/
+  proposal.md    -- why we're doing this, what's changing
+  specs/         -- requirements and scenarios
+  design.md      -- technical approach
+  tasks.md       -- implementation checklist</div>
+
+<h4>Step 2: Review artifacts</h4>
+<p>Read through the generated artifacts. Adjust any requirements, design decisions, or task ordering directly in the files. OpenSpec is fluid -- update any artifact at any time.</p>
+
+<h4>Step 3: Implement the tasks</h4>
+
+<div class="cmd-block">/opsx:apply</div>
+
+<p>The AI agent reads \`tasks.md\` and implements each task sequentially:</p>
+<ul>
+<li>Database schema and user model</li>
+<li>Registration endpoint with validation</li>
+<li>Password hashing with bcrypt</li>
+<li>JWT token generation</li>
+<li>Error handling for duplicates</li>
+<li>Tests</li>
+</ul>
+
+<h4>Step 4: Verify the implementation</h4>
+
+<div class="cmd-block">/opsx:verify</div>
+
+<p>Validates that the implementation matches the design and requirements in the specs.</p>
+
+<h4>Step 5: Archive the change</h4>
+
+<div class="cmd-block">/opsx:archive</div>
+
+<p>Moves the completed change to \`openspec/changes/archive/YYYY-MM-DD-user-registration/\`.</p>
+
+<h4>Step 6: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push
+git tag v0.0.1
+git push --tags</div>
+
+<h3>FR-02 -- Board Management</h3>
+
+<h4>Step 1: Propose the feature</h4>
+
+<div class="cmd-block">/opsx:propose board-management "Users can create, rename, and delete boards. Each board belongs to one user. List boards for authenticated user."</div>
+
+<h4>Step 2: Review and implement</h4>
+<p>Review \`openspec/changes/board-management/\` artifacts, then:</p>
+
+<div class="cmd-block">/opsx:apply</div>
+
+<h4>Step 3: Verify and archive</h4>
+
+<div class="cmd-block">/opsx:verify
+/opsx:archive</div>
+
+<h4>Step 4: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push
+git tag v0.0.2
+git push --tags</div>
+
+<h3>FR-03 -- Real-time Notifications</h3>
+
+<h4>Step 1: Propose the feature</h4>
+
+<div class="cmd-block">/opsx:propose realtime-notifications "Users receive real-time notifications via WebSocket when a card assigned to them changes status. Includes card title, old status, new status, timestamp."</div>
+
+<h4>Step 2: Review, implement, verify</h4>
+
+<div class="cmd-block">/opsx:apply
+/opsx:verify
+/opsx:archive</div>
+
+<h4>Step 3: Commit, PR, and release</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT
+- FR-02: Board CRUD operations
+- FR-03: Real-time notifications via WebSocket
+
+## OpenSpec Artifacts
+- Per-feature: proposal.md, specs/, design.md, tasks.md
+- All changes verified and archived"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>`,
+
+  "ai-sdd": `<h2>How to Implement Features with AI-SDD</h2>
+<p><strong>Source:</strong> https://ai-sdd.com/</p>
+<p><strong>Philosophy:</strong> Spec-as-source-of-truth with TDD. The Director-Executor-Contract model: you provide intent and constraints, AI implements within defined boundaries, specifications are the shared language.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Node.js v18+</li>
+<li>Git</li>
+<li>AI coding agent (Claude Code, Cursor, Gemini CLI, Copilot, Windsurf, etc.)</li>
+</ul>
+
+<h3>Project Setup</h3>
+
+<div class="cmd-block">mkdir my-project && cd my-project
+git init
+
+# Install AI-SDD
+npx ai-sdd</div>
+
+<p>The installer scaffolds the \`.sdd/\` directory with steering files, commands, and workflow templates.</p>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with AI-SDD"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<h3>FR-01 -- User Registration</h3>
+
+<h4>Step 1: Establish project context (steering)</h4>
+
+<div class="cmd-block">/sdd:steering</div>
+
+<p>Define high-level project context: tech stack preferences, coding standards, architecture patterns, and non-functional requirements. This persists in \`.sdd/steering/\` as project memory across sessions.</p>
+
+<h4>Step 2: Initialize the spec</h4>
+
+<div class="cmd-block">/sdd:spec-init "User registration system with email/password authentication and JWT tokens"</div>
+
+<p>Creates a structured plan under \`.sdd/\` with the feature scope and initial boundaries.</p>
+
+<h4>Step 3: Gather requirements</h4>
+
+<div class="cmd-block">/sdd:spec-requirements user-registration</div>
+
+<p>The AI asks clarifying questions:</p>
+<ul>
+<li>What validation rules for email and password?</li>
+<li>Should email verification be included?</li>
+<li>JWT expiration policy?</li>
+<li>Error response format?</li>
+</ul>
+
+<p>Your answers become the requirements spec. Three-phase approval gate: requirements must be approved before design.</p>
+
+<h4>Step 4: Design the feature</h4>
+
+<div class="cmd-block">/sdd:spec-design user-registration</div>
+
+<p>The AI generates the technical design: data model, API contract, service architecture, security considerations. You review and approve before moving to tasks.</p>
+
+<h4>Step 5: Generate implementation tasks</h4>
+
+<div class="cmd-block">/sdd:spec-tasks user-registration</div>
+
+<p>Breaks the design into ordered tasks with dependency tracking. Tasks marked \`(P)\` can run in parallel.</p>
+
+<h4>Step 6: Implement with TDD</h4>
+
+<div class="cmd-block">/sdd:spec-impl user-registration</div>
+
+<p>The AI implements using a TDD cycle: write failing test, implement code, refactor. Each task follows red-green-refactor.</p>
+
+<h4>Step 7: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push
+git tag v0.0.1
+git push --tags</div>
+
+<h3>FR-02 -- Board Management</h3>
+
+<h4>Step 1: Initialize and specify</h4>
+
+<div class="cmd-block">/sdd:spec-init "Board management with CRUD operations for authenticated users"
+/sdd:spec-requirements board-management</div>
+
+<h4>Step 2: Design and plan</h4>
+
+<div class="cmd-block">/sdd:spec-design board-management
+/sdd:spec-tasks board-management</div>
+
+<h4>Step 3: Implement</h4>
+
+<div class="cmd-block">/sdd:spec-impl board-management</div>
+
+<h4>Step 4: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push
+git tag v0.0.2
+git push --tags</div>
+
+<h3>FR-03 -- Real-time Notifications</h3>
+
+<h4>Step 1: Initialize and specify</h4>
+
+<div class="cmd-block">/sdd:spec-init "Real-time notifications via WebSocket when cards change status"
+/sdd:spec-requirements notifications</div>
+
+<h4>Step 2: Design and validate</h4>
+
+<div class="cmd-block">/sdd:spec-design notifications
+/sdd:validate-design</div>
+
+<p>The \`/sdd:validate-design\` command checks for architectural consistency with existing features.</p>
+
+<h4>Step 3: Generate tasks and implement</h4>
+
+<div class="cmd-block">/sdd:spec-tasks notifications
+/sdd:spec-impl notifications</div>
+
+<h4>Step 4: Commit, PR, and release</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT (TDD)
+- FR-02: Board CRUD operations (TDD)
+- FR-03: Real-time notifications via WebSocket (TDD)
+
+## AI-SDD Artifacts
+- Steering context in .sdd/steering/
+- Per-feature: requirements, design, tasks specs
+- All features implemented with TDD (red-green-refactor)"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>`,
+
+  "specpulse": `<h2>How to Implement Features with SpecPulse</h2>
+<p><strong>Source:</strong> https://github.com/specpulse/specpulse</p>
+<p><strong>Philosophy:</strong> CLI-first with AI enhancement. Structured specifications before code, with 11 identical commands across 8 AI platforms. MoSCoW prioritization for task breakdown.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Python 3.11+</li>
+<li>pip</li>
+<li>Git</li>
+<li>AI coding assistant (Claude Code, Cursor, Gemini CLI, Windsurf, etc.)</li>
+</ul>
+
+<h3>Project Setup</h3>
+
+<div class="cmd-block">mkdir my-project && cd my-project
+git init
+
+# Install SpecPulse
+pip install specpulse
+
+# Initialize project with your AI platform
+specpulse init my-project --ai claude
+cd my-project</div>
+
+<p>Project structure created:</p>
+
+<div class="cmd-block">my-project/
+  .specpulse/        -- specs, plans, tasks
+  .claude/           -- AI platform commands (auto-deployed)
+  README.md</div>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with SpecPulse"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<h3>FR-01 -- User Registration</h3>
+
+<h4>Step 1: Initialize the feature</h4>
+
+<div class="cmd-block">/sp-pulse user-registration</div>
+
+<p>This is the entry point. Creates:</p>
+<ul>
+<li>Feature directory: \`specs/001-user-registration/\`</li>
+<li>Project context and metadata</li>
+<li>Feature tracking state</li>
+</ul>
+
+<h4>Step 2: Create the specification</h4>
+
+<div class="cmd-block">/sp-spec "Users can register with email and password. System validates input, hashes password, stores user, returns JWT. Duplicate emails rejected with clear error message."</div>
+
+<p>The AI generates a comprehensive spec including:</p>
+<ul>
+<li>Problem statement and business context</li>
+<li>Functional requirements</li>
+<li>Security requirements</li>
+<li>API design with endpoint specs</li>
+<li>Data models and schemas</li>
+<li>Acceptance criteria</li>
+</ul>
+
+<h4>Step 3: Generate the implementation plan</h4>
+
+<div class="cmd-block">/sp-plan</div>
+
+<p>The AI creates a detailed plan with:</p>
+<ul>
+<li>Architecture decisions and technology choices</li>
+<li>File structure for new/modified files</li>
+<li>Sequential implementation steps</li>
+<li>Dependencies between components</li>
+<li>Testing strategy</li>
+</ul>
+
+<h4>Step 4: Break down into tasks</h4>
+
+<div class="cmd-block">/sp-task</div>
+
+<p>Generates actionable tasks with MoSCoW prioritization:</p>
+<ul>
+<li>Each task has an ID, status, description, files touched, success criteria</li>
+<li>Dependencies between tasks are tracked</li>
+<li>Tasks are ordered for implementation</li>
+</ul>
+
+<h4>Step 5: Execute the tasks</h4>
+
+<div class="cmd-block">/sp-execute</div>
+
+<p>The AI implements tasks continuously: picks the next pending task, marks it in-progress, writes code, validates, marks complete, moves to next.</p>
+
+<p>For specific task execution:</p>
+
+<div class="cmd-block">/sp-execute task-001</div>
+
+<h4>Step 6: Validate the work</h4>
+
+<div class="cmd-block">/sp-validate</div>
+
+<p>Checks all completed tasks against their success criteria and the original specification.</p>
+
+<h4>Step 7: Check progress and commit</h4>
+
+<div class="cmd-block">/sp-status</div>
+
+<p>Shows current feature progress with completion percentage.</p>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push
+git tag v0.0.1
+git push --tags</div>
+
+<h3>FR-02 -- Board Management</h3>
+
+<h4>Step 1: Initialize the feature</h4>
+
+<div class="cmd-block">/sp-pulse board-management</div>
+
+<h4>Step 2: Specify, plan, task, execute</h4>
+
+<div class="cmd-block">/sp-spec "Users can create, rename, and delete boards. Each board belongs to one user. List boards for authenticated user. Boards have title and creation timestamp."
+/sp-plan
+/sp-task
+/sp-execute</div>
+
+<h4>Step 3: Validate and commit</h4>
+
+<div class="cmd-block">/sp-validate
+/sp-status</div>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push
+git tag v0.0.2
+git push --tags</div>
+
+<h3>FR-03 -- Real-time Notifications</h3>
+
+<h4>Step 1: Initialize the feature</h4>
+
+<div class="cmd-block">/sp-pulse realtime-notifications</div>
+
+<h4>Step 2: Specify with detail</h4>
+
+<div class="cmd-block">/sp-spec "Real-time notifications via WebSocket when a card assigned to a user changes status. Notification includes card title, old status, new status, and timestamp. Users subscribe on login."</div>
+
+<h4>Step 3: Clarify requirements (optional)</h4>
+
+<div class="cmd-block">/sp-clarify spec-001</div>
+
+<p>The AI asks structured questions to resolve ambiguities.</p>
+
+<h4>Step 4: Plan, task, execute, validate</h4>
+
+<div class="cmd-block">/sp-plan
+/sp-task
+/sp-execute
+/sp-validate</div>
+
+<h4>Step 5: Commit, PR, and release</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT
+- FR-02: Board CRUD operations
+- FR-03: Real-time notifications via WebSocket
+
+## SpecPulse Artifacts
+- Per-feature: spec, plan, tasks in .specpulse/
+- All features validated against acceptance criteria
+- MoSCoW prioritized task execution"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>`,
+
+  "spec-workflow-mcp": `<h2>How to Implement Features with Spec-Workflow-MCP</h2>
+<p><strong>Source:</strong> https://github.com/Pimzino/spec-workflow-mcp</p>
+<p><strong>Philosophy:</strong> MCP-native, conversational interface for structured spec-driven development. Natural language instead of slash commands, with a real-time web dashboard for tracking.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Node.js v18+</li>
+<li>Git</li>
+<li>AI coding agent with MCP support (Claude Code, Cursor, Windsurf, etc.)</li>
+</ul>
+
+<h3>Project Setup</h3>
+
+<div class="cmd-block">mkdir my-project && cd my-project
+git init</div>
+
+<h4>Add the MCP server to your AI tool</h4>
+
+<p><strong>Claude Code:</strong></p>
+
+<div class="cmd-block">claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp@latest -- /path/to/my-project</div>
+
+<p><strong>Cursor / Windsurf / other MCP clients</strong> -- add to your MCP configuration:</p>
+
+<div class="cmd-block">{
+  "mcpServers": {
+    "spec-workflow": {
+      "command": "npx",
+      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/my-project"]
+    }
+  }
+}</div>
+
+<h4>Start the dashboard (optional but recommended)</h4>
+
+<div class="cmd-block">npx -y @pimzino/spec-workflow-mcp@latest --dashboard</div>
+
+<p>Dashboard available at: http://localhost:5000</p>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with Spec-Workflow-MCP"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<h3>FR-01 -- User Registration</h3>
+
+<h4>Step 1: Create the spec (natural language)</h4>
+<p>Tell your AI agent:</p>
+
+<div class="cmd-block">Create a spec for user registration. Users can register with email and password.
+The system validates input, hashes the password, stores the user, and returns a JWT.
+Duplicate emails are rejected with a clear error.</div>
+
+<p>The MCP server creates a structured spec in \`.spec-workflow/specs/\` with:</p>
+<ul>
+<li>Requirements document</li>
+<li>Design document</li>
+<li>Task breakdown</li>
+</ul>
+
+<p>The workflow is sequential: Requirements -> Design -> Tasks.</p>
+
+<h4>Step 2: Review and approve the spec</h4>
+<p>Check the spec in the dashboard at http://localhost:5000, or ask your agent:</p>
+
+<div class="cmd-block">List my specs</div>
+
+<p>Review the generated requirements. When satisfied, approve through the dashboard or tell the agent:</p>
+
+<div class="cmd-block">Approve the requirements for user-registration</div>
+
+<p>The agent then generates the design document. Review and approve it to unlock task generation.</p>
+
+<h4>Step 3: Execute tasks</h4>
+
+<div class="cmd-block">Execute task 1 in spec user-registration</div>
+
+<p>The agent implements the first task (e.g., database schema + user model).</p>
+
+<p>Continue with each task:</p>
+
+<div class="cmd-block">Execute task 2 in spec user-registration
+Execute task 3 in spec user-registration</div>
+
+<p>Or ask the agent to execute all remaining tasks:</p>
+
+<div class="cmd-block">Execute all remaining tasks in spec user-registration</div>
+
+<h4>Step 4: Monitor progress</h4>
+
+<div class="cmd-block">Show progress for spec user-registration</div>
+
+<p>Or check the real-time dashboard for visual progress bars and task status.</p>
+
+<h4>Step 5: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push
+git tag v0.0.1
+git push --tags</div>
+
+<h3>FR-02 -- Board Management</h3>
+
+<h4>Step 1: Create the spec</h4>
+
+<div class="cmd-block">Create a spec for board management. Users can create, rename, and delete boards.
+Each board belongs to one user. List boards for the authenticated user.</div>
+
+<h4>Step 2: Approve and execute</h4>
+
+<div class="cmd-block">Approve the requirements for board-management
+Approve the design for board-management
+Execute all remaining tasks in spec board-management</div>
+
+<h4>Step 3: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push
+git tag v0.0.2
+git push --tags</div>
+
+<h3>FR-03 -- Real-time Notifications</h3>
+
+<h4>Step 1: Create the spec</h4>
+
+<div class="cmd-block">Create a spec for real-time notifications. Users receive WebSocket notifications
+when a card assigned to them changes status. Include card title, old status, new
+status, and timestamp.</div>
+
+<h4>Step 2: Approve and execute</h4>
+
+<div class="cmd-block">Approve the requirements for realtime-notifications
+Approve the design for realtime-notifications
+Execute all remaining tasks in spec realtime-notifications</div>
+
+<h4>Step 3: Commit, PR, and release</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT
+- FR-02: Board CRUD operations
+- FR-03: Real-time notifications via WebSocket
+
+## Spec-Workflow-MCP Artifacts
+- Structured specs in .spec-workflow/specs/
+- Requirements -> Design -> Tasks approval workflow per feature
+- Dashboard tracking at localhost:5000"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>`,
+
+  "anws": `<h2>How to Implement Features with ANWS</h2>
+<p><strong>Source:</strong> https://github.com/Haaaiawd/ANWS</p>
+<p><strong>Philosophy:</strong> Four principles -- Axiom (principle before implementation), Nexus (connection before fragmentation), Weave (coherence before accumulation), Sovereignty (human judgment before automation). Design-first, spec-driven workflow.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Node.js v18+</li>
+<li>Git</li>
+<li>AI IDE (Claude Code, Cursor, Windsurf, Copilot, etc.)</li>
+</ul>
+
+<h3>Project Setup</h3>
+
+<div class="cmd-block">mkdir my-project && cd my-project
+git init
+
+# Install ANWS globally
+npm install -g @haaaiawd/anws
+
+# Initialize with your target IDE(s)
+anws init --target claude,cursor</div>
+
+<p>This creates:</p>
+<ul>
+<li>\`AGENTS.md\` -- root anchor file (recovery point for AI sessions)</li>
+<li>\`.anws/\` -- versioned architecture docs and changelog</li>
+<li>\`.claude/commands/\` + \`.claude/skills/\` -- IDE-native commands</li>
+<li>\`.cursor/commands/\` + \`.cursor/skills/\` -- IDE-native commands</li>
+</ul>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with ANWS"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<h3>FR-01 -- User Registration</h3>
+
+<h4>Step 1: Quickstart (auto-detect path)</h4>
+
+<div class="cmd-block">/quickstart</div>
+
+<p>ANWS detects you're starting from zero and routes you to the genesis workflow.</p>
+
+<h4>Step 2: Genesis -- create PRD and architecture from idea</h4>
+
+<div class="cmd-block">/genesis</div>
+
+<p>Describe your full vision:</p>
+
+<blockquote>
+<p>"A web application with user registration (email/password + JWT), board management, and real-time notifications. Starting with user registration."</p>
+</blockquote>
+
+<p>The genesis workflow produces:</p>
+<ul>
+<li>\`.anws/v1/01_PRD.md\` -- Product Requirements Document</li>
+<li>\`.anws/v1/02_ARCHITECTURE.md\` -- System architecture</li>
+<li>\`.anws/v1/03_ADR/\` -- Architecture Decision Records (tech stack, auth strategy, etc.)</li>
+</ul>
+
+<h4>Step 3: Challenge the design (optional but recommended)</h4>
+
+<div class="cmd-block">/challenge</div>
+
+<p>Reviews the PRD and architecture with adversarial pressure. Surfaces risks, contradictions, and missing considerations. Produces a challenge report.</p>
+
+<h4>Step 4: Blueprint -- break into executable tasks</h4>
+
+<div class="cmd-block">/blueprint</div>
+
+<p>Decomposes the architecture into ordered, executable tasks:</p>
+<ul>
+<li>\`.anws/v1/05_TASKS.md\` -- task list with dependencies, acceptance criteria, file paths</li>
+</ul>
+
+<h4>Step 5: Forge -- implement FR-01</h4>
+
+<div class="cmd-block">/forge</div>
+
+<p>The forge workflow reads the approved tasks and implements them:</p>
+<ul>
+<li>User model and database schema</li>
+<li>Registration endpoint with validation</li>
+<li>Password hashing</li>
+<li>JWT generation</li>
+<li>Error handling</li>
+<li>Tests</li>
+</ul>
+
+<p>Human review checkpoint after implementation.</p>
+
+<h4>Step 6: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push
+git tag v0.0.1
+git push --tags</div>
+
+<h3>FR-02 -- Board Management</h3>
+
+<h4>Step 1: Design the new system component</h4>
+
+<div class="cmd-block">/design-system</div>
+
+<blockquote>
+<p>"Board management: CRUD operations for boards belonging to authenticated users."</p>
+</blockquote>
+
+<p>Produces a focused system design document for the board module within the existing architecture.</p>
+
+<h4>Step 2: Blueprint the tasks</h4>
+
+<div class="cmd-block">/blueprint</div>
+
+<p>Generates new tasks for board management, respecting dependencies on the existing user system.</p>
+
+<h4>Step 3: Forge the implementation</h4>
+
+<div class="cmd-block">/forge</div>
+
+<p>Implements board creation, renaming, deletion, listing, and tests.</p>
+
+<h4>Step 4: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push
+git tag v0.0.2
+git push --tags</div>
+
+<h3>FR-03 -- Real-time Notifications</h3>
+
+<h4>Step 1: Explore the approach (optional)</h4>
+
+<div class="cmd-block">/explore</div>
+
+<blockquote>
+<p>"Research WebSocket approaches for real-time notifications in our stack."</p>
+</blockquote>
+
+<p>Produces an exploration report on technology options and trade-offs.</p>
+
+<h4>Step 2: Design, blueprint, and forge</h4>
+
+<div class="cmd-block">/design-system</div>
+
+<blockquote>
+<p>"Notification service: WebSocket-based real-time notifications when cards change status."</p>
+</blockquote>
+
+<div class="cmd-block">/challenge
+/blueprint
+/forge</div>
+
+<h4>Step 3: Commit, PR, and release</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT
+- FR-02: Board CRUD operations
+- FR-03: Real-time notifications via WebSocket
+
+## ANWS Artifacts
+- PRD, Architecture, ADRs in .anws/v1/
+- Task breakdown in 05_TASKS.md
+- Challenge reports for design validation
+- AGENTS.md as root anchor"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>`,
+
+  "taskmaster": `<h2>How to Implement Features with Taskmaster</h2>
+<p><strong>Source:</strong> https://www.task-master.dev/</p>
+<p><strong>Philosophy:</strong> PRD-driven, dependency-ordered task management. Parse a Product Requirements Document into structured tasks with topological ordering, then execute tasks sequentially guided by AI.</p>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Node.js v18+</li>
+<li>Git</li>
+<li>AI coding agent (Claude Code, Cursor, etc.)</li>
+</ul>
+
+<h3>Project Setup</h3>
+
+<div class="cmd-block">mkdir my-project && cd my-project
+git init
+
+# Install Taskmaster globally
+npm install -g task-master-ai
+
+# Initialize Taskmaster in your project
+task-master init</div>
+
+<p>This creates:</p>
+<ul>
+<li>\`.taskmaster/\` directory with configuration</li>
+<li>\`.taskmaster/docs/\` for PRD templates</li>
+<li>\`tasks/\` directory for generated task files</li>
+</ul>
+
+<div class="cmd-block">git add .
+git commit -m "chore: initialize project with Taskmaster"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin main</div>
+
+<h3>FR-01 -- User Registration</h3>
+
+<h4>Step 1: Write the PRD</h4>
+<p>Create a PRD in \`.taskmaster/docs/prd.md\` using the provided template. Include all three features so Taskmaster can understand the full scope and dependencies:</p>
+
+<div class="cmd-block"># Product Requirements Document
+
+## Overview
+Web application with user management, boards, and notifications.
+
+## Feature Requirements
+
+### FR-01: User Registration
+- Users register with email and password
+- System validates input and hashes password
+- Returns JWT on successful registration
+- Rejects duplicate emails with clear error
+
+### FR-02: Board Management
+- CRUD operations for boards
+- Each board belongs to one user
+- List boards for authenticated user
+
+### FR-03: Real-time Notifications
+- WebSocket notifications on card status change
+- Notify assigned users with card title, old/new status, timestamp</div>
+
+<h4>Step 2: Parse the PRD into tasks</h4>
+
+<div class="cmd-block">task-master parse-prd .taskmaster/docs/prd.md</div>
+
+<p>This converts the PRD into \`tasks/tasks.json\` -- a structured task list with:</p>
+<ul>
+<li>Task IDs, titles, descriptions</li>
+<li>Dependencies between tasks</li>
+<li>Priority ordering</li>
+<li>Status tracking</li>
+</ul>
+
+<h4>Step 3: Analyze complexity (optional)</h4>
+
+<div class="cmd-block">task-master analyze-complexity</div>
+
+<p>Identifies which tasks need further breakdown and which are straightforward.</p>
+
+<h4>Step 4: Expand complex tasks into subtasks</h4>
+
+<div class="cmd-block">task-master expand --id=1
+task-master expand --id=2</div>
+
+<p>Generates subtasks for complex tasks, giving the AI more granular instructions.</p>
+
+<h4>Step 5: Get the next task</h4>
+
+<div class="cmd-block">task-master next</div>
+
+<p>Returns the next task to implement based on dependency order and status. For FR-01, this will be the foundational tasks (database setup, user model, etc.).</p>
+
+<h4>Step 6: Implement the task</h4>
+<p>Use your AI agent to implement what \`task-master next\` returns. The task description includes context, dependencies, and acceptance criteria.</p>
+
+<p>After implementation, update the status:</p>
+
+<div class="cmd-block">task-master set-status --id=1 --status=done</div>
+
+<h4>Step 7: Repeat until FR-01 tasks are complete</h4>
+
+<div class="cmd-block">task-master next
+# ... implement ...
+task-master set-status --id=2 --status=done
+
+task-master next
+# ... implement ...
+task-master set-status --id=3 --status=done</div>
+
+<h4>Step 8: List tasks to verify progress</h4>
+
+<div class="cmd-block">task-master list</div>
+
+<h4>Step 9: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(auth): add user registration (FR-01)"
+git push
+git tag v0.0.1
+git push --tags</div>
+
+<h3>FR-02 -- Board Management</h3>
+
+<h4>Step 1: Get next task (FR-02 tasks now unlocked)</h4>
+
+<div class="cmd-block">task-master next</div>
+
+<p>Dependencies from FR-01 are satisfied, so board management tasks are now available.</p>
+
+<h4>Step 2: Implement and update status</h4>
+
+<div class="cmd-block"># Implement board model
+task-master set-status --id=4 --status=done
+
+task-master next
+# Implement board endpoints
+task-master set-status --id=5 --status=done
+
+task-master next
+# Implement board tests
+task-master set-status --id=6 --status=done</div>
+
+<h4>Step 3: Commit and tag</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(boards): add board management (FR-02)"
+git push
+git tag v0.0.2
+git push --tags</div>
+
+<h3>FR-03 -- Real-time Notifications</h3>
+
+<h4>Step 1: Get next task and expand if needed</h4>
+
+<div class="cmd-block">task-master next
+task-master expand --id=7</div>
+
+<h4>Step 2: Implement notification tasks</h4>
+
+<div class="cmd-block">task-master next
+# Implement WebSocket server
+task-master set-status --id=7 --status=done
+
+task-master next
+# Implement notification service
+task-master set-status --id=8 --status=done
+
+task-master next
+# Implement event triggers + tests
+task-master set-status --id=9 --status=done</div>
+
+<h4>Step 3: Update tasks if requirements change</h4>
+
+<div class="cmd-block">task-master update-task --id=9 --prompt="Add reconnection logic for dropped WebSocket connections"</div>
+
+<h4>Step 4: Verify all tasks complete</h4>
+
+<div class="cmd-block">task-master list</div>
+
+<h4>Step 5: Commit, PR, and release</h4>
+
+<div class="cmd-block">git add .
+git commit -m "feat(notifications): add real-time notifications (FR-03)"
+git push</div>
+
+<div class="cmd-block">gh pr create \\
+  --title "Release 1.0.0 -- User Registration, Boards, Notifications" \\
+  --body "## Summary
+- FR-01: User registration with JWT
+- FR-02: Board CRUD operations
+- FR-03: Real-time notifications via WebSocket
+
+## Taskmaster Artifacts
+- PRD in .taskmaster/docs/prd.md
+- Structured tasks in tasks/tasks.json
+- All tasks marked as done with dependency tracking"</div>
+
+<p>After PR approval and merge:</p>
+
+<div class="cmd-block">git checkout main && git pull
+git tag v1.0.0
+git push --tags</div>`
+};
+
+const methodWorkflowsFull = {
+  "bmad": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>npx bmad-method install</td>
+<td>Yes</td>
+<td>_bmad/ directory + config</td>
+<td>Select AI tool and modules during install</td>
+</tr>
+<tr>
+<td>Setup</td>
+<td>2</td>
+<td>Help Agent</td>
+<td>bmad-help</td>
+<td>No</td>
+<td>Guidance on next step</td>
+<td>Available anytime; auto-runs after every workflow</td>
+</tr>
+<tr>
+<td>Phase 1: Analysis</td>
+<td>1</td>
+<td>Analyst (Mary)</td>
+<td>bmad-brainstorming</td>
+<td>No</td>
+<td>brainstorming-report.md</td>
+<td>Trigger: BP</td>
+</tr>
+<tr>
+<td>Phase 1: Analysis</td>
+<td>2</td>
+<td>Analyst (Mary)</td>
+<td>bmad-domain-research</td>
+<td>No</td>
+<td>Research findings</td>
+<td>Trigger: RS</td>
+</tr>
+<tr>
+<td>Phase 2: Planning</td>
+<td>1</td>
+<td>Product Manager (John)</td>
+<td>bmad-create-prd</td>
+<td>Yes</td>
+<td>_bmad-output/PRD.md</td>
+<td>Trigger: CP; covers ALL features for the project</td>
+</tr>
+<tr>
+<td>Phase 2: Planning</td>
+<td>2</td>
+<td>UX Designer (Sally)</td>
+<td>bmad-create-ux-design</td>
+<td>No</td>
+<td>_bmad-output/ux-spec.md</td>
+<td>Trigger: CU; skip for backend-only projects</td>
+</tr>
+<tr>
+<td>Phase 3: Solutioning</td>
+<td>1</td>
+<td>Architect (Winston)</td>
+<td>bmad-create-architecture</td>
+<td>Yes</td>
+<td>_bmad-output/architecture.md + ADRs</td>
+<td>Trigger: CA</td>
+</tr>
+<tr>
+<td>Phase 3: Solutioning</td>
+<td>2</td>
+<td>Quick Flow (Barry)</td>
+<td>bmad-generate-project-context</td>
+<td>Recommended</td>
+<td>_bmad-output/project-context.md</td>
+<td>Orchestrator utility; run after architecture; guides all subsequent agents</td>
+</tr>
+<tr>
+<td>Phase 3: Solutioning</td>
+<td>3</td>
+<td>Product Manager (John)</td>
+<td>bmad-create-epics-and-stories</td>
+<td>Yes</td>
+<td>Epic files with stories under _bmad-output/</td>
+<td>Trigger: CE; uses both PRD and Architecture</td>
+</tr>
+<tr>
+<td>Phase 3: Solutioning</td>
+<td>4</td>
+<td>PM (John) / Architect (Winston)</td>
+<td>bmad-check-implementation-readiness</td>
+<td>Recommended</td>
+<td>Readiness report (PASS, CONCERNS, or FAIL)</td>
+<td>Trigger: IR (available on both PM and Architect agents)</td>
+</tr>
+<tr>
+<td>Phase 4: Implementation</td>
+<td>1</td>
+<td>Scrum Master (Bob)</td>
+<td>bmad-sprint-planning</td>
+<td>Yes</td>
+<td>sprint-status.yaml</td>
+<td>Trigger: SP; run once per project to initialize sprint tracking</td>
+</tr>
+<tr>
+<td>Phase 4: Implementation</td>
+<td>2</td>
+<td>Scrum Master (Bob)</td>
+<td>bmad-create-story</td>
+<td>Yes</td>
+<td>story-[slug].md</td>
+<td>Trigger: CS; repeat per story in fresh chat</td>
+</tr>
+<tr>
+<td>Phase 4: Implementation</td>
+<td>3</td>
+<td>Developer (Amelia)</td>
+<td>bmad-dev-story</td>
+<td>Yes</td>
+<td>Working code + tests</td>
+<td>Trigger: DS; reads story file and implements</td>
+</tr>
+<tr>
+<td>Phase 4: Implementation</td>
+<td>4</td>
+<td>Developer (Amelia) / Quick Flow (Barry)</td>
+<td>bmad-code-review</td>
+<td>Recommended</td>
+<td>Review report (approved or changes requested)</td>
+<td>Trigger: CR; available on both Dev and Master agents</td>
+</tr>
+<tr>
+<td>Anytime</td>
+<td>1</td>
+<td>Quick Flow (Barry)</td>
+<td>bmad-quick-dev</td>
+<td>No</td>
+<td>spec-*.md + working code</td>
+<td>Trigger: QD; skip Phases 1-3, one-pass workflow</td>
+</tr>
+<tr>
+<td>Anytime</td>
+<td>2</td>
+<td>PM (John) / SM (Bob)</td>
+<td>bmad-correct-course</td>
+<td>No</td>
+<td>Updated plan or re-routing decision</td>
+<td>Trigger: CC; for significant mid-sprint changes, scope pivots</td>
+</tr>
+</tbody>
+</table>`,
+
+  "spec-kit": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>specify init . --ai claude</td>
+<td>Yes</td>
+<td>.specify/ directory + templates + commands</td>
+<td>uv tool install specify-cli; then specify init; specify check to verify</td>
+</tr>
+<tr>
+<td>Setup</td>
+<td>2</td>
+<td>AI Agent</td>
+<td>/speckit.constitution</td>
+<td>Yes</td>
+<td>.specify/memory/constitution.md</td>
+<td>Project principles: code quality + testing + security + API consistency</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/speckit.specify</td>
+<td>Yes</td>
+<td>.specify/specs/NNN-[name]/spec.md</td>
+<td>User stories + functional requirements + acceptance criteria</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>2</td>
+<td>AI Agent</td>
+<td>/speckit.clarify</td>
+<td>Recommended</td>
+<td>Updated spec.md</td>
+<td>Structured questions to fill gaps; tighten requirements</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>3</td>
+<td>AI Agent</td>
+<td>/speckit.plan</td>
+<td>Yes</td>
+<td>.specify/specs/NNN-[name]/plan.md</td>
+<td>Architecture decisions, data model, file structure, implementation steps</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>4</td>
+<td>AI Agent</td>
+<td>/speckit.tasks</td>
+<td>Yes</td>
+<td>.specify/specs/NNN-[name]/tasks.md</td>
+<td>Ordered, dependency-aware tasks with file paths and parallel markers</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>5</td>
+<td>AI Agent</td>
+<td>/speckit.implement</td>
+<td>Yes</td>
+<td>Working code + tests</td>
+<td>Executes all tasks in order</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>6</td>
+<td>AI Agent</td>
+<td>/speckit.analyze</td>
+<td>Recommended</td>
+<td>Consistency check report</td>
+<td>Used for FR-03 in how-to; checks consistency before implementation</td>
+</tr>
+</tbody>
+</table>`,
+
+  "gsd": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>npx get-shit-done-cc@latest</td>
+<td>Yes</td>
+<td>GSD config + commands</td>
+<td>Multi-runtime supported; local or global install</td>
+</tr>
+<tr>
+<td>Setup</td>
+<td>2</td>
+<td>GSD Orchestrator</td>
+<td>/gsd:help</td>
+<td>No</td>
+<td>Command reference</td>
+<td>Show all commands and usage guide</td>
+</tr>
+<tr>
+<td>Phase 1: Discovery</td>
+<td>1</td>
+<td>GSD Orchestrator</td>
+<td>/gsd:new-project</td>
+<td>Yes</td>
+<td>PROJECT.md, REQUIREMENTS.md, ROADMAP.md, STATE.md, .planning/research/</td>
+<td>Questions -> Research -> Requirements -> Roadmap; use --auto for autonomous mode</td>
+</tr>
+<tr>
+<td>Phase 2: Discussion</td>
+<td>1</td>
+<td>GSD Orchestrator</td>
+<td>/gsd:discuss-phase N</td>
+<td>Yes</td>
+<td>N-CONTEXT.md</td>
+<td>Surfaces gray areas; use --batch to answer grouped questions</td>
+</tr>
+<tr>
+<td>Phase 3: Planning</td>
+<td>1</td>
+<td>Research Agents</td>
+<td>/gsd:plan-phase N</td>
+<td>Yes</td>
+<td>N-RESEARCH.md, N-1-PLAN.md, N-2-PLAN.md</td>
+<td>Spawns research agents then creates atomic XML plans</td>
+</tr>
+<tr>
+<td>Phase 4: Execution</td>
+<td>1</td>
+<td>Executor Agents</td>
+<td>/gsd:execute-phase N</td>
+<td>Yes</td>
+<td>N-1-SUMMARY.md, N-2-SUMMARY.md, N-VERIFICATION.md</td>
+<td>Groups plans into waves; fresh 200k context per task; auto-commits</td>
+</tr>
+<tr>
+<td>Phase 5: Verification</td>
+<td>1</td>
+<td>Verifier Agent</td>
+<td>/gsd:verify-work N</td>
+<td>Recommended</td>
+<td>N-UAT.md</td>
+<td>Walk through deliverables; spawns debug agents if failures</td>
+</tr>
+<tr>
+<td>Phase 6: Release</td>
+<td>1</td>
+<td>GSD Orchestrator</td>
+<td>/gsd:ship N</td>
+<td>Yes</td>
+<td>Pull request</td>
+<td>Creates PR with auto-generated body; use --draft for draft PRs</td>
+</tr>
+<tr>
+<td>Anytime</td>
+<td>1</td>
+<td>GSD Orchestrator</td>
+<td>/gsd:next</td>
+<td>No</td>
+<td>Runs next logical command</td>
+<td>Auto-detects state and runs discuss -> plan -> execute -> verify -> ship</td>
+</tr>
+<tr>
+<td>Anytime</td>
+<td>2</td>
+<td>GSD Orchestrator</td>
+<td>/gsd:quick</td>
+<td>No</td>
+<td>Code changes</td>
+<td>Ad-hoc tasks outside phase system; flags: --discuss, --research, --full</td>
+</tr>
+<tr>
+<td>Anytime</td>
+<td>3</td>
+<td>GSD Orchestrator</td>
+<td>/gsd:fast</td>
+<td>No</td>
+<td>Code changes</td>
+<td>Skips planning; executes immediately; for trivial tasks</td>
+</tr>
+</tbody>
+</table>`,
+
+  "openspec": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>openspec init</td>
+<td>Yes</td>
+<td>openspec/ directory + AI commands</td>
+<td>npm install -g @fission-ai/openspec@latest first</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/opsx:propose</td>
+<td>Yes</td>
+<td>openspec/changes/[name]/ (proposal.md, specs/, design.md, tasks.md)</td>
+<td>Creates complete change folder with all artifacts in one pass</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>2</td>
+<td>Developer</td>
+<td>Manual review</td>
+<td>Recommended</td>
+<td>Edited artifacts (if needed)</td>
+<td>Read and adjust requirements/design/tasks directly in files</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>3</td>
+<td>AI Agent</td>
+<td>/opsx:apply</td>
+<td>Yes</td>
+<td>Working code + tests</td>
+<td>Reads tasks.md and implements each task sequentially</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>4</td>
+<td>AI Agent</td>
+<td>/opsx:verify</td>
+<td>Recommended</td>
+<td>Verification report</td>
+<td>Validates implementation matches design and specs</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>5</td>
+<td>AI Agent</td>
+<td>/opsx:archive</td>
+<td>No</td>
+<td>openspec/changes/archive/YYYY-MM-DD-[name]/</td>
+<td>Moves completed change to archive folder</td>
+</tr>
+</tbody>
+</table>`,
+
+  "ai-sdd": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>npx ai-sdd</td>
+<td>Yes</td>
+<td>.sdd/ directory + steering files + commands</td>
+<td>Scaffolds the framework</td>
+</tr>
+<tr>
+<td>Setup</td>
+<td>2</td>
+<td>AI Agent</td>
+<td>/sdd:steering</td>
+<td>Yes</td>
+<td>.sdd/steering/ (project memory)</td>
+<td>Tech stack preferences; coding standards; persists across sessions</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/sdd:spec-init</td>
+<td>Yes</td>
+<td>Feature spec structure under .sdd/</td>
+<td>Provide feature description as argument</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>2</td>
+<td>AI Agent</td>
+<td>/sdd:spec-requirements</td>
+<td>Yes</td>
+<td>Requirements spec</td>
+<td>Three-phase approval gate; must approve before design</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>3</td>
+<td>AI Agent</td>
+<td>/sdd:spec-design</td>
+<td>Yes</td>
+<td>Design spec (data model, API, services, security)</td>
+<td>Must approve before tasks</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>4</td>
+<td>AI Agent</td>
+<td>/sdd:spec-tasks</td>
+<td>Yes</td>
+<td>Task breakdown with dependency tracking</td>
+<td>Tasks marked (P) can run in parallel</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>5</td>
+<td>AI Agent</td>
+<td>/sdd:spec-impl</td>
+<td>Yes</td>
+<td>Code + tests (red-green-refactor)</td>
+<td>TDD cycle per task</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>6</td>
+<td>AI Agent</td>
+<td>/sdd:validate-design</td>
+<td>Recommended</td>
+<td>Architectural consistency report</td>
+<td>Used for FR-03 in how-to; checks consistency with existing features</td>
+</tr>
+</tbody>
+</table>`,
+
+  "specpulse": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>specpulse init my-project --ai claude</td>
+<td>Yes</td>
+<td>.specpulse/ + .claude/ commands</td>
+<td>pip install specpulse first; auto-deploys AI platform commands</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/sp-pulse [feature-name]</td>
+<td>Yes</td>
+<td>specs/NNN-[name]/ directory + tracking state</td>
+<td>Entry point; creates feature directory and metadata</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>2</td>
+<td>AI Agent</td>
+<td>/sp-spec</td>
+<td>Yes</td>
+<td>Spec with requirements, API design, data models, acceptance criteria</td>
+<td>Problem statement, functional reqs, security reqs, endpoint specs</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>3</td>
+<td>AI Agent</td>
+<td>/sp-clarify</td>
+<td>Recommended</td>
+<td>Updated spec with clarifications</td>
+<td>Structured questions to resolve ambiguities; used for FR-03 in how-to</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>4</td>
+<td>AI Agent</td>
+<td>/sp-plan</td>
+<td>Yes</td>
+<td>Plan with architecture decisions, file structure, steps, dependencies</td>
+<td>Testing strategy included</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>5</td>
+<td>AI Agent</td>
+<td>/sp-task</td>
+<td>Yes</td>
+<td>Tasks with MoSCoW priority + IDs + status + success criteria</td>
+<td>Dependencies tracked; tasks ordered for implementation</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>6</td>
+<td>AI Agent</td>
+<td>/sp-execute</td>
+<td>Yes</td>
+<td>Working code + tests</td>
+<td>Continuous execution: pick next pending, implement, validate, mark done; also /sp-execute task-NNN for single task</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>7</td>
+<td>AI Agent</td>
+<td>/sp-validate</td>
+<td>Recommended</td>
+<td>Validation report against spec + success criteria</td>
+<td>Checks all completed tasks against original specification</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>8</td>
+<td>AI Agent</td>
+<td>/sp-status</td>
+<td>No</td>
+<td>Feature progress report with completion percentage</td>
+<td>Shows current feature status</td>
+</tr>
+</tbody>
+</table>`,
+
+  "spec-workflow-mcp": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp@latest</td>
+<td>Yes</td>
+<td>MCP server registered in AI tool</td>
+<td>Also supports Cursor/Windsurf via mcpServers JSON config</td>
+</tr>
+<tr>
+<td>Setup</td>
+<td>2</td>
+<td>Developer</td>
+<td>npx -y @pimzino/spec-workflow-mcp@latest --dashboard</td>
+<td>Recommended</td>
+<td>Web dashboard at http://localhost:5000</td>
+<td>Real-time visual progress bars and task status</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>1</td>
+<td>AI Agent + MCP Server</td>
+<td>Create a spec for [feature]</td>
+<td>Yes</td>
+<td>.spec-workflow/specs/[name]/ (requirements document)</td>
+<td>MCP tool: create_spec; sequential workflow: Requirements -> Design -> Tasks</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>2</td>
+<td>AI Agent + MCP Server</td>
+<td>List my specs</td>
+<td>No</td>
+<td>Spec list with status (inline)</td>
+<td>MCP tool: list_specs; also visible on dashboard</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>3</td>
+<td>AI Agent + MCP Server</td>
+<td>Approve requirements for [feature]</td>
+<td>Yes</td>
+<td>Design document generated</td>
+<td>MCP tool: approve(requirements); unlocks design generation</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>4</td>
+<td>AI Agent + MCP Server</td>
+<td>Approve design for [feature]</td>
+<td>Yes</td>
+<td>Task breakdown generated</td>
+<td>MCP tool: approve(design); unlocks task generation</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>5</td>
+<td>AI Agent + MCP Server</td>
+<td>Execute task N in spec [feature]</td>
+<td>Yes</td>
+<td>Code + tests for task N</td>
+<td>MCP tool: execute_task; dashboard updates progress bar</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>6</td>
+<td>AI Agent + MCP Server</td>
+<td>Execute all remaining tasks in spec [feature]</td>
+<td>Yes</td>
+<td>Code + tests for all remaining tasks</td>
+<td>Loops through all pending tasks; alternative to one-by-one execution</td>
+</tr>
+<tr>
+<td>Per-Feature Cycle</td>
+<td>7</td>
+<td>AI Agent + MCP Server</td>
+<td>Show progress for spec [feature]</td>
+<td>No</td>
+<td>Progress report (inline)</td>
+<td>Also visible on real-time dashboard</td>
+</tr>
+</tbody>
+</table>`,
+
+  "anws": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>anws init --target claude</td>
+<td>Yes</td>
+<td>AGENTS.md + .anws/ + .claude/commands/ + .claude/skills/</td>
+<td>Multi-target supported (claude + cursor)</td>
+</tr>
+<tr>
+<td>Phase 1: Genesis</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/quickstart</td>
+<td>No</td>
+<td>Routes to appropriate workflow</td>
+<td>Detects project state and suggests next action</td>
+</tr>
+<tr>
+<td>Phase 1: Genesis</td>
+<td>2</td>
+<td>AI Agent</td>
+<td>/genesis</td>
+<td>Yes</td>
+<td>.anws/v1/01_PRD.md, 02_ARCHITECTURE.md, 03_ADR/</td>
+<td>Describe full vision; produces PRD + architecture + ADRs in one pass</td>
+</tr>
+<tr>
+<td>Phase 2: Validation</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/challenge</td>
+<td>Recommended</td>
+<td>Challenge report (risks + gaps)</td>
+<td>Adversarial review of PRD and architecture</td>
+</tr>
+<tr>
+<td>Phase 3: Task Planning</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/blueprint</td>
+<td>Yes</td>
+<td>.anws/v1/05_TASKS.md (ordered, executable tasks)</td>
+<td>Acceptance criteria + file paths per task</td>
+</tr>
+<tr>
+<td>Phase 4: Implementation</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/forge</td>
+<td>Yes</td>
+<td>Working code + tests</td>
+<td>Reads approved tasks and implements; human review checkpoint after</td>
+</tr>
+<tr>
+<td>Phase 2: Validation (incremental)</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/design-system</td>
+<td>Yes</td>
+<td>System design document for new module</td>
+<td>For adding new components to existing architecture (FR-02+ workflow)</td>
+</tr>
+<tr>
+<td>Anytime</td>
+<td>1</td>
+<td>AI Agent</td>
+<td>/explore</td>
+<td>No</td>
+<td>Exploration report (options + trade-offs)</td>
+<td>Research technology approaches before design decisions</td>
+</tr>
+</tbody>
+</table>`,
+
+  "taskmaster": `<table class="workflow-table">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Step Order</th>
+<th>Agent</th>
+<th>Command</th>
+<th>Required</th>
+<th>Output Artifact</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>1</td>
+<td>Developer</td>
+<td>task-master init</td>
+<td>Yes</td>
+<td>.taskmaster/ directory + tasks/ directory</td>
+<td>npm install -g task-master-ai first</td>
+</tr>
+<tr>
+<td>Phase 1: Requirements</td>
+<td>1</td>
+<td>Developer</td>
+<td>Manual: write PRD</td>
+<td>Yes</td>
+<td>.taskmaster/docs/prd.md</td>
+<td>Use provided template; include ALL features for full scope and dependencies</td>
+</tr>
+<tr>
+<td>Phase 2: Task Generation</td>
+<td>1</td>
+<td>Taskmaster CLI</td>
+<td>task-master parse-prd .taskmaster/docs/prd.md</td>
+<td>Yes</td>
+<td>tasks/tasks.json (structured tasks with IDs, deps, priority, status)</td>
+<td>Converts PRD into dependency-ordered task list</td>
+</tr>
+<tr>
+<td>Phase 2: Task Generation</td>
+<td>2</td>
+<td>Taskmaster CLI</td>
+<td>task-master analyze-complexity</td>
+<td>Recommended</td>
+<td>Complexity report (inline)</td>
+<td>Identifies which tasks need further breakdown</td>
+</tr>
+<tr>
+<td>Phase 2: Task Generation</td>
+<td>3</td>
+<td>Taskmaster CLI</td>
+<td>task-master expand --id=N</td>
+<td>Recommended</td>
+<td>Updated tasks.json with subtasks</td>
+<td>Generates subtasks for complex tasks; more granular AI instructions</td>
+</tr>
+<tr>
+<td>Phase 3: Implementation</td>
+<td>1</td>
+<td>Taskmaster CLI</td>
+<td>task-master next</td>
+<td>Yes</td>
+<td>Next task by dependency order (inline)</td>
+<td>Returns next task based on dependency order and status</td>
+</tr>
+<tr>
+<td>Phase 3: Implementation</td>
+<td>2</td>
+<td>Taskmaster CLI</td>
+<td>task-master show --id=N</td>
+<td>No</td>
+<td>Task details (inline)</td>
+<td>Referenced in process diagram; review task before implementation</td>
+</tr>
+<tr>
+<td>Phase 3: Implementation</td>
+<td>3</td>
+<td>AI Agent</td>
+<td>AI implements task</td>
+<td>Yes</td>
+<td>Working code + tests</td>
+<td>Developer uses AI agent to implement what task-master next returns</td>
+</tr>
+<tr>
+<td>Phase 3: Implementation</td>
+<td>4</td>
+<td>Taskmaster CLI</td>
+<td>task-master set-status --id=N --status=done</td>
+<td>Yes</td>
+<td>Updated tasks.json</td>
+<td>Mark task as done after implementation; repeat next -> implement -> set-status</td>
+</tr>
+<tr>
+<td>Phase 3: Implementation</td>
+<td>5</td>
+<td>Taskmaster CLI</td>
+<td>task-master update-task --id=N --prompt=...</td>
+<td>No</td>
+<td>Updated task in tasks.json</td>
+<td>Modify task if requirements change mid-implementation</td>
+</tr>
+<tr>
+<td>Phase 3: Implementation</td>
+<td>6</td>
+<td>Taskmaster CLI</td>
+<td>task-master list</td>
+<td>No</td>
+<td>Task list with status (inline)</td>
+<td>Verify progress; check all tasks complete before release</td>
+</tr>
+</tbody>
+</table>`
+};
+
+</script>
+
+<!-- Neon Auth / Stack Auth SDK (load when you have your project configured) -->
+<!-- <script src="https://unpkg.com/@stackframe/stack@latest/dist/browser.js"></script> -->
+<!-- <script>
+  window.StackAuth = new Stack({
+    projectId: NEON_AUTH_CONFIG.projectId,
+    publishableClientKey: NEON_AUTH_CONFIG.publishableClientKey,
+  });
+</script> -->
+
+</body>
+</html>

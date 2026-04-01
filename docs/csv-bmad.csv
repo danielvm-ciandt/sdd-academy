@@ -1,0 +1,55 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,npx bmad-method install,Install BMAD Method,Yes,_bmad/ directory + config,Yes,Select AI tool and modules during install
+Setup,2,Help Agent,bmad-help,bmad-help,Get Guidance,No,Guidance on next step,Yes,Available anytime; auto-runs after every workflow
+Phase 1: Analysis,1,"Analyst (Mary)",bmad-analyst,bmad-brainstorming,Brainstorm Ideas,No,brainstorming-report.md,Yes,Trigger: BP
+Phase 1: Analysis,2,"Analyst (Mary)",bmad-analyst,bmad-domain-research,Domain Research,No,Research findings,Yes,Trigger: RS
+Phase 1: Analysis,3,"Analyst (Mary)",bmad-analyst,bmad-market-research,Market Research,No,Research findings,Yes,Trigger: RS
+Phase 1: Analysis,4,"Analyst (Mary)",bmad-analyst,bmad-technical-research,Technical Research,No,Research findings,Yes,Trigger: RS
+Phase 1: Analysis,5,"Analyst (Mary)",bmad-analyst,bmad-product-brief,Create Product Brief,No,product-brief.md,Yes,Trigger: CB
+Phase 1: Analysis,6,"Analyst (Mary)",bmad-analyst,bmad-prfaq,PRFAQ / Working Backwards,No,prfaq-{project}.md,Yes,Trigger: WB; stress-test and forge product concept
+Phase 2: Planning,1,"Product Manager (John)",bmad-pm,bmad-create-prd,Create PRD,Yes,_bmad-output/PRD.md,Yes,Trigger: CP; covers ALL features for the project
+Phase 2: Planning,2,"Product Manager (John)",bmad-pm,bmad-validate-prd,Validate PRD,Recommended,PRD validation report,Yes,"Trigger: VP; listed in agents table, not in step-by-step walkthrough"
+Phase 2: Planning,3,"Product Manager (John)",bmad-pm,bmad-edit-prd,Edit PRD,No,Updated PRD,Yes,"Trigger: EP; listed in agents table, not in step-by-step walkthrough"
+Phase 2: Planning,4,"UX Designer (Sally)",bmad-ux-designer,bmad-create-ux-design,Create UX Design,No,_bmad-output/ux-spec.md,Yes,Trigger: CU; skip for backend-only projects
+Phase 3: Solutioning,1,"Architect (Winston)",bmad-architect,bmad-create-architecture,Create Architecture,Yes,_bmad-output/architecture.md + ADRs,Yes,Trigger: CA
+Phase 3: Solutioning,2,Standalone Workflow,N/A,bmad-generate-project-context,Generate Project Context,Recommended,_bmad-output/project-context.md,Yes,Standalone solutioning workflow; run after architecture; guides all subsequent agents
+Phase 3: Solutioning,3,"Product Manager (John)",bmad-pm,bmad-create-epics-and-stories,Create Epics and Stories,Yes,Epic files with stories under _bmad-output/,Yes,Trigger: CE; uses both PRD and Architecture
+Phase 3: Solutioning,4,"PM (John) / Architect (Winston)",bmad-pm or bmad-architect,bmad-check-implementation-readiness,Check Implementation Readiness,Recommended,"Readiness report (PASS, CONCERNS, or FAIL)",Yes,Trigger: IR (available on both PM and Architect agents)
+Phase 4: Implementation,1,"Scrum Master (Bob)",bmad-sm,bmad-sprint-planning,Sprint Planning,Yes,sprint-status.yaml,Yes,Trigger: SP; run once per project to initialize sprint tracking
+Phase 4: Implementation,2,"Scrum Master (Bob)",bmad-sm,bmad-create-story,Create Story,Yes,story-[slug].md,Yes,Trigger: CS; repeat per story in fresh chat
+Phase 4: Implementation,3,"Developer (Amelia)",bmad-dev,bmad-dev-story,Dev Story,Yes,Working code + tests,Yes,Trigger: DS; reads story file and implements
+Phase 4: Implementation,4,"Developer (Amelia) / Quick Flow (Barry)",bmad-dev or bmad-master,bmad-code-review,Code Review,Recommended,Review report (approved or changes requested),Yes,Trigger: CR; available on both Dev and Master agents
+Phase 4: Implementation,5,"QA Engineer (Quinn)",bmad-qa,bmad-qa-generate-e2e-tests,QA Generate E2E Tests,No,Automated test suite,Yes,"Trigger: QA; listed in agents table, not in step-by-step walkthrough"
+Phase 4: Implementation,6,"Scrum Master (Bob)",bmad-sm,bmad-sprint-status,Sprint Status,No,Status summary (inline),Yes,Track progress and story status
+Phase 4: Implementation,7,"Scrum Master (Bob)",bmad-sm,bmad-retrospective,Epic Retrospective,No,Retrospective doc,Yes,Trigger: ER; run after completing all stories in an epic
+Anytime,1,"Quick Flow (Barry)",bmad-master,bmad-quick-dev,Quick Dev,No,spec-*.md + working code,Yes,"Trigger: QD; skip Phases 1-3, one-pass workflow"
+Anytime,2,"PM (John) / SM (Bob)",bmad-pm or bmad-sm,bmad-correct-course,Correct Course,No,Updated plan or re-routing decision,Yes,"Trigger: CC; for significant mid-sprint changes, scope pivots"
+Anytime,3,"Quick Flow (Barry)",bmad-master,bmad-quick-spec,Quick Spec,No,Lightweight spec,No,"No matching skill directory in current source (v6); may be removed or renamed; not documented in how-to"
+Anytime,4,"Analyst (Mary)",bmad-analyst,bmad-document-project,Document Project,No,Documentation in docs/,No,"Trigger: DP; from BMAD standard workflow; for brownfield codebases; not in how-to step-by-step"
+Anytime,5,Tech Writer (Paige),bmad-tech-writer,bmad-tech-writer (WD trigger),Write Document,No,Documentation in docs/,No,"Conversational trigger WD on tech-writer agent; not a standalone workflow skill"
+Core Tool,1,N/A,N/A,bmad-party-mode,Party Mode,No,Multi-agent discussion output,No,Core workflow; multi-agent room for tradeoff decisions and brainstorming
+Core Tool,2,N/A,N/A,bmad-distillator,Distillator,No,Lossless compressed distillate,No,Core task; LLM-oriented compression
+Core Tool,3,N/A,N/A,bmad-advanced-elicitation,Advanced Elicitation,No,Refined LLM output,No,Core task; iterative refinement of generated content
+Core Tool,4,N/A,N/A,bmad-review-adversarial-general,Adversarial Review,No,Issue list (min 10),No,Core task; cynical gap-finding review
+Core Tool,5,N/A,N/A,bmad-review-edge-case-hunter,Edge Case Hunter,No,Edge-case analysis (JSON),No,Core task; branching-path and edge-case analysis
+Core Tool,6,N/A,N/A,bmad-editorial-review-prose,Editorial Review (Prose),No,Copy-edited text,No,Core task; prose clarity editing
+Core Tool,7,N/A,N/A,bmad-editorial-review-structure,Editorial Review (Structure),No,Structural feedback,No,Core task; structural editing
+Core Tool,8,N/A,N/A,bmad-shard-doc,Shard Document,No,Split markdown files + index.md,No,Core task; splits large markdown on ## headings
+Core Tool,9,N/A,N/A,bmad-index-docs,Index Docs,No,Folder index.md,No,Core task; generates index.md for a docs folder
+Phase 4: Implementation,8,"Scrum Master (Bob)",bmad-sm,bmad-create-story (Validate Mode),Validate Story,Recommended,Story validation report,No,"From BMAD standard workflow Phase 4; pre-development story review / Three Amigos"
+Phase 3-4: Testing,1,"Test Architect (Murat)",bmad-tea,/bmad:tea:teach-me-testing,Teach Me Testing (TEA Academy),No,TEA Academy learning materials,No,"Trigger: TMT; Codex: $bmad-tea-teach-me-testing; TEA enterprise module"
+Phase 3-4: Testing,2,"Test Architect (Murat)",bmad-tea,/bmad:tea:framework,Scaffold Test Framework,No,"Test framework config (frontend, backend, or fullstack)",No,"Trigger: TF; Codex: $bmad-tea-testarch-framework; TEA enterprise module"
+Phase 3-4: Testing,3,"Test Architect (Murat)",bmad-tea,/bmad:tea:ci,Set Up CI/CD Quality Pipeline,No,CI/CD pipeline config (multi-platform),No,"Trigger: CI; Codex: $bmad-tea-testarch-ci; TEA enterprise module"
+Phase 3-4: Testing,4,"Test Architect (Murat)",bmad-tea,/bmad:tea:test-design,Test Design,No,System-level or epic-level test design,No,"Trigger: TD; Codex: $bmad-tea-testarch-test-design; TEA enterprise module"
+Phase 3-4: Testing,5,"Test Architect (Murat)",bmad-tea,/bmad:tea:atdd,ATDD (Acceptance Test-Driven Dev),No,Failing acceptance tests + checklist,No,"Trigger: AT; Codex: $bmad-tea-testarch-atdd; TEA enterprise module"
+Phase 3-4: Testing,6,"Test Architect (Murat)",bmad-tea,/bmad:tea:automate,Expand Test Automation,No,Expanded test automation coverage,No,"Trigger: TA; Codex: $bmad-tea-testarch-automate; TEA enterprise module"
+Phase 3-4: Testing,7,"Test Architect (Murat)",bmad-tea,/bmad:tea:test-review,Test Review,No,Test quality score + review report,No,"Trigger: RV; Codex: $bmad-tea-testarch-test-review; TEA enterprise module"
+Phase 3-4: Testing,8,"Test Architect (Murat)",bmad-tea,/bmad:tea:trace,Traceability + Gate Decision,No,Requirements-to-tests traceability matrix + gate decision,No,"Trigger: TR; Codex: $bmad-tea-testarch-trace; TEA enterprise module; release gate"
+Phase 3-4: Testing,9,"Test Architect (Murat)",bmad-tea,/bmad:tea:nfr-assess,NFR Assessment,No,Non-functional requirements assessment report,No,"Trigger: NR; Codex: $bmad-tea-testarch-nfr; TEA enterprise module"
+CIS: Creative,1,Brainstorming Coach,cis-brainstorm,/cis-brainstorm,Brainstorm Ideas (CIS),No,Ideation session with structured techniques (SCAMPER etc.),No,CIS module; install via npx bmad-method@alpha install; select Creative Intelligence Suite
+CIS: Creative,2,Design Thinking Coach,cis-design-thinking,/cis-design-thinking,Design Thinking,No,Human-centered design through empathy + ideation + prototyping,No,CIS module; for user-centered design work
+CIS: Creative,3,Problem Solver,cis-problem-solve,/cis-problem-solve,Systematic Problem Analysis,No,Problem diagnosis + root cause analysis,No,CIS module; for when stuck on a problem
+CIS: Creative,4,Innovation Strategist,cis-innovation,/cis-innovation,Innovation & Disruption Analysis,No,Disruption opportunities + business model innovation,No,CIS module; for finding market gaps
+CIS: Creative,5,Storyteller,cis-storytelling,/cis-storytelling,Product Storytelling,No,Compelling narratives for products and features,No,CIS module; for product story crafting
+CIS: Creative,6,Presentation Master,cis-presentation,/cis-presentation,Presentation Design,No,Structured persuasive presentation,No,CIS module; for pitch preparation
+CIS: Creative,7,Creative Problem Solver,cis-creative-problem-solver,N/A (agent only),Creative Problem Solving,No,Creative solutions using lateral thinking,No,"CIS module; listed as agent, no dedicated slash command documented; may be invoked via agent menu"

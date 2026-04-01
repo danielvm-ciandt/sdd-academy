@@ -1,0 +1,30 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,npx get-shit-done-cc@latest,Install GSD,Yes,GSD config + commands,Yes,Multi-runtime supported; local or global install
+Setup,2,GSD Orchestrator,N/A,/gsd:help,Help,No,Command reference,Yes,Show all commands and usage guide
+Setup,3,GSD Orchestrator,N/A,/gsd:map-codebase,Map Codebase,No,Codebase analysis,Yes,For brownfield projects; spawns parallel agents to analyze stack
+Phase 1: Discovery,1,GSD Orchestrator,N/A,/gsd:new-project,New Project,Yes,"PROJECT.md, REQUIREMENTS.md, ROADMAP.md, STATE.md, .planning/research/",Yes,"Questions -> Research -> Requirements -> Roadmap; use --auto for autonomous mode"
+Phase 2: Discussion,1,GSD Orchestrator,N/A,/gsd:discuss-phase N,Discuss Phase,Yes,N-CONTEXT.md,Yes,"Surfaces gray areas; use --batch to answer grouped questions"
+Phase 3: Planning,1,Research Agents,N/A,/gsd:plan-phase N,Plan Phase,Yes,"N-RESEARCH.md, N-1-PLAN.md, N-2-PLAN.md",Yes,Spawns research agents then creates atomic XML plans
+Phase 4: Execution,1,Executor Agents,N/A,/gsd:execute-phase N,Execute Phase,Yes,"N-1-SUMMARY.md, N-2-SUMMARY.md, N-VERIFICATION.md",Yes,Groups plans into waves; fresh 200k context per task; auto-commits
+Phase 5: Verification,1,Verifier Agent,N/A,/gsd:verify-work N,Verify Work,Recommended,N-UAT.md,Yes,Walk through deliverables; spawns debug agents if failures
+Phase 6: Release,1,GSD Orchestrator,N/A,/gsd:ship N,Ship Phase,Yes,Pull request,Yes,"Creates PR with auto-generated body; use --draft for draft PRs"
+Phase 6: Release,2,GSD Orchestrator,N/A,/gsd:complete-milestone,Complete Milestone,Yes,Milestone completion,Yes,Run after all phases shipped
+Phase 6: Release,3,GSD Orchestrator,N/A,/gsd:new-milestone,New Milestone,No,Next milestone setup,Yes,Starts next version cycle for existing codebase
+Anytime,1,GSD Orchestrator,N/A,/gsd:next,Auto-detect Next Step,No,Runs next logical command,Yes,Auto-detects state and runs discuss -> plan -> execute -> verify -> ship
+Anytime,2,GSD Orchestrator,N/A,/gsd:quick,Quick Task,No,Code changes,Yes,"Ad-hoc tasks outside phase system; flags: --discuss, --research, --full"
+Anytime,3,GSD Orchestrator,N/A,/gsd:fast,Fast Inline Task,No,Code changes,Yes,Skips planning; executes immediately; for trivial tasks
+Anytime,4,GSD Orchestrator,N/A,/gsd:pause-work,Pause Work,No,HANDOFF.json,Yes,Create handoff when stopping mid-phase
+Anytime,5,GSD Orchestrator,N/A,/gsd:resume-work,Resume Work,No,Restored session state,Yes,Restore from last session
+Anytime,6,GSD Orchestrator,N/A,/gsd:progress,Show Progress,No,Progress summary (inline),Yes,Where am I? What is next?
+Anytime,7,GSD Orchestrator,N/A,/gsd:add-phase,Add Phase,No,Updated ROADMAP.md,Yes,Append phase to roadmap
+Anytime,8,GSD Orchestrator,N/A,/gsd:insert-phase N,Insert Phase,No,Updated ROADMAP.md,Yes,Insert urgent work between phases
+Anytime,9,GSD Orchestrator,N/A,/gsd:review,Peer Review,No,Review report (inline),Yes,Cross-AI peer review of current phase or branch
+Anytime,10,GSD Orchestrator,N/A,/gsd:audit-milestone,Audit Milestone,No,Milestone audit report,Yes,Verify milestone achieved its definition of done
+Anytime,11,GSD Orchestrator,N/A,/gsd:debug,Debug,No,Debug findings + fix plans,Yes,Systematic debugging with persistent state
+Anytime,12,GSD Orchestrator,N/A,/gsd:workstreams,Manage Workstreams,No,Workstream state,Yes,"Parallel workstreams: list, create, switch, complete"
+Anytime,13,GSD Orchestrator,N/A,/gsd:ui-phase N,UI Phase,No,UI design contract,Yes,Generate UI design contract for frontend phases
+Anytime,14,GSD Orchestrator,N/A,/gsd:health,Health Check,No,Integrity report,Yes,"Validate .planning/ directory; use --repair to fix"
+Anytime,15,GSD Orchestrator,N/A,/gsd:stats,Project Statistics,No,Stats summary (inline),Yes,Display project statistics
+Anytime,16,GSD Orchestrator,N/A,/gsd:update,Update GSD,No,Updated GSD with changelog,Yes,Update GSD installation
+Anytime,17,GSD Orchestrator,N/A,/gsd:set-profile,Set Model Profile,No,Updated profile config,Yes,"Profiles: quality, balanced (default), budget, inherit"
+Anytime,18,GSD Orchestrator,N/A,/gsd:settings,Settings,No,Settings UI,Yes,Toggle workflow agents and configure git branching

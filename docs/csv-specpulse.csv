@@ -1,0 +1,10 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,specpulse init my-project --ai claude,Install SpecPulse,Yes,.specpulse/ + .claude/ commands,Yes,pip install specpulse first; auto-deploys AI platform commands
+Per-Feature Cycle,1,AI Agent,N/A,/sp-pulse [feature-name],Initialize Feature,Yes,specs/NNN-[name]/ directory + tracking state,Yes,Entry point; creates feature directory and metadata
+Per-Feature Cycle,2,AI Agent,N/A,/sp-spec,Create Specification,Yes,"Spec with requirements, API design, data models, acceptance criteria",Yes,"Problem statement, functional reqs, security reqs, endpoint specs"
+Per-Feature Cycle,3,AI Agent,N/A,/sp-clarify,Clarify Requirements,Recommended,Updated spec with clarifications,Yes,Structured questions to resolve ambiguities; used for FR-03 in how-to
+Per-Feature Cycle,4,AI Agent,N/A,/sp-plan,Generate Implementation Plan,Yes,"Plan with architecture decisions, file structure, steps, dependencies",Yes,Testing strategy included
+Per-Feature Cycle,5,AI Agent,N/A,/sp-task,Break Down into Tasks,Yes,Tasks with MoSCoW priority + IDs + status + success criteria,Yes,Dependencies tracked; tasks ordered for implementation
+Per-Feature Cycle,6,AI Agent,N/A,/sp-execute,Execute Tasks,Yes,Working code + tests,Yes,"Continuous execution: pick next pending, implement, validate, mark done; also /sp-execute task-NNN for single task"
+Per-Feature Cycle,7,AI Agent,N/A,/sp-validate,Validate Work,Recommended,Validation report against spec + success criteria,Yes,Checks all completed tasks against original specification
+Per-Feature Cycle,8,AI Agent,N/A,/sp-status,Check Progress,No,Feature progress report with completion percentage,Yes,Shows current feature status

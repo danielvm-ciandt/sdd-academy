@@ -1,0 +1,613 @@
+{
+  "methods": [
+    {
+      "id": "bmad",
+      "name": "BMAD Method",
+      "slug": "bmad",
+      "version": "2.1.0",
+      "releaseDate": "2024-03-10",
+      "source": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "philosophy": "Multi-agent role-play (PM, Architect, Dev, Scrum Master, UX, QA, Analyst) with scale-adaptive intelligence. Progressive context building across 4 phases — each phase produces documents that inform the next, so agents always know what to build and why.",
+      "shortDescription": "A structured multi-agent approach where specialized personas (PM, Architect, Dev, Scrum Master, UX, QA) collaborate across 4 phases to build robust specifications and implement features.",
+      "keyFeatures": [
+        "Multi-agent personas with role-based slash commands",
+        "4-phase workflow: Analysis → Planning → Solutioning → Implementation",
+        "Scale-adaptive planning tracks (Quick Flow, BMad Method, Enterprise)",
+        "Implementation readiness gate before coding",
+        "Sprint planning and story-by-story execution",
+        "Built-in code review workflow"
+      ],
+      "bestFor": [
+        "Complex products and platforms (10-50+ stories)",
+        "Enterprise projects with compliance needs",
+        "Teams that want structured role-based collaboration",
+        "Projects requiring full PRD, Architecture, and UX specs"
+      ],
+      "teamSize": "Large",
+      "speed": "Medium",
+      "complexity": "High",
+      "phases": [
+        {
+          "name": "Analysis",
+          "description": "Brainstorm ideas, research domain, and capture strategic vision with the Analyst agent (optional — skip if requirements are clear)"
+        },
+        {
+          "name": "Planning",
+          "description": "PM creates PRD covering all features, UX Designer creates UX spec if UI matters"
+        },
+        {
+          "name": "Solutioning",
+          "description": "Architect creates architecture + ADRs, PM generates epics and stories, readiness gate validates cohesion"
+        },
+        {
+          "name": "Implementation",
+          "description": "Sprint planning, then story-by-story cycle: create story → dev story → code review → commit"
+        }
+      ],
+      "setupCommands": [
+        "npx bmad-method install",
+        "bmad-help"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "native",
+        "windsurf": "cli",
+        "copilot": "cli",
+        "cline": "cli",
+        "antigravity": "cli",
+        "aider": "limited",
+        "continue": "limited"
+      },
+      "relatedProjects": [
+        "digital-music-store",
+        "hr-portal",
+        "flight-booking-system"
+      ],
+      "tags": ["multi-agent", "enterprise", "structured", "role-based"]
+    },
+    {
+      "id": "spec-kit",
+      "name": "Spec-Kit",
+      "slug": "spec-kit",
+      "source": "https://github.com/github/spec-kit",
+      "philosophy": "Constitution-first, spec-driven development where specifications define the 'what' before the 'how', with multi-step refinement rather than one-shot generation.",
+      "shortDescription": "A constitution-first approach from GitHub with multi-step refinement loops: specify, clarify, plan, task, implement. Each feature gets its own spec directory.",
+      "keyFeatures": [
+        "Constitution file defines project-wide principles",
+        "6-phase workflow: Constitution → Specify → Clarify → Plan → Tasks → Implement",
+        "Per-feature spec directories with spec.md, plan.md, tasks.md",
+        "Cross-artifact consistency analysis (/speckit.analyze)",
+        "Dependency-aware task ordering with parallel markers",
+        "Python-based CLI (uv/pip install)"
+      ],
+      "bestFor": [
+        "Projects where quality and consistency matter most",
+        "Teams wanting iterative spec refinement before coding",
+        "Multi-feature projects needing cross-artifact validation",
+        "Regulated or high-quality-standard environments"
+      ],
+      "teamSize": "Small to Medium",
+      "speed": "Medium",
+      "complexity": "Medium",
+      "phases": [
+        {
+          "name": "Constitution",
+          "description": "Establish project principles: code quality, testing standards, security, API consistency"
+        },
+        {
+          "name": "Specify",
+          "description": "Create detailed specification with user stories, functional requirements, and acceptance criteria"
+        },
+        {
+          "name": "Clarify",
+          "description": "AI asks structured questions to fill gaps and tighten requirements"
+        },
+        {
+          "name": "Plan",
+          "description": "Create technical plan with architecture decisions, data model, file structure"
+        },
+        {
+          "name": "Tasks",
+          "description": "Generate ordered, dependency-aware task breakdown with file paths and parallel markers"
+        },
+        {
+          "name": "Implement",
+          "description": "AI executes all tasks in order: models, services, endpoints, validation, tests"
+        }
+      ],
+      "setupCommands": [
+        "uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@vX.Y.Z",
+        "specify init . --ai claude",
+        "specify check"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "native",
+        "windsurf": "cli",
+        "copilot": "cli",
+        "cline": "cli",
+        "antigravity": "cli",
+        "aider": "limited",
+        "continue": "limited"
+      },
+      "relatedProjects": [
+        "hr-portal",
+        "banking-system"
+      ],
+      "tags": ["constitution-first", "refinement", "quality", "github"]
+    },
+    {
+      "id": "gsd",
+      "name": "Get-Shit-Done (GSD)",
+      "slug": "gsd",
+      "source": "https://github.com/gsd-build/get-shit-done",
+      "philosophy": "Anti-context-rot system that uses fresh 200k-token contexts per task, parallel wave execution, and structured meta-prompting to make AI coding reliable.",
+      "shortDescription": "An anti-context-rot framework that spawns fresh AI contexts per task, executes in parallel waves, and uses structured research + verification agents.",
+      "keyFeatures": [
+        "Fresh 200k-token context per task (anti-context-rot)",
+        "6-phase workflow: Discovery → Discussion → Planning → Execution → Verification → Release",
+        "Parallel wave execution with dependency grouping",
+        "31 commands including 18 'anytime' commands",
+        "Model profiles: quality, balanced, budget, inherit",
+        "Quick mode (/gsd:quick) and fast mode (/gsd:fast) for ad-hoc tasks"
+      ],
+      "bestFor": [
+        "Projects suffering from AI context degradation",
+        "Teams wanting parallel agent execution",
+        "Brownfield projects (map-codebase before planning)",
+        "Projects with multiple phases and milestones"
+      ],
+      "teamSize": "Small to Medium",
+      "speed": "Fast",
+      "complexity": "High",
+      "phases": [
+        {
+          "name": "Discovery",
+          "description": "Interactive questions, parallel research agents, requirements extraction, roadmap creation"
+        },
+        {
+          "name": "Discussion",
+          "description": "Gray-area questions per phase to capture context and decisions"
+        },
+        {
+          "name": "Planning",
+          "description": "Research approaches, create atomic XML task plans, verify against requirements"
+        },
+        {
+          "name": "Execution",
+          "description": "Wave-based execution in fresh contexts, atomic commits per task"
+        },
+        {
+          "name": "Verification",
+          "description": "Walk through deliverables, spawn debug agents for failures"
+        },
+        {
+          "name": "Release",
+          "description": "Ship as PR with auto-generated body, complete milestone"
+        }
+      ],
+      "setupCommands": [
+        "npx get-shit-done-cc@latest",
+        "/gsd:help"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "cli",
+        "windsurf": "limited",
+        "copilot": "limited",
+        "cline": "cli",
+        "antigravity": "limited",
+        "aider": "limited",
+        "continue": "limited"
+      },
+      "relatedProjects": [
+        "recommendation-engine",
+        "project-management-tool"
+      ],
+      "tags": ["anti-context-rot", "parallel", "agents", "fresh-context"]
+    },
+    {
+      "id": "openspec",
+      "name": "OpenSpec",
+      "slug": "openspec",
+      "source": "https://github.com/Fission-AI/OpenSpec/",
+      "philosophy": "Fluid, iterative, artifact-guided workflow. Each change gets its own folder with proposal, specs, design, and tasks. Built for brownfield and greenfield alike.",
+      "shortDescription": "A fluid, change-folder-based workflow where each feature gets a complete artifact set (proposal, specs, design, tasks) that you can edit at any time.",
+      "keyFeatures": [
+        "5-phase workflow: Propose → Review → Apply → Verify → Archive",
+        "Per-change artifact folders (proposal.md, specs/, design.md, tasks.md)",
+        "Fluid editing — update any artifact at any time",
+        "Simplest workflow (~8 steps)",
+        "Automatic archiving with date-stamped folders",
+        "Works for brownfield and greenfield projects"
+      ],
+      "bestFor": [
+        "Teams wanting a simple, iterative approach",
+        "Brownfield projects with ongoing changes",
+        "Teams that prefer editing specs directly over rigid workflows",
+        "Projects with frequent small-to-medium features"
+      ],
+      "teamSize": "Small to Medium",
+      "speed": "Fast",
+      "complexity": "Medium",
+      "phases": [
+        {
+          "name": "Propose",
+          "description": "Create a change folder with proposal, specs, design, and task breakdown"
+        },
+        {
+          "name": "Review",
+          "description": "Review and edit generated artifacts directly — adjust requirements, design, or tasks"
+        },
+        {
+          "name": "Apply",
+          "description": "AI reads tasks.md and implements each task sequentially"
+        },
+        {
+          "name": "Verify",
+          "description": "Validate that implementation matches design and requirements"
+        },
+        {
+          "name": "Archive",
+          "description": "Move completed change to date-stamped archive folder"
+        }
+      ],
+      "setupCommands": [
+        "npm install -g @fission-ai/openspec@latest",
+        "openspec init"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "native",
+        "windsurf": "cli",
+        "copilot": "cli",
+        "cline": "cli",
+        "antigravity": "cli",
+        "aider": "limited",
+        "continue": "limited"
+      },
+      "relatedProjects": [
+        "element-explorer",
+        "todo-api",
+        "chat-application"
+      ],
+      "tags": ["iterative", "fluid", "simple", "change-folders"]
+    },
+    {
+      "id": "ai-sdd",
+      "name": "AI-SDD",
+      "slug": "ai-sdd",
+      "source": "https://ai-sdd.com/",
+      "philosophy": "Spec-as-source-of-truth with TDD. The Director-Executor-Contract model: you provide intent and constraints, AI implements within defined boundaries, specifications are the shared language.",
+      "shortDescription": "A spec-as-source-of-truth method with TDD integration. Director-Executor-Contract model with 3 approval gates and test-driven red-green-refactor implementation.",
+      "keyFeatures": [
+        "Director-Executor-Contract model",
+        "6-phase workflow: Steering → Spec Init → Requirements → Design → Tasks → Implement (TDD)",
+        "3 approval gates (requirements, design, implementation)",
+        "TDD cycle: write failing test → implement → refactor",
+        "Steering files for persistent project context",
+        "Design validation for cross-feature consistency"
+      ],
+      "bestFor": [
+        "Teams that value TDD and test-first development",
+        "Projects where specs are the single source of truth",
+        "Teams wanting explicit approval gates between phases",
+        "Quality-focused projects with clear contract boundaries"
+      ],
+      "teamSize": "Small to Medium",
+      "speed": "Medium",
+      "complexity": "High",
+      "phases": [
+        {
+          "name": "Steering",
+          "description": "Define project context: tech stack, coding standards, architecture patterns, non-functional requirements"
+        },
+        {
+          "name": "Spec Init",
+          "description": "Initialize feature scope and boundaries"
+        },
+        {
+          "name": "Requirements",
+          "description": "Clarifying questions, requirements spec — must be approved before design"
+        },
+        {
+          "name": "Design",
+          "description": "Technical design: data model, API contract, service architecture — must be approved before tasks"
+        },
+        {
+          "name": "Tasks",
+          "description": "Break design into ordered tasks with dependency tracking and parallel markers"
+        },
+        {
+          "name": "Implement (TDD)",
+          "description": "Red-green-refactor cycle: write failing test, implement code, refactor — per task"
+        }
+      ],
+      "setupCommands": [
+        "npx ai-sdd"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "native",
+        "windsurf": "cli",
+        "copilot": "cli",
+        "cline": "cli",
+        "antigravity": "cli",
+        "aider": "limited",
+        "continue": "limited"
+      },
+      "relatedProjects": [
+        "element-explorer",
+        "recommendation-engine"
+      ],
+      "tags": ["tdd", "contracts", "approval-gates", "spec-first"]
+    },
+    {
+      "id": "specpulse",
+      "name": "SpecPulse",
+      "slug": "specpulse",
+      "source": "https://github.com/specpulse/specpulse",
+      "philosophy": "CLI-first with AI enhancement. Structured specifications before code, with 11 identical commands across 8 AI platforms. MoSCoW prioritization for task breakdown.",
+      "shortDescription": "A CLI-first framework with 11 identical commands that work across 8 AI platforms. MoSCoW-prioritized tasks and continuous execution with validation.",
+      "keyFeatures": [
+        "11 identical commands across 8 AI platforms",
+        "7-phase workflow: Pulse → Spec → Clarify → Plan → Task → Execute → Validate",
+        "MoSCoW prioritization for task breakdown",
+        "Continuous task execution (auto-picks next pending task)",
+        "Python-based CLI (pip install)",
+        "Platform-agnostic: works the same everywhere"
+      ],
+      "bestFor": [
+        "Teams using multiple AI coding tools",
+        "Teams wanting identical workflows regardless of IDE",
+        "Projects needing MoSCoW-prioritized delivery",
+        "CLI-comfortable developers"
+      ],
+      "teamSize": "Any",
+      "speed": "Fast",
+      "complexity": "Medium",
+      "phases": [
+        {
+          "name": "Pulse",
+          "description": "Initialize feature: create feature directory, project context, and tracking state"
+        },
+        {
+          "name": "Spec",
+          "description": "Create comprehensive specification: requirements, security, API design, data models, acceptance criteria"
+        },
+        {
+          "name": "Clarify",
+          "description": "AI asks structured questions to resolve ambiguities in the spec"
+        },
+        {
+          "name": "Plan",
+          "description": "Architecture decisions, file structure, implementation steps, testing strategy"
+        },
+        {
+          "name": "Task",
+          "description": "Generate actionable tasks with MoSCoW priority, dependencies, and success criteria"
+        },
+        {
+          "name": "Execute",
+          "description": "Continuous execution: pick next pending task, implement, validate, move to next"
+        },
+        {
+          "name": "Validate",
+          "description": "Check all completed tasks against success criteria and original specification"
+        }
+      ],
+      "setupCommands": [
+        "pip install specpulse",
+        "specpulse init my-project --ai claude"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "native",
+        "windsurf": "native",
+        "copilot": "native",
+        "cline": "native",
+        "antigravity": "native",
+        "aider": "native",
+        "continue": "native"
+      },
+      "relatedProjects": [
+        "todo-api",
+        "social-network",
+        "chat-application"
+      ],
+      "tags": ["cli-first", "cross-platform", "moscow", "universal"]
+    },
+    {
+      "id": "spec-workflow-mcp",
+      "name": "Spec Workflow MCP",
+      "slug": "spec-workflow-mcp",
+      "source": "https://github.com/Pimzino/spec-workflow-mcp",
+      "philosophy": "MCP-native, conversational interface for structured spec-driven development. Natural language instead of slash commands, with a real-time web dashboard for tracking.",
+      "shortDescription": "An MCP-native method that uses natural language instead of slash commands. Real-time web dashboard for tracking specs, requirements, designs, and task progress.",
+      "keyFeatures": [
+        "MCP-native (Model Context Protocol)",
+        "Natural language interface — no slash commands needed",
+        "Real-time web dashboard at localhost:5000",
+        "4-phase workflow: Create Spec → Approve Requirements → Approve Design → Execute Tasks",
+        "Sequential approval workflow (requirements → design → tasks)",
+        "Works with any MCP-capable AI tool"
+      ],
+      "bestFor": [
+        "Teams using MCP-capable AI tools (Claude Code, Cursor, Windsurf)",
+        "Teams preferring natural language over slash commands",
+        "Projects wanting real-time visual progress tracking",
+        "Developers who like conversational interfaces"
+      ],
+      "teamSize": "Small to Medium",
+      "speed": "Fast",
+      "complexity": "Low",
+      "phases": [
+        {
+          "name": "Create Spec",
+          "description": "Tell your AI agent what to build in natural language — MCP server generates structured spec"
+        },
+        {
+          "name": "Approve Requirements",
+          "description": "Review requirements in dashboard or via agent, approve to unlock design generation"
+        },
+        {
+          "name": "Approve Design",
+          "description": "Review technical design, approve to unlock task generation"
+        },
+        {
+          "name": "Execute Tasks",
+          "description": "Execute tasks one by one or all at once — monitor progress on the dashboard"
+        }
+      ],
+      "setupCommands": [
+        "claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp@latest -- /path/to/project",
+        "npx -y @pimzino/spec-workflow-mcp@latest --dashboard"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "native",
+        "windsurf": "native",
+        "copilot": "not-supported",
+        "cline": "cli",
+        "antigravity": "not-supported",
+        "aider": "not-supported",
+        "continue": "not-supported"
+      },
+      "relatedProjects": [
+        "element-explorer",
+        "todo-api"
+      ],
+      "tags": ["mcp", "natural-language", "dashboard", "conversational"]
+    },
+    {
+      "id": "anws",
+      "name": "ANWS",
+      "slug": "anws",
+      "source": "https://github.com/Haaaiawd/ANWS",
+      "philosophy": "Four principles — Axiom (principle before implementation), Nexus (connection before fragmentation), Weave (coherence before accumulation), Sovereignty (human judgment before automation). Design-first with adversarial reviews.",
+      "shortDescription": "A four-principles method (Axiom, Nexus, Weave, Sovereignty) with adversarial design reviews and a genesis-to-forge workflow for design-first development.",
+      "keyFeatures": [
+        "Four guiding principles: Axiom, Nexus, Weave, Sovereignty",
+        "4-phase workflow: Genesis → Challenge → Blueprint → Forge",
+        "Adversarial /challenge reviews surface risks and contradictions",
+        "AGENTS.md as root anchor file for AI session recovery",
+        "Architecture Decision Records (ADRs) built into genesis",
+        "Versioned architecture docs in .anws/"
+      ],
+      "bestFor": [
+        "Projects requiring adversarial design validation",
+        "Teams that value principle-driven development",
+        "Complex systems needing architectural rigor",
+        "Projects where human sovereignty over AI decisions matters"
+      ],
+      "teamSize": "Medium to Large",
+      "speed": "Medium",
+      "complexity": "High",
+      "phases": [
+        {
+          "name": "Genesis",
+          "description": "Create PRD, architecture, and ADRs from idea — the foundation of the system"
+        },
+        {
+          "name": "Challenge",
+          "description": "Adversarial review of PRD and architecture — surface risks, contradictions, gaps"
+        },
+        {
+          "name": "Blueprint",
+          "description": "Decompose architecture into ordered, executable tasks with dependencies and acceptance criteria"
+        },
+        {
+          "name": "Forge",
+          "description": "Implement tasks with human review checkpoints — code, tests, and validation"
+        }
+      ],
+      "setupCommands": [
+        "npm install -g @haaaiawd/anws",
+        "anws init --target claude"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "native",
+        "windsurf": "cli",
+        "copilot": "cli",
+        "cline": "cli",
+        "antigravity": "cli",
+        "aider": "limited",
+        "continue": "limited"
+      },
+      "relatedProjects": [
+        "digital-music-store",
+        "flight-booking-system"
+      ],
+      "tags": ["principles", "adversarial", "design-first", "sovereignty"]
+    },
+    {
+      "id": "taskmaster",
+      "name": "Taskmaster",
+      "slug": "taskmaster",
+      "source": "https://www.task-master.dev/",
+      "philosophy": "PRD-driven, dependency-ordered task management. Parse a Product Requirements Document into structured tasks with topological sorting, then execute sequentially guided by AI.",
+      "shortDescription": "A PRD-driven method that parses requirements documents into dependency-ordered tasks with topological sorting. CLI-based task management with expand, analyze, and status tracking.",
+      "keyFeatures": [
+        "PRD-to-tasks pipeline with topological sorting",
+        "5-phase workflow: Write PRD → Parse → Analyze → Expand → Implement",
+        "Dependency-ordered task execution (task-master next)",
+        "Complexity analysis identifies tasks needing subtask expansion",
+        "CLI-based: works with any AI coding tool",
+        "Task status tracking and update commands"
+      ],
+      "bestFor": [
+        "Teams starting from a PRD or requirements document",
+        "Projects needing explicit dependency tracking between tasks",
+        "Developers who prefer CLI-based task management",
+        "Any team size — scales from solo to large"
+      ],
+      "teamSize": "Any",
+      "speed": "Medium",
+      "complexity": "Medium",
+      "phases": [
+        {
+          "name": "Write PRD",
+          "description": "Create a Product Requirements Document covering all features and scope"
+        },
+        {
+          "name": "Parse",
+          "description": "task-master parse-prd converts the PRD into structured tasks with IDs, dependencies, and priorities"
+        },
+        {
+          "name": "Analyze",
+          "description": "task-master analyze-complexity identifies which tasks need further breakdown"
+        },
+        {
+          "name": "Expand",
+          "description": "task-master expand breaks complex tasks into granular subtasks"
+        },
+        {
+          "name": "Implement",
+          "description": "Loop: task-master next → AI implements → task-master set-status --status=done → repeat"
+        }
+      ],
+      "setupCommands": [
+        "npm install -g task-master-ai",
+        "task-master init",
+        "task-master parse-prd"
+      ],
+      "toolCompatibility": {
+        "claude-code": "native",
+        "cursor": "native",
+        "windsurf": "native",
+        "copilot": "native",
+        "cline": "native",
+        "antigravity": "native",
+        "aider": "cli",
+        "continue": "cli"
+      },
+      "relatedProjects": [
+        "project-management-tool",
+        "banking-system",
+        "social-network"
+      ],
+      "tags": ["prd-driven", "dependency-ordered", "cli", "topological-sort"]
+    }
+  ]
+}

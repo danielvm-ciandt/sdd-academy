@@ -1,0 +1,10 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp@latest,Add MCP Server,Yes,MCP server registered in AI tool,Yes,Also supports Cursor/Windsurf via mcpServers JSON config
+Setup,2,Developer,N/A,npx -y @pimzino/spec-workflow-mcp@latest --dashboard,Start Dashboard,Recommended,Web dashboard at http://localhost:5000,Yes,Real-time visual progress bars and task status
+Per-Feature Cycle,1,AI Agent + MCP Server,N/A,"Create a spec for [feature]",Create Spec (natural language),Yes,.spec-workflow/specs/[name]/ (requirements document),Yes,MCP tool: create_spec; sequential workflow: Requirements -> Design -> Tasks
+Per-Feature Cycle,2,AI Agent + MCP Server,N/A,"List my specs",List Specs,No,Spec list with status (inline),Yes,MCP tool: list_specs; also visible on dashboard
+Per-Feature Cycle,3,AI Agent + MCP Server,N/A,"Approve requirements for [feature]",Approve Requirements,Yes,Design document generated,Yes,MCP tool: approve(requirements); unlocks design generation
+Per-Feature Cycle,4,AI Agent + MCP Server,N/A,"Approve design for [feature]",Approve Design,Yes,Task breakdown generated,Yes,MCP tool: approve(design); unlocks task generation
+Per-Feature Cycle,5,AI Agent + MCP Server,N/A,"Execute task N in spec [feature]",Execute Single Task,Yes,Code + tests for task N,Yes,MCP tool: execute_task; dashboard updates progress bar
+Per-Feature Cycle,6,AI Agent + MCP Server,N/A,"Execute all remaining tasks in spec [feature]",Execute All Tasks,Yes,Code + tests for all remaining tasks,Yes,Loops through all pending tasks; alternative to one-by-one execution
+Per-Feature Cycle,7,AI Agent + MCP Server,N/A,"Show progress for spec [feature]",Show Progress,No,Progress report (inline),Yes,Also visible on real-time dashboard

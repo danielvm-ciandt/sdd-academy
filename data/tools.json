@@ -1,0 +1,157 @@
+{
+  "tools": [
+    {
+      "name": "Claude Code",
+      "slug": "claude-code",
+      "description": "Claude's code generation and analysis capabilities integrated with your IDE",
+      "setupUrl": "https://claude.ai/code",
+      "support": {
+        "anws": "native",
+        "bmad": "native",
+        "ai-sdd": "native",
+        "gsd": "native",
+        "openspec": "native",
+        "spec-kit": "native",
+        "specpulse": "native",
+        "spec-workflow-mcp": "native",
+        "taskmaster": "native"
+      }
+    },
+    {
+      "name": "Cursor",
+      "slug": "cursor",
+      "description": "AI-powered code editor with built-in AI assistance and code generation",
+      "setupUrl": "https://cursor.sh",
+      "support": {
+        "anws": "native",
+        "bmad": "native",
+        "ai-sdd": "native",
+        "gsd": "native",
+        "openspec": "cli",
+        "spec-kit": "native",
+        "specpulse": "native",
+        "spec-workflow-mcp": "native",
+        "taskmaster": "native"
+      }
+    },
+    {
+      "name": "GitHub Copilot",
+      "slug": "copilot",
+      "description": "AI code suggestions and auto-completion for Visual Studio Code and GitHub",
+      "setupUrl": "https://github.com/features/copilot",
+      "support": {
+        "anws": "cli",
+        "bmad": "native",
+        "ai-sdd": "native",
+        "gsd": "native",
+        "openspec": "native",
+        "spec-kit": "native",
+        "specpulse": "native",
+        "spec-workflow-mcp": "cli",
+        "taskmaster": "native"
+      }
+    },
+    {
+      "name": "Windsurf",
+      "slug": "windsurf",
+      "description": "Codeium's advanced IDE with AI-powered code completion and generation",
+      "setupUrl": "https://windsurf.dev",
+      "support": {
+        "anws": "cli",
+        "bmad": "native",
+        "ai-sdd": "native",
+        "gsd": "native",
+        "openspec": "cli",
+        "spec-kit": "native",
+        "specpulse": "native",
+        "spec-workflow-mcp": "cli",
+        "taskmaster": "native"
+      }
+    },
+    {
+      "name": "Cline",
+      "slug": "cline",
+      "description": "Claude-powered VS Code extension for autonomous coding tasks",
+      "setupUrl": "https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev",
+      "support": {
+        "anws": "native",
+        "bmad": "native",
+        "ai-sdd": "native",
+        "gsd": "native",
+        "openspec": "native",
+        "spec-kit": "native",
+        "specpulse": "native",
+        "spec-workflow-mcp": "native",
+        "taskmaster": "native"
+      }
+    },
+    {
+      "name": "Antigravy",
+      "slug": "antigravity",
+      "description": "Code generation tool for building applications from specifications",
+      "setupUrl": "https://antigravity.dev",
+      "support": {
+        "anws": "not-supported",
+        "bmad": "cli",
+        "ai-sdd": "native",
+        "gsd": "cli",
+        "openspec": "not-supported",
+        "spec-kit": "cli",
+        "specpulse": "cli",
+        "spec-workflow-mcp": "not-supported",
+        "taskmaster": "cli"
+      }
+    },
+    {
+      "name": "Aider",
+      "slug": "aider",
+      "description": "Terminal-based AI coding assistant for pair programming",
+      "setupUrl": "https://aider.chat",
+      "support": {
+        "anws": "cli",
+        "bmad": "native",
+        "ai-sdd": "native",
+        "gsd": "native",
+        "openspec": "cli",
+        "spec-kit": "native",
+        "specpulse": "native",
+        "spec-workflow-mcp": "cli",
+        "taskmaster": "native"
+      }
+    },
+    {
+      "name": "Continue",
+      "slug": "continue",
+      "description": "Open-source AI code completion and generation framework",
+      "setupUrl": "https://continue.dev",
+      "support": {
+        "anws": "native",
+        "bmad": "native",
+        "ai-sdd": "native",
+        "gsd": "native",
+        "openspec": "native",
+        "spec-kit": "native",
+        "specpulse": "native",
+        "spec-workflow-mcp": "native",
+        "taskmaster": "native"
+      }
+    },
+    {
+      "name": "OpenCode",
+      "slug": "opencode",
+      "description": "Open-source AI code assistant for autonomous coding and specification-driven development",
+      "setupUrl": "https://opencode.dev",
+      "support": {
+        "anws": "native",
+        "bmad": "native",
+        "ai-sdd": "native",
+        "gsd": "native",
+        "openspec": "native",
+        "spec-kit": "native",
+        "specpulse": "native",
+        "spec-workflow-mcp": "native",
+        "taskmaster": "native"
+      }
+    }
+  ]
+}

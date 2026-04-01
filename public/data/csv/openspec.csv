@@ -1,0 +1,7 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,openspec init,Install OpenSpec,Yes,openspec/ directory + AI commands,Yes,npm install -g @fission-ai/openspec@latest first
+Per-Feature Cycle,1,AI Agent,N/A,/opsx:propose,Propose Feature,Yes,"openspec/changes/[name]/proposal.md, specs/, design.md, tasks.md",Yes,Creates complete change folder with all artifacts in one pass
+Per-Feature Cycle,2,Developer,N/A,Manual review,Review Artifacts,Recommended,Edited artifacts (if needed),Yes,Read and adjust requirements/design/tasks directly in files
+Per-Feature Cycle,3,AI Agent,N/A,/opsx:apply,Apply (Implement),Yes,Working code + tests,Yes,Reads tasks.md and implements each task sequentially
+Per-Feature Cycle,4,AI Agent,N/A,/opsx:verify,Verify Implementation,Recommended,Verification report,Yes,Validates implementation matches design and specs
+Per-Feature Cycle,5,AI Agent,N/A,/opsx:archive,Archive Change,No,openspec/changes/archive/YYYY-MM-DD-[name]/,Yes,Moves completed change to archive folder

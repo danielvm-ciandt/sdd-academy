@@ -1,0 +1,12 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,task-master init,Install Taskmaster,Yes,".taskmaster/ directory + tasks/ directory",Yes,npm install -g task-master-ai first
+Phase 1: Requirements,1,Developer,N/A,Manual: write PRD,Write PRD,Yes,.taskmaster/docs/prd.md,Yes,Use provided template; include ALL features for full scope and dependencies
+Phase 2: Task Generation,1,Taskmaster CLI,N/A,task-master parse-prd .taskmaster/docs/prd.md,Parse PRD into Tasks,Yes,"tasks/tasks.json (structured tasks with IDs, deps, priority, status)",Yes,Converts PRD into dependency-ordered task list
+Phase 2: Task Generation,2,Taskmaster CLI,N/A,task-master analyze-complexity,Analyze Complexity,Recommended,Complexity report (inline),Yes,Identifies which tasks need further breakdown
+Phase 2: Task Generation,3,Taskmaster CLI,N/A,task-master expand --id=N,Expand Task into Subtasks,Recommended,Updated tasks.json with subtasks,Yes,Generates subtasks for complex tasks; more granular AI instructions
+Phase 3: Implementation,1,Taskmaster CLI,N/A,task-master next,Get Next Task,Yes,Next task by dependency order (inline),Yes,Returns next task based on dependency order and status
+Phase 3: Implementation,2,Taskmaster CLI,N/A,task-master show --id=N,Show Task Details,No,Task details (inline),Yes,Referenced in process diagram; review task before implementation
+Phase 3: Implementation,3,AI Agent,N/A,AI implements task,Implement Task,Yes,Working code + tests,Yes,Developer uses AI agent to implement what task-master next returns
+Phase 3: Implementation,4,Taskmaster CLI,N/A,task-master set-status --id=N --status=done,Set Task Status,Yes,Updated tasks.json,Yes,Mark task as done after implementation; repeat next -> implement -> set-status
+Phase 3: Implementation,5,Taskmaster CLI,N/A,task-master update-task --id=N --prompt=...,Update Task,No,Updated task in tasks.json,Yes,Modify task if requirements change mid-implementation
+Phase 3: Implementation,6,Taskmaster CLI,N/A,task-master list,List Tasks,No,Task list with status (inline),Yes,Verify progress; check all tasks complete before release

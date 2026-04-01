@@ -1,0 +1,21 @@
+I need to created something to help my 350 team members to learn spec driven development and b eable to apply tho their day by day and make thinks more productive. 
+
+We are a software develpment company that believes in lean thinking to run our business and to deal with our clients project. 
+
+So the mental framework should be lean. Most of our contracts follow PMI project structures using agile methodologies.
+
+I want to have all the how-tos and the list of agenst/frameworks for all those 10 methodologies with and area for the explanation of the method and their oficial and non oficial references and also an area like "from zero to prod using X" for each one of the methods. Also list all the (cursor, antygravity, claude, co-pilot and other ide/apps they run.)(please let everibody know wich version of the method are we thalking about and add something so show live the version of the method on their repository if it existis).
+
+Create one project sample definition for each one of the available test data source here:
+https://neon.com/docs/import/import-sample-data
+
+My idea is "pick a method and pick a project and build by yourself"
+
+The instructions should be agnostic and the people will decide if the use Cursor, Claude code, antigravity , Cline, open cloud or other. 
+
+Give another ideas on how to offer a good material to help team leader to set the knowled on their teams.
+
+We should use neon/auth to let just people from ciandt.com access the system. 
+
+Use this https://rfranco-br.github.io/Intent-Driven-Flow/idf-v7.9.html as inspiration
+We will host the site the same way this one did. 

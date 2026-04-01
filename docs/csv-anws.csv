@@ -1,0 +1,9 @@
+phase,step_order,agent_name,agent_id,workflow_command,workflow_name,required,output_artifact,in_howto,notes
+Setup,1,Developer,N/A,anws init --target claude,Install ANWS,Yes,"AGENTS.md + .anws/ + .claude/commands/ + .claude/skills/",Yes,Multi-target supported (claude + cursor)
+Phase 1: Genesis,1,AI Agent,N/A,/quickstart,Quickstart (Auto-detect),No,Routes to appropriate workflow,Yes,Detects project state and suggests next action
+Phase 1: Genesis,2,AI Agent,N/A,/genesis,Genesis (PRD + Architecture),Yes,".anws/v1/01_PRD.md, 02_ARCHITECTURE.md, 03_ADR/",Yes,Describe full vision; produces PRD + architecture + ADRs in one pass
+Phase 2: Validation,1,AI Agent,N/A,/challenge,Challenge Design,Recommended,Challenge report (risks + gaps),Yes,Adversarial review of PRD and architecture
+Phase 3: Task Planning,1,AI Agent,N/A,/blueprint,Blueprint (Task Decomposition),Yes,".anws/v1/05_TASKS.md (ordered, executable tasks)",Yes,Acceptance criteria + file paths per task
+Phase 4: Implementation,1,AI Agent,N/A,/forge,Forge (Implement),Yes,Working code + tests,Yes,Reads approved tasks and implements; human review checkpoint after
+Phase 2: Validation (incremental),1,AI Agent,N/A,/design-system,Design System Component,Yes,System design document for new module,Yes,For adding new components to existing architecture (FR-02+ workflow)
+Anytime,1,AI Agent,N/A,/explore,Explore / Research,No,Exploration report (options + trade-offs),Yes,Research technology approaches before design decisions
